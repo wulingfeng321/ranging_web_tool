@@ -32,7 +32,7 @@ def read_capture(folder: Path):
         for row in logs:
             records[row[0]].append(dict(zip(SCHEMAS[row[0]], row[1:])))
         boards[board] = {'meta':meta, 'pcm':np.frombuffer(pcm,dtype='<i2').reshape(-1,2),
-                         'anchors':anchors, 'logs':dict(records)}
+                         'anchors':anchors, 'logs':dict(records), 'log_rows':logs}
         digest.update(board.encode()); digest.update(data)
     return boards, digest.hexdigest()
 

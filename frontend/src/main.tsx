@@ -22,6 +22,7 @@ import {
 } from "lucide-react";
 import type { Data, Layout } from "plotly.js";
 import Chart from "./Chart";
+import DecodedData from "./DecodedData";
 import "./style.css";
 
 type Raw = Record<string, string>;
@@ -530,6 +531,12 @@ function App() {
                     >
                       时钟与采集状态
                     </button>
+                    <button
+                      className={tab === "decoded" ? "active" : ""}
+                      onClick={() => setTab("decoded")}
+                    >
+                      解析数据
+                    </button>
                     <div>
                       <Clock3 size={14} />
                       RNG1 · {report.analysis_version}
@@ -537,6 +544,12 @@ function App() {
                   </div>
                   {tab === "health" ? (
                     <Health report={report} />
+                  ) : tab === "decoded" ? (
+                    <DecodedData
+                      key={selectedId}
+                      experimentId={selectedId}
+                      boards={report.boards}
+                    />
                   ) : (
                     <>
                       <div className="analysis-grid">
@@ -945,21 +958,27 @@ function PairDetail({
               </h3>
               {pair.events[b] ? (
                 <>
-                  <div className="candidate-header">
-                    <span>候选</span>
-                    <span>脉冲 0 偏移 / μs</span>
-                    <span>质量</span>
-                  </div>
-                  {pair.events[b]!.candidates.map((c) => (
-                    <div
-                      className={`candidate ${Number(c.index_zero_based) + 1 === Number(pair.raw[b === "A" ? "best_a" : "best_b"]) ? "best" : ""}`}
-                      key={c.index_zero_based}
-                    >
-                      <span>#{Number(c.index_zero_based) + 1}</span>
-                      <span>{fmt(Number(c.pulse0_offset_ns) / 1000, 3)}</span>
-                      <span>{c.quality}</span>
+                  <div className="candidate-scroll">
+                    <div className="candidate-header">
+                      <span>候选</span>
+                      <span>脉冲 0 / μs</span>
+                      <span>脉冲 1 / μs</span>
+                      <span>脉冲 2 / μs</span>
+                      <span>质量</span>
                     </div>
-                  ))}
+                    {pair.events[b]!.candidates.map((c) => (
+                      <div
+                        className={`candidate ${Number(c.index_zero_based) + 1 === Number(pair.raw[b === "A" ? "best_a" : "best_b"]) ? "best" : ""}`}
+                        key={c.index_zero_based}
+                      >
+                        <span>#{Number(c.index_zero_based) + 1}</span>
+                        <span>{fmt(Number(c.pulse0_offset_ns) / 1000, 3)}</span>
+                        <span>{fmt(Number(c.pulse1_offset_ns) / 1000, 3)}</span>
+                        <span>{fmt(Number(c.pulse2_offset_ns) / 1000, 3)}</span>
+                        <span>{c.quality}</span>
+                      </div>
+                    ))}
+                  </div>
                   <p>
                     锁定：{pair.events[b]!.locked === "1" ? "是" : "否"} · epoch{" "}
                     {pair.events[b]!.epoch ?? "不在录音范围"}

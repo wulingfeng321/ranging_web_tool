@@ -6,17 +6,20 @@ import shutil
 import sqlite3
 import threading
 import uuid
+import tempfile
+import wave as wave_io
 from concurrent.futures import ThreadPoolExecutor
 from contextlib import asynccontextmanager, contextmanager
 from datetime import datetime, timezone
 from functools import lru_cache
 from pathlib import Path
-from typing import Annotated
+from typing import Annotated, Literal
 from fastapi import FastAPI, File, Form, HTTPException, Query, UploadFile
-from fastapi.responses import Response
+from fastapi.responses import Response, FileResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 from .analysis import read_capture, build_report, json_safe, waveform
+from .data_views import TABLES, table_page, csv_chunks
 
 ROOT=Path(os.environ.get('RANGING_DATA_DIR',Path(__file__).resolve().parents[2]/'data')).resolve()
 ROOT.mkdir(parents=True,exist_ok=True)
@@ -162,6 +165,43 @@ def export(experiment_id:str):
         writer.writerow([result['report']['analysis_version'],p['index'],p['time_s'],p['outcome'],p['delay_us'],p['distance_mm'],result['report']['stats']['temperature_c'],0,
                          p['raw']['event_a_id'],p['raw']['event_b_id'],(p['events']['A'] or {}).get('event'),(p['events']['B'] or {}).get('event'),p['reason_label']])
     return Response('\ufeff'+out.getvalue(),media_type='text/csv; charset=utf-8',headers={'Content-Disposition':f'attachment; filename="{experiment_id}-pairs.csv"'})
+
+def ready_boards(experiment_id):
+    if row_by_id(experiment_id)['status']!='ready': raise HTTPException(409,'实验尚未完成分析')
+    return loaded(experiment_id)
+
+@app.get('/api/experiments/{experiment_id}/decoded/{board}')
+def decoded(experiment_id:str, board:Literal['A','B'], table:str='metadata',
+            offset:int=Query(0,ge=0), limit:int=Query(50,ge=1,le=500),
+            format:Literal['json','csv']='json'):
+    if table not in TABLES:raise HTTPException(422,'不支持的数据分类')
+    capture=ready_boards(experiment_id)[board]
+    if format=='csv':
+        return StreamingResponse(csv_chunks(capture,table),media_type='text/csv; charset=utf-8',
+            headers={'Content-Disposition':f'attachment; filename="{board}-{table}.csv"'})
+    return table_page(capture,table,offset,limit)
+
+@app.get('/api/experiments/{experiment_id}/audio/{board}.wav')
+def audio(experiment_id:str, board:Literal['A','B'], channel:Literal['stereo','1','2']='stereo',download:bool=False):
+    capture=ready_boards(experiment_id)[board]
+    folder=ROOT/experiment_id/'audio';folder.mkdir(exist_ok=True)
+    path=folder/f'{board}-{channel}.wav'
+    if not path.is_file():
+        # A unique temporary file and atomic replacement allow concurrent media requests.
+        descriptor,temporary=tempfile.mkstemp(suffix='.wav',dir=folder)
+        os.close(descriptor)
+        try:
+            pcm=capture['pcm'] if channel=='stereo' else capture['pcm'][:,int(channel)-1]
+            with wave_io.open(temporary,'wb') as output:
+                output.setnchannels(2 if channel=='stereo' else 1)
+                output.setsampwidth(2)
+                output.setframerate(capture['meta']['rate'])
+                output.writeframes(pcm.tobytes())
+            os.replace(temporary,path)
+        finally:
+            if os.path.isfile(temporary):os.unlink(temporary)
+    return FileResponse(path,media_type='audio/wav',filename=path.name,
+                        content_disposition_type='attachment' if download else 'inline')
 
 # Built frontend and API share one origin for the local launcher.
 STATIC=Path(__file__).resolve().parents[2]/'frontend'/'dist'
