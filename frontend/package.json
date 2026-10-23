@@ -12,7 +12,9 @@
     "lucide-react": "^0.468.0",
     "plotly.js-cartesian-dist-min": "^3.1.0",
     "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "react-dom": "^19.2.0",
+    "react-markdown": "^10.1.0",
+    "remark-gfm": "^4.0.1"
   },
   "devDependencies": {
     "@types/plotly.js": "^3.0.0",

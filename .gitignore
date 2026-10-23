@@ -6,5 +6,6 @@ frontend/dist/
 data/
 *.log
 .env
+config/ai.local.toml
 artifacts/
 *.tsbuildinfo

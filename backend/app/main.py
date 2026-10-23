@@ -20,11 +20,13 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 from .analysis import read_capture, build_report, json_safe, waveform
 from .data_views import TABLES, table_page, csv_chunks
+from . import ai_analysis as ai
 
 ROOT=Path(os.environ.get('RANGING_DATA_DIR',Path(__file__).resolve().parents[2]/'data')).resolve()
 ROOT.mkdir(parents=True,exist_ok=True)
 DB=ROOT/'studio.sqlite3'
 POOL=ThreadPoolExecutor(max_workers=1,thread_name_prefix='analysis')
+AI_POOL=ThreadPoolExecutor(max_workers=1,thread_name_prefix='ai-analysis')
 LIMIT=64*1024*1024
 LOCK=threading.Lock()
 
@@ -41,13 +43,22 @@ with database() as db:
     db.execute('''CREATE TABLE IF NOT EXISTS experiments (
         id TEXT PRIMARY KEY,name TEXT NOT NULL,created_at TEXT NOT NULL,status TEXT NOT NULL,
         notes TEXT NOT NULL DEFAULT '',truth_mm REAL,error TEXT,digest TEXT,summary TEXT)''')
+    db.execute('''CREATE TABLE IF NOT EXISTS ai_runs (
+        id TEXT PRIMARY KEY, experiment_id TEXT NOT NULL, created_at TEXT NOT NULL,
+        status TEXT NOT NULL, preset TEXT NOT NULL, focus TEXT NOT NULL, model TEXT NOT NULL,
+        base_url TEXT NOT NULL, source_hash TEXT NOT NULL, snapshot TEXT NOT NULL,
+        result TEXT, error TEXT)''')
 
 @asynccontextmanager
 async def lifespan(app):
+    global AI_POOL
+    AI_POOL=ThreadPoolExecutor(max_workers=1,thread_name_prefix='ai-analysis')
     with database() as db:
         db.execute("UPDATE experiments SET status='failed',error='服务重启中断了分析，请重试' WHERE status IN ('queued','processing')")
+        db.execute("UPDATE ai_runs SET status='failed',error='服务重启中断了 AI 分析，请手动重新生成。' WHERE status='running'")
     yield
     POOL.shutdown(wait=True)
+    AI_POOL.shutdown(wait=True)
 
 app=FastAPI(title='Ranging Studio',version='0.1.0',lifespan=lifespan)
 
@@ -202,6 +213,80 @@ def audio(experiment_id:str, board:Literal['A','B'], channel:Literal['stereo','1
             if os.path.isfile(temporary):os.unlink(temporary)
     return FileResponse(path,media_type='audio/wav',filename=path.name,
                         content_disposition_type='attachment' if download else 'inline')
+
+class AIRequest(BaseModel):
+    preset: Literal['summary','diagnosis','report']='summary'
+    focus: str=Field(default='',max_length=2000)
+
+class AIGenerateRequest(AIRequest):
+    input_hash: str=Field(pattern=r'^[0-9a-f]{64}$')
+
+def ai_input(experiment_id, data):
+    experiment=detail(experiment_id)
+    if 'report' not in experiment: raise HTTPException(409,'实验尚未完成分析')
+    try:return ai.prepare(experiment,data.preset,data.focus)
+    except ai.AIError as exc:raise HTTPException(422,str(exc)) from None
+
+@app.get('/api/ai/config')
+def ai_config():return ai.public_settings()
+
+@app.post('/api/experiments/{experiment_id}/ai/preview')
+def ai_preview(experiment_id:str,data:AIRequest):
+    return ai_input(experiment_id,data)
+
+def process_ai(run_id, config, snapshot):
+    try:
+        result=ai.complete(config,snapshot['messages'])
+        with database() as db:
+            db.execute("UPDATE ai_runs SET status='completed',result=? WHERE id=?",(ai.encode(result),run_id))
+    except Exception as exc:
+        message=str(exc) if isinstance(exc,ai.AIError) else 'AI 分析未完成，请检查本地服务配置后手动重试。'
+        with database() as db:
+            db.execute("UPDATE ai_runs SET status='failed',error=? WHERE id=?",(message,run_id))
+
+@app.get('/api/experiments/{experiment_id}/ai/runs')
+def ai_runs(experiment_id:str):
+    experiment=detail(experiment_id)
+    current=ai.fingerprint(experiment) if 'report' in experiment else None
+    with database() as db:
+        rows=db.execute('SELECT * FROM ai_runs WHERE experiment_id=? ORDER BY created_at DESC LIMIT 30',(experiment_id,)).fetchall()
+    result=[]
+    for row in rows:
+        item=dict(row)
+        item.pop('snapshot')
+        item['result']=json.loads(item['result']) if item['result'] else None
+        item['stale']=item['source_hash']!=current
+        result.append(item)
+    return result
+
+@app.get('/api/experiments/{experiment_id}/ai/runs/{run_id}/snapshot')
+def ai_snapshot(experiment_id:str,run_id:str):
+    row_by_id(experiment_id)
+    with database() as db:
+        row=db.execute('SELECT snapshot FROM ai_runs WHERE id=? AND experiment_id=?',(run_id,experiment_id)).fetchone()
+    if not row:raise HTTPException(404,'AI 分析记录不存在')
+    return json.loads(row['snapshot'])
+
+@app.post('/api/experiments/{experiment_id}/ai/runs',status_code=202)
+def ai_generate(experiment_id:str,data:AIGenerateRequest):
+    snapshot=ai_input(experiment_id,data)
+    if snapshot['input_hash']!=data.input_hash:
+        raise HTTPException(409,'数据或提示词已更新，请刷新分析材料后重新生成。')
+    try:config=ai.settings(require_ready=True)
+    except ai.AIError as exc:raise HTTPException(409,str(exc)) from None
+    snapshot['request_parameters']={k:getattr(config,k) for k in ('base_url','model','max_tokens','temperature','thinking','timeout_seconds')}
+    run_id=uuid.uuid4().hex
+    with database() as db:
+        db.execute('BEGIN IMMEDIATE')
+        if db.execute("SELECT 1 FROM ai_runs WHERE status='running' LIMIT 1").fetchone():
+            raise HTTPException(409,'已有 AI 分析正在运行，请等待完成后再提交。')
+        db.execute('INSERT INTO ai_runs (id,experiment_id,created_at,status,preset,focus,model,base_url,source_hash,snapshot) VALUES (?,?,?,?,?,?,?,?,?,?)',
+                   (run_id,experiment_id,datetime.now(timezone.utc).isoformat(),'running',data.preset,data.focus,config.model,config.base_url,snapshot['source_hash'],ai.encode(snapshot)))
+    try:AI_POOL.submit(process_ai,run_id,config,snapshot)
+    except RuntimeError:
+        with database() as db:db.execute("UPDATE ai_runs SET status='failed',error='服务正在关闭，请重新启动后再试。' WHERE id=?",(run_id,))
+        raise HTTPException(503,'服务正在关闭，请重新启动后再试。') from None
+    return {'id':run_id,'status':'running'}
 
 # Built frontend and API share one origin for the local launcher.
 STATIC=Path(__file__).resolve().parents[2]/'frontend'/'dist'

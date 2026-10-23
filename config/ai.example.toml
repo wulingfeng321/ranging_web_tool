@@ -1,0 +1,12 @@
+# 复制为 ai.local.toml；本地配置已加入 Git 忽略。保存后下一次请求自动生效。
+enabled = false
+base_url = "https://api.deepseek.com"
+model = "deepseek-flash"
+api_key = ""
+# 环境变量优先于上面的 api_key。不要将真实密钥写入示例文件。
+api_key_env = "DEEPSEEK_API_KEY"
+timeout_seconds = 120
+max_tokens = 6000
+temperature = 0.2
+# disabled 侧重快速汇总；enabled 启用思考模式，建议提高 max_tokens。
+thinking = "disabled"

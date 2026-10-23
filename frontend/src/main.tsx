@@ -23,6 +23,7 @@ import {
 import type { Data, Layout } from "plotly.js";
 import Chart from "./Chart";
 import DecodedData from "./DecodedData";
+import AIAnalysis from "./AIAnalysis";
 import "./style.css";
 
 type Raw = Record<string, string>;
@@ -537,6 +538,12 @@ function App() {
                     >
                       解析数据
                     </button>
+                    <button
+                      className={tab === "ai" ? "active" : ""}
+                      onClick={() => setTab("ai")}
+                    >
+                      AI 分析
+                    </button>
                     <div>
                       <Clock3 size={14} />
                       RNG1 · {report.analysis_version}
@@ -544,6 +551,16 @@ function App() {
                   </div>
                   {tab === "health" ? (
                     <Health report={report} />
+                  ) : tab === "ai" ? (
+                    <AIAnalysis
+                      key={selectedId}
+                      experimentId={selectedId}
+                      metadataVersion={JSON.stringify([
+                        detail.name,
+                        detail.notes,
+                        detail.truth_mm,
+                      ])}
+                    />
                   ) : tab === "decoded" ? (
                     <DecodedData
                       key={selectedId}
