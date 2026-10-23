@@ -329,6 +329,7 @@ main {
   margin-bottom: 10px;
 }
 h1 {
+  overflow-wrap: anywhere;
   font-size: 26px;
   letter-spacing: -0.6px;
   font-weight: 650;
@@ -1047,6 +1048,9 @@ footer {
   .detail-body {
     padding: 14px;
   }
+}
+.page-heading > div:first-child {
+  min-width: 0;
 }
 @media (max-width: 950px) {
   .sidebar {

@@ -79,3 +79,26 @@ def test_duplicate_clock_does_not_guess(tmp_path):
     report=build_report(boards)
     assert report['pairs'][0]['events']['A'] is None
     assert any('无法' in w for w in report['warnings'])
+
+def test_unknown_log_rejected(tmp_path):
+    folder=write_fixture(tmp_path)
+    raw=(folder/'A.RNG').read_bytes().replace(b'event,',b'other,',1)
+    with pytest.raises(ValueError,match='Unknown'):parse(raw)
+
+def test_truncated_payload_rejected(tmp_path):
+    folder=write_fixture(tmp_path)
+    with pytest.raises(ValueError,match='Truncated'):parse((folder/'A.RNG').read_bytes()[:-1])
+
+def test_large_timestamp_translation_preserves_relative_samples(tmp_path):
+    boards,_=read_capture(write_fixture(tmp_path))
+    original=waveform(boards,0,.01,pixels=30)
+    shift=10**18+7
+    for board in boards.values():
+        board['anchors']=[(count,ns+shift,epoch,frames) for count,ns,epoch,frames in board['anchors']]
+        for event in board['logs']['event']: event['local_ns']=str(int(event['local_ns'])+shift)
+        for clock in board['logs']['clock']: clock['master_ns']=str(int(clock['master_ns'])+shift)
+        for pair in board['logs'].get('pair',[]):
+            for key in ['a_master_ns','b_master_ns']:pair[key]=str(int(pair[key])+shift)
+    shifted=waveform(boards,0,.01,pixels=30)
+    assert original==shifted
+    assert build_report(boards)['pairs'][0]['time_s']==pytest.approx(.001)

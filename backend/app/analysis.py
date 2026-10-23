@@ -51,7 +51,7 @@ def block_times(board):
 
 def epoch_at(board, local_ns):
     for _,frames,end,step,epoch,_ in block_times(board):
-        if end-frames*step <= local_ns < end:
+        if 0 < end-local_ns <= frames*step:
             return epoch
     return None
 
@@ -85,7 +85,7 @@ def alignment_segments(board):
 
 def base_time(boards):
     _,frames,ns,step,_,_=next(block_times(boards['A']))
-    return int(round(ns-frames*step))
+    return ns-int(round(frames*step))
 
 def build_report(boards):
     base=base_time(boards)
@@ -153,7 +153,7 @@ def waveform(boards, start, end, pixels=1200, mode='master'):
     for b,board in boards.items():
         parts=[]
         ownbase=next(block_times(board))
-        ownbase=int(round(ownbase[2]-ownbase[1]*ownbase[3]))
+        ownbase=ownbase[2]-int(round(ownbase[1]*ownbase[3]))
         segments=alignment_segments(board) if b=='B' and mode=='master' else []
         for pos,frames,ns,step,epoch,continuous in block_times(board):
             # Subtract the integer reference before converting to float.

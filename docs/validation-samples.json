@@ -1,0 +1,226 @@
+[
+  {
+    "folder": "2026-09-29_50cm_source\\R000001",
+    "pairs": 15,
+    "matched_both": 15,
+    "warnings": [],
+    "wave_points": 10250,
+    "elapsed_s": 0.576
+  },
+  {
+    "folder": "2026-09-29_50cm_source\\R000002",
+    "pairs": 15,
+    "matched_both": 15,
+    "warnings": [],
+    "wave_points": 10256,
+    "elapsed_s": 0.532
+  },
+  {
+    "folder": "2026-09-29_50cm_source\\R000003",
+    "pairs": 15,
+    "matched_both": 15,
+    "warnings": [],
+    "wave_points": 10259,
+    "elapsed_s": 0.537
+  },
+  {
+    "folder": "2026-09-29_50cm_source\\R000004",
+    "pairs": 14,
+    "matched_both": 14,
+    "warnings": [],
+    "wave_points": 10268,
+    "elapsed_s": 0.54
+  },
+  {
+    "folder": "2026-09-29_50cm_source\\R000005",
+    "pairs": 15,
+    "matched_both": 15,
+    "warnings": [],
+    "wave_points": 10262,
+    "elapsed_s": 0.53
+  },
+  {
+    "folder": "2026-09-29_50cm_source\\R000006",
+    "pairs": 15,
+    "matched_both": 15,
+    "warnings": [],
+    "wave_points": 10256,
+    "elapsed_s": 0.528
+  },
+  {
+    "folder": "2026-09-29_50cm_source\\R000007",
+    "pairs": 13,
+    "matched_both": 13,
+    "warnings": [],
+    "wave_points": 10254,
+    "elapsed_s": 0.536
+  },
+  {
+    "folder": "2026-09-29_50cm_source\\R000008",
+    "pairs": 15,
+    "matched_both": 15,
+    "warnings": [],
+    "wave_points": 10268,
+    "elapsed_s": 0.529
+  },
+  {
+    "folder": "2026-09-29_50cm_source\\R000009",
+    "pairs": 10,
+    "matched_both": 10,
+    "warnings": [],
+    "wave_points": 10258,
+    "elapsed_s": 0.538
+  },
+  {
+    "folder": "2026-09-29_50cm_source\\R000010",
+    "pairs": 15,
+    "matched_both": 15,
+    "warnings": [],
+    "wave_points": 10258,
+    "elapsed_s": 0.532
+  },
+  {
+    "folder": "2026-09-29_50cm_source\\R000011",
+    "pairs": 15,
+    "matched_both": 15,
+    "warnings": [],
+    "wave_points": 10254,
+    "elapsed_s": 0.529
+  },
+  {
+    "folder": "2026-09-29_50cm_source\\R000012",
+    "pairs": 15,
+    "matched_both": 15,
+    "warnings": [],
+    "wave_points": 10264,
+    "elapsed_s": 0.529
+  },
+  {
+    "folder": "2026-09-29_50cm_source\\R000013",
+    "pairs": 4,
+    "matched_both": 4,
+    "warnings": [],
+    "wave_points": 10262,
+    "elapsed_s": 0.523
+  },
+  {
+    "folder": "2026-09-29_50cm_source\\R000014",
+    "pairs": 6,
+    "matched_both": 6,
+    "warnings": [],
+    "wave_points": 10258,
+    "elapsed_s": 0.525
+  },
+  {
+    "folder": "2026-09-29_50cm_source\\R000015",
+    "pairs": 13,
+    "matched_both": 13,
+    "warnings": [],
+    "wave_points": 10266,
+    "elapsed_s": 0.527
+  },
+  {
+    "folder": "2026-09-29_50cm_source\\R000016",
+    "pairs": 12,
+    "matched_both": 12,
+    "warnings": [],
+    "wave_points": 10258,
+    "elapsed_s": 0.536
+  },
+  {
+    "folder": "2026-09-29_early1_190cm\\R000017",
+    "pairs": 15,
+    "matched_both": 15,
+    "warnings": [],
+    "wave_points": 10266,
+    "elapsed_s": 0.528
+  },
+  {
+    "folder": "2026-09-29_early1_190cm\\R000018",
+    "pairs": 7,
+    "matched_both": 7,
+    "warnings": [],
+    "wave_points": 8124,
+    "elapsed_s": 0.408
+  },
+  {
+    "folder": "2026-09-29_early1_190cm\\R000019",
+    "pairs": 8,
+    "matched_both": 8,
+    "warnings": [],
+    "wave_points": 9782,
+    "elapsed_s": 0.548
+  },
+  {
+    "folder": "2026-10-02_clap-module_R000009_215010",
+    "pairs": 15,
+    "matched_both": 15,
+    "warnings": [],
+    "wave_points": 10266,
+    "elapsed_s": 0.531
+  },
+  {
+    "folder": "2026-10-02_memory-wave_R000008_211920",
+    "pairs": 28,
+    "matched_both": 28,
+    "warnings": [],
+    "wave_points": 10268,
+    "elapsed_s": 0.537
+  },
+  {
+    "folder": "2026-10-02_phase4_R000006_202853",
+    "pairs": 28,
+    "matched_both": 28,
+    "warnings": [],
+    "wave_points": 8832,
+    "elapsed_s": 0.533
+  },
+  {
+    "folder": "2026-10-02_phase4_R000007_203929",
+    "pairs": 15,
+    "matched_both": 15,
+    "warnings": [],
+    "wave_points": 10270,
+    "elapsed_s": 0.529
+  },
+  {
+    "folder": "2026-10-02_position-module_R000010_222150",
+    "pairs": 15,
+    "matched_both": 15,
+    "warnings": [],
+    "wave_points": 10270,
+    "elapsed_s": 0.533
+  },
+  {
+    "folder": "2026-10-02_range-protocol_R000011_225444",
+    "pairs": 17,
+    "matched_both": 17,
+    "warnings": [],
+    "wave_points": 7634,
+    "elapsed_s": 0.509
+  },
+  {
+    "folder": "2026-10-02_range-protocol_R000012_232358",
+    "pairs": 15,
+    "matched_both": 15,
+    "warnings": [],
+    "wave_points": 10258,
+    "elapsed_s": 0.529
+  },
+  {
+    "folder": "2026-10-02_range-protocol_R000013_232358",
+    "pairs": 15,
+    "matched_both": 15,
+    "warnings": [],
+    "wave_points": 10258,
+    "elapsed_s": 0.525
+  },
+  {
+    "folder": "R000004",
+    "pairs": 15,
+    "matched_both": 15,
+    "warnings": [],
+    "wave_points": 10270,
+    "elapsed_s": 0.504
+  }
+]

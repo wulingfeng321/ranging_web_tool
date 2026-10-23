@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import Plotly from "plotly.js-basic-dist-min";
+import Plotly from "plotly.js-cartesian-dist-min";
 import type {
   Data,
   Layout,

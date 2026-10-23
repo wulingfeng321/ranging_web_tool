@@ -142,7 +142,9 @@ function App() {
   async function refresh() {
     try {
       const rows = await request<Experiment[]>("/api/experiments");
-      setExperiments(rows);
+      setExperiments((old) =>
+        JSON.stringify(old) === JSON.stringify(rows) ? old : rows,
+      );
       if (!selectedRef.current && rows.length) setSelectedId(rows[0].id);
     } catch (e) {
       setError(String(e));
@@ -477,7 +479,7 @@ function App() {
                       label="记录时长"
                       value={fmt(report.boards.A.duration_s, 1)}
                       unit="s"
-                      foot={`48 kHz · A / B 双板 · 各 2 通道`}
+                      foot={`${Number(report.boards.A.meta.rate) / 1000} kHz · A / B 双板 · 各 2 通道`}
                       icon={<AudioLines size={17} />}
                     />
                     <Metric
