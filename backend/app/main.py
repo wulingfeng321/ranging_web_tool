@@ -1,0 +1,168 @@
+import csv
+import io
+import json
+import os
+import shutil
+import sqlite3
+import threading
+import uuid
+from concurrent.futures import ThreadPoolExecutor
+from contextlib import asynccontextmanager, contextmanager
+from datetime import datetime, timezone
+from functools import lru_cache
+from pathlib import Path
+from typing import Annotated
+from fastapi import FastAPI, File, Form, HTTPException, Query, UploadFile
+from fastapi.responses import Response
+from fastapi.staticfiles import StaticFiles
+from pydantic import BaseModel, Field
+from .analysis import read_capture, build_report, json_safe, waveform
+
+ROOT=Path(os.environ.get('RANGING_DATA_DIR',Path(__file__).resolve().parents[2]/'data')).resolve()
+ROOT.mkdir(parents=True,exist_ok=True)
+DB=ROOT/'studio.sqlite3'
+POOL=ThreadPoolExecutor(max_workers=1,thread_name_prefix='analysis')
+LIMIT=64*1024*1024
+LOCK=threading.Lock()
+
+@contextmanager
+def database():
+    con=sqlite3.connect(DB,timeout=30)
+    con.row_factory=sqlite3.Row
+    try:
+        yield con
+        con.commit()
+    finally: con.close()
+
+with database() as db:
+    db.execute('''CREATE TABLE IF NOT EXISTS experiments (
+        id TEXT PRIMARY KEY,name TEXT NOT NULL,created_at TEXT NOT NULL,status TEXT NOT NULL,
+        notes TEXT NOT NULL DEFAULT '',truth_mm REAL,error TEXT,digest TEXT,summary TEXT)''')
+
+@asynccontextmanager
+async def lifespan(app):
+    with database() as db:
+        db.execute("UPDATE experiments SET status='failed',error='服务重启中断了分析，请重试' WHERE status IN ('queued','processing')")
+    yield
+    POOL.shutdown(wait=True)
+
+app=FastAPI(title='Ranging Studio',version='0.1.0',lifespan=lifespan)
+
+def row_by_id(experiment_id):
+    with database() as db: row=db.execute('SELECT * FROM experiments WHERE id=?',(experiment_id,)).fetchone()
+    if not row: raise HTTPException(404,'实验不存在')
+    return dict(row)
+
+def public_row(row):
+    r=dict(row)
+    r['summary']=json.loads(r['summary']) if r.get('summary') else None
+    return r
+
+def process(experiment_id):
+    folder=ROOT/experiment_id
+    try:
+        with database() as db: db.execute("UPDATE experiments SET status='processing',error=NULL WHERE id=?",(experiment_id,))
+        boards,digest=read_capture(folder/'raw')
+        report=json_safe(build_report(boards))
+        (folder/'report.json').write_text(json.dumps(report,ensure_ascii=False,allow_nan=False),encoding='utf-8')
+        with database() as db:
+            db.execute("UPDATE experiments SET status='ready',digest=?,summary=? WHERE id=?",(digest,json.dumps(report['stats']),experiment_id))
+    except Exception as exc:
+        with database() as db: db.execute("UPDATE experiments SET status='failed',error=? WHERE id=?",(f'{type(exc).__name__}: {exc}',experiment_id))
+
+@lru_cache(maxsize=2)
+def loaded(experiment_id):
+    return read_capture(ROOT/experiment_id/'raw')[0]
+
+@app.get('/api/health')
+def health(): return {'status':'ok','version':'0.1.0','mode':'local'}
+
+@app.get('/api/experiments')
+def listing():
+    with database() as db: rows=db.execute('SELECT * FROM experiments ORDER BY created_at DESC').fetchall()
+    return [public_row(r) for r in rows]
+
+@app.post('/api/experiments',status_code=202)
+async def upload(files:Annotated[list[UploadFile],File()], name:Annotated[str,Form()]= '未命名实验',
+                 notes:Annotated[str,Form()]='', truth_mm:Annotated[str,Form()]=''):
+    if len(name)>200 or len(notes)>4000: raise HTTPException(422,'名称或备注过长')
+    truth=None
+    if truth_mm:
+        try: truth=float(truth_mm)
+        except ValueError: raise HTTPException(422,'真实距离必须是数值')
+        if not 0 <= truth <= 100000: raise HTTPException(422,'真实距离须在 0—100000 mm 内')
+    expected={'A.RNG','B.RNG','COMPLETE.TXT'}
+    # Names are matched, never used as arbitrary filesystem paths.
+    if len(files)!=3 or {f.filename for f in files}!=expected:
+        raise HTTPException(422,'请选择 A.RNG、B.RNG、COMPLETE.TXT 三个文件，不含子路径')
+    experiment_id=uuid.uuid4().hex
+    folder=ROOT/experiment_id/'raw'; folder.mkdir(parents=True)
+    total=0
+    try:
+        for file in files:
+            with (folder/file.filename).open('wb') as output:
+                while chunk:=await file.read(1024*1024):
+                    total+=len(chunk)
+                    if total>LIMIT: raise HTTPException(413,'单轮上传上限为 64 MiB')
+                    output.write(chunk)
+        with database() as db:
+            db.execute('INSERT INTO experiments (id,name,created_at,status,notes,truth_mm) VALUES (?,?,?,?,?,?)',
+                (experiment_id,name.strip() or '未命名实验',datetime.now(timezone.utc).isoformat(),'queued',notes,truth))
+        POOL.submit(process,experiment_id)
+    except Exception:
+        shutil.rmtree(folder.parent)
+        raise
+    finally:
+        for file in files: await file.close()
+    return public_row(row_by_id(experiment_id))
+
+@app.get('/api/experiments/{experiment_id}')
+def detail(experiment_id:str):
+    row=public_row(row_by_id(experiment_id))
+    if row['status']=='ready':
+        row['report']=json.loads((ROOT/experiment_id/'report.json').read_text('utf-8'))
+        with database() as db:
+            row['duplicate_count']=db.execute('SELECT COUNT(*) FROM experiments WHERE digest=? AND id<>?',(row['digest'],experiment_id)).fetchone()[0]
+    return row
+
+class Metadata(BaseModel):
+    name:str=Field(min_length=1,max_length=200)
+    notes:str=Field(default='',max_length=4000)
+    truth_mm:float|None=Field(default=None,ge=0,le=100000)
+
+@app.patch('/api/experiments/{experiment_id}')
+def edit(experiment_id:str, data:Metadata):
+    row_by_id(experiment_id)
+    with database() as db: db.execute('UPDATE experiments SET name=?,notes=?,truth_mm=? WHERE id=?',(data.name,data.notes,data.truth_mm,experiment_id))
+    return public_row(row_by_id(experiment_id))
+
+@app.post('/api/experiments/{experiment_id}/retry',status_code=202)
+def retry(experiment_id:str):
+    with LOCK:
+        row=row_by_id(experiment_id)
+        if row['status']!='failed': raise HTTPException(409,'仅失败任务可重试')
+        with database() as db: db.execute("UPDATE experiments SET status='queued',error=NULL WHERE id=?",(experiment_id,))
+        POOL.submit(process,experiment_id)
+    return {'status':'queued'}
+
+@app.get('/api/experiments/{experiment_id}/waveform')
+def wave(experiment_id:str, start:float=Query(0,ge=0,allow_inf_nan=False), end:float=Query(16,gt=0,allow_inf_nan=False),
+         pixels:int=Query(900,ge=100,le=2000),mode:str=Query('master',pattern='^(master|local)$')):
+    if row_by_id(experiment_id)['status']!='ready': raise HTTPException(409,'实验尚未完成分析')
+    if end<=start: raise HTTPException(422,'时间范围无效')
+    return waveform(loaded(experiment_id),start,end,pixels,mode)
+
+@app.get('/api/experiments/{experiment_id}/pairs.csv')
+def export(experiment_id:str):
+    result=detail(experiment_id)
+    if 'report' not in result: raise HTTPException(409,'实验尚未完成分析')
+    out=io.StringIO(newline='');writer=csv.writer(out)
+    writer.writerow(['analysis_version','index','relative_master_s','outcome','delay_us','derived_distance_mm','temperature_c','bias_assumed_ns','a_protocol_id','b_protocol_id','a_local_event','b_local_event','reason'])
+    for p in result['report']['pairs']:
+        writer.writerow([result['report']['analysis_version'],p['index'],p['time_s'],p['outcome'],p['delay_us'],p['distance_mm'],result['report']['stats']['temperature_c'],0,
+                         p['raw']['event_a_id'],p['raw']['event_b_id'],(p['events']['A'] or {}).get('event'),(p['events']['B'] or {}).get('event'),p['reason_label']])
+    return Response('\ufeff'+out.getvalue(),media_type='text/csv; charset=utf-8',headers={'Content-Disposition':f'attachment; filename="{experiment_id}-pairs.csv"'})
+
+# Built frontend and API share one origin for the local launcher.
+STATIC=Path(__file__).resolve().parents[2]/'frontend'/'dist'
+if STATIC.is_dir(): app.mount('/',StaticFiles(directory=STATIC,html=True),name='frontend')

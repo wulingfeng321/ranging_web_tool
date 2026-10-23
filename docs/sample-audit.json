@@ -1,0 +1,6106 @@
+[
+  {
+    "folder": "2026-09-29_50cm_source\\R000001",
+    "boards": {
+      "A": {
+        "meta": {
+          "format": "RNG1",
+          "firmware_base": "dd73c22+capture4",
+          "board": "A",
+          "rate": 48000,
+          "channels": 2,
+          "sample_bytes": 2,
+          "frames": 768000,
+          "header_bytes": 4096,
+          "anchor_count": 1000,
+          "anchor_bytes": 24,
+          "log_bytes": 7088,
+          "log_overflow": 0,
+          "triggered": 1,
+          "temperature_deci_c": 250,
+          "profile": 1,
+          "joint": 1,
+          "local_ns": 22453978395,
+          "master_ns": 22453979670,
+          "clock_locked": 1,
+          "sync_error_ns": 948,
+          "sample_period_ps": 20837209,
+          "session": 306063025058241559,
+          "peer_session": 16396052838017017245
+        },
+        "counts": {
+          "trigger": 1,
+          "event": 15,
+          "clock": 15,
+          "candidate": 30,
+          "status": 25,
+          "dsp": 25,
+          "pair": 15
+        },
+        "first_anchor": [
+          31488,
+          740827745,
+          0,
+          768
+        ],
+        "last_anchor": [
+          798720,
+          16727801880,
+          0,
+          768
+        ],
+        "examples": {
+          "event": [
+            "event",
+            "1",
+            "4416079683",
+            "530",
+            "1"
+          ],
+          "clock": [
+            "clock",
+            "1",
+            "4416079683",
+            "0.000",
+            "0.000",
+            "0.000000000000"
+          ],
+          "pair": [
+            "pair",
+            "11",
+            "149",
+            "4416079683",
+            "4413208990",
+            "1",
+            "0",
+            "-2870901",
+            "-3000151",
+            "396440",
+            "296800",
+            "2875",
+            "5625",
+            "1",
+            "1",
+            "1",
+            "2"
+          ],
+          "wave_clock": null,
+          "ui": null,
+          "status": [
+            "status",
+            "4747",
+            "1",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "946",
+            "20837208",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "epochs": [
+          0
+        ],
+        "pcm_sha256": "d54f4aca1edb887d822c2ea92acbfcfa4c63d48a16c1ee15c2463d5724d2c6e0"
+      },
+      "B": {
+        "meta": {
+          "format": "RNG1",
+          "firmware_base": "dd73c22+capture4",
+          "board": "B",
+          "rate": 48000,
+          "channels": 2,
+          "sample_bytes": 2,
+          "frames": 768000,
+          "header_bytes": 4096,
+          "anchor_count": 1000,
+          "anchor_bytes": 24,
+          "log_bytes": 6567,
+          "log_overflow": 0,
+          "triggered": 1,
+          "temperature_deci_c": 250,
+          "profile": 1,
+          "joint": 1,
+          "local_ns": 28805457610,
+          "master_ns": 22457910787,
+          "clock_locked": 1,
+          "sync_error_ns": 948,
+          "sample_period_ps": 20837211,
+          "session": 16396052838017017245,
+          "peer_session": 306063025058241559
+        },
+        "counts": {
+          "trigger": 1,
+          "event": 15,
+          "clock": 15,
+          "candidate": 45,
+          "status": 25,
+          "dsp": 25
+        },
+        "first_anchor": [
+          334848,
+          7062020155,
+          0,
+          768
+        ],
+        "last_anchor": [
+          1102080,
+          23048993575,
+          0,
+          768
+        ],
+        "examples": {
+          "event": [
+            "event",
+            "1",
+            "10760717717",
+            "736",
+            "1"
+          ],
+          "clock": [
+            "clock",
+            "1",
+            "4413208990",
+            "10914333770.000",
+            "6347509061.714",
+            "0.000002181517"
+          ],
+          "pair": null,
+          "wave_clock": null,
+          "ui": null,
+          "status": [
+            "status",
+            "11069",
+            "1",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "946",
+            "20837210",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "epochs": [
+          0
+        ],
+        "pcm_sha256": "10d781cdf59999b910708d5a0aa4b802513701abbf9ad59a1ecef45b110ff10c"
+      }
+    },
+    "supported": true
+  },
+  {
+    "folder": "2026-09-29_50cm_source\\R000002",
+    "boards": {
+      "A": {
+        "meta": {
+          "format": "RNG1",
+          "firmware_base": "dd73c22+capture4",
+          "board": "A",
+          "rate": 48000,
+          "channels": 2,
+          "sample_bytes": 2,
+          "frames": 768000,
+          "header_bytes": 4096,
+          "anchor_count": 1000,
+          "anchor_bytes": 24,
+          "log_bytes": 7241,
+          "log_overflow": 0,
+          "triggered": 1,
+          "temperature_deci_c": 250,
+          "profile": 1,
+          "joint": 1,
+          "local_ns": 86230779300,
+          "master_ns": 86230780575,
+          "clock_locked": 1,
+          "sync_error_ns": 949,
+          "sample_period_ps": 20837209,
+          "session": 306063025058241559,
+          "peer_session": 16396052838017017245
+        },
+        "counts": {
+          "trigger": 1,
+          "event": 15,
+          "clock": 15,
+          "candidate": 32,
+          "status": 25,
+          "dsp": 25,
+          "pair": 15
+        },
+        "first_anchor": [
+          3079680,
+          64256642770,
+          0,
+          768
+        ],
+        "last_anchor": [
+          3846912,
+          80243616215,
+          0,
+          768
+        ],
+        "examples": {
+          "event": [
+            "event",
+            "1",
+            "67934029325",
+            "460",
+            "1"
+          ],
+          "clock": [
+            "clock",
+            "1",
+            "67934029325",
+            "0.000",
+            "0.000",
+            "0.000000000000"
+          ],
+          "pair": [
+            "pair",
+            "172",
+            "791",
+            "67934029325",
+            "67928945759",
+            "1",
+            "0",
+            "-5082725",
+            "-5212725",
+            "361166",
+            "274946",
+            "2614",
+            "5823",
+            "1",
+            "1",
+            "1",
+            "2"
+          ],
+          "wave_clock": null,
+          "ui": null,
+          "status": [
+            "status",
+            "68246",
+            "1",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "948",
+            "20837209",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "epochs": [
+          0
+        ],
+        "pcm_sha256": "770d6470584a5a5fb3ce678adc508427a41397fccd18e82a6d6fe95c0232de16"
+      },
+      "B": {
+        "meta": {
+          "format": "RNG1",
+          "firmware_base": "dd73c22+capture4",
+          "board": "B",
+          "rate": 48000,
+          "channels": 2,
+          "sample_bytes": 2,
+          "frames": 768000,
+          "header_bytes": 4096,
+          "anchor_count": 1000,
+          "anchor_bytes": 24,
+          "log_bytes": 6581,
+          "log_overflow": 0,
+          "triggered": 1,
+          "temperature_deci_c": 250,
+          "profile": 1,
+          "joint": 1,
+          "local_ns": 92581710260,
+          "master_ns": 86234028243,
+          "clock_locked": 1,
+          "sync_error_ns": 949,
+          "sample_period_ps": 20837208,
+          "session": 16396052838017017245,
+          "peer_session": 306063025058241559
+        },
+        "counts": {
+          "trigger": 1,
+          "event": 15,
+          "clock": 15,
+          "candidate": 45,
+          "status": 25,
+          "dsp": 25
+        },
+        "first_anchor": [
+          3383040,
+          70577834495,
+          0,
+          768
+        ],
+        "last_anchor": [
+          4150272,
+          86564808570,
+          0,
+          768
+        ],
+        "examples": {
+          "event": [
+            "event",
+            "1",
+            "74276590185",
+            "754",
+            "1"
+          ],
+          "clock": [
+            "clock",
+            "1",
+            "67928945759",
+            "74401839370.000",
+            "6347644691.939",
+            "0.000002122490"
+          ],
+          "pair": null,
+          "wave_clock": null,
+          "ui": null,
+          "status": [
+            "status",
+            "74577",
+            "1",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "948",
+            "20837208",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "epochs": [
+          0
+        ],
+        "pcm_sha256": "b6c6971e9a083d8bf0918b09bf7b2fe8df020e01457ccc14dd053679b9098c81"
+      }
+    },
+    "supported": true
+  },
+  {
+    "folder": "2026-09-29_50cm_source\\R000003",
+    "boards": {
+      "A": {
+        "meta": {
+          "format": "RNG1",
+          "firmware_base": "dd73c22+capture4",
+          "board": "A",
+          "rate": 48000,
+          "channels": 2,
+          "sample_bytes": 2,
+          "frames": 768000,
+          "header_bytes": 4096,
+          "anchor_count": 1000,
+          "anchor_bytes": 24,
+          "log_bytes": 7272,
+          "log_overflow": 0,
+          "triggered": 1,
+          "temperature_deci_c": 250,
+          "profile": 1,
+          "joint": 1,
+          "local_ns": 152320235955,
+          "master_ns": 152320237230,
+          "clock_locked": 1,
+          "sync_error_ns": 952,
+          "sample_period_ps": 20837212,
+          "session": 306063025058241559,
+          "peer_session": 16396052838017017245
+        },
+        "counts": {
+          "trigger": 1,
+          "event": 15,
+          "clock": 15,
+          "candidate": 30,
+          "status": 25,
+          "dsp": 25,
+          "pair": 15
+        },
+        "first_anchor": [
+          6292224,
+          131197094200,
+          0,
+          768
+        ],
+        "last_anchor": [
+          7059456,
+          147184068260,
+          0,
+          768
+        ],
+        "examples": {
+          "event": [
+            "event",
+            "1",
+            "134891902288",
+            "525",
+            "1"
+          ],
+          "clock": [
+            "clock",
+            "1",
+            "134891902288",
+            "0.000",
+            "0.000",
+            "0.000000000000"
+          ],
+          "pair": [
+            "pair",
+            "347",
+            "1499",
+            "134891902288",
+            "134889031632",
+            "1",
+            "0",
+            "-2870228",
+            "-2744394",
+            "392408",
+            "298288",
+            "1833",
+            "5296",
+            "1",
+            "1",
+            "2",
+            "1"
+          ],
+          "wave_clock": null,
+          "ui": null,
+          "status": [
+            "status",
+            "135187",
+            "1",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "951",
+            "20837217",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "epochs": [
+          0
+        ],
+        "pcm_sha256": "5eeee72d7bb98c1039c04cde7956c54199cb1cd4d07a94bb944602d32da50ea4"
+      },
+      "B": {
+        "meta": {
+          "format": "RNG1",
+          "firmware_base": "dd73c22+capture4",
+          "board": "B",
+          "rate": 48000,
+          "channels": 2,
+          "sample_bytes": 2,
+          "frames": 768000,
+          "header_bytes": 4096,
+          "anchor_count": 1000,
+          "anchor_bytes": 24,
+          "log_bytes": 6665,
+          "log_overflow": 0,
+          "triggered": 1,
+          "temperature_deci_c": 250,
+          "profile": 1,
+          "joint": 1,
+          "local_ns": 158671062365,
+          "master_ns": 152323242416,
+          "clock_locked": 1,
+          "sync_error_ns": 952,
+          "sample_period_ps": 20837207,
+          "session": 16396052838017017245,
+          "peer_session": 306063025058241559
+        },
+        "counts": {
+          "trigger": 1,
+          "event": 15,
+          "clock": 15,
+          "candidate": 45,
+          "status": 25,
+          "dsp": 25
+        },
+        "first_anchor": [
+          6597888,
+          137566295115,
+          0,
+          768
+        ],
+        "last_anchor": [
+          7365120,
+          153553269440,
+          0,
+          768
+        ],
+        "examples": {
+          "event": [
+            "event",
+            "1",
+            "141236816168",
+            "724",
+            "1"
+          ],
+          "clock": [
+            "clock",
+            "1",
+            "134889031632",
+            "141377913410.000",
+            "6347784831.251",
+            "0.000002090003"
+          ],
+          "pair": null,
+          "wave_clock": null,
+          "ui": null,
+          "status": [
+            "status",
+            "141557",
+            "1",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "951",
+            "20837209",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "epochs": [
+          0
+        ],
+        "pcm_sha256": "790dd170a8b979a97347724feb8b5eaeb75192012959d3d168b9d71c293db20a"
+      }
+    },
+    "supported": true
+  },
+  {
+    "folder": "2026-09-29_50cm_source\\R000004",
+    "boards": {
+      "A": {
+        "meta": {
+          "format": "RNG1",
+          "firmware_base": "dd73c22+capture4",
+          "board": "A",
+          "rate": 48000,
+          "channels": 2,
+          "sample_bytes": 2,
+          "frames": 768000,
+          "header_bytes": 4096,
+          "anchor_count": 1000,
+          "anchor_bytes": 24,
+          "log_bytes": 7079,
+          "log_overflow": 0,
+          "triggered": 1,
+          "temperature_deci_c": 250,
+          "profile": 1,
+          "joint": 1,
+          "local_ns": 248348302420,
+          "master_ns": 248348303695,
+          "clock_locked": 1,
+          "sync_error_ns": 944,
+          "sample_period_ps": 20837201,
+          "session": 306063025058241559,
+          "peer_session": 16396052838017017245
+        },
+        "counts": {
+          "trigger": 1,
+          "event": 14,
+          "clock": 14,
+          "candidate": 29,
+          "status": 25,
+          "dsp": 25,
+          "pair": 14
+        },
+        "first_anchor": [
+          10863360,
+          226446811730,
+          0,
+          768
+        ],
+        "last_anchor": [
+          11630592,
+          242433785835,
+          0,
+          768
+        ],
+        "examples": {
+          "event": [
+            "event",
+            "1",
+            "230148760581",
+            "437",
+            "1"
+          ],
+          "clock": [
+            "clock",
+            "1",
+            "230148760581",
+            "0.000",
+            "0.000",
+            "0.000000000000"
+          ],
+          "pair": [
+            "pair",
+            "666",
+            "2749",
+            "230148760581",
+            "230144455442",
+            "1",
+            "0",
+            "-4306034",
+            "-4439284",
+            "321230",
+            "246610",
+            "8831",
+            "8051",
+            "1",
+            "1",
+            "1",
+            "2"
+          ],
+          "wave_clock": null,
+          "ui": null,
+          "status": [
+            "status",
+            "230416",
+            "1",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "949",
+            "20837209",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "epochs": [
+          0
+        ],
+        "pcm_sha256": "1cef9fe8d6e6085923bef7c626630f20de4f3b29570c0df8254e51c37fdfc2dd"
+      },
+      "B": {
+        "meta": {
+          "format": "RNG1",
+          "firmware_base": "dd73c22+capture4",
+          "board": "B",
+          "rate": 48000,
+          "channels": 2,
+          "sample_bytes": 2,
+          "frames": 768000,
+          "header_bytes": 4096,
+          "anchor_count": 1000,
+          "anchor_bytes": 24,
+          "log_bytes": 6685,
+          "log_overflow": 0,
+          "triggered": 1,
+          "temperature_deci_c": 250,
+          "profile": 1,
+          "joint": 1,
+          "local_ns": 254698868445,
+          "master_ns": 248350846766,
+          "clock_locked": 1,
+          "sync_error_ns": 944,
+          "sample_period_ps": 20837210,
+          "session": 16396052838017017245,
+          "peer_session": 306063025058241559
+        },
+        "counts": {
+          "trigger": 1,
+          "event": 15,
+          "clock": 15,
+          "candidate": 45,
+          "status": 25,
+          "dsp": 25
+        },
+        "first_anchor": [
+          11166720,
+          232768004325,
+          0,
+          768
+        ],
+        "last_anchor": [
+          11933952,
+          248754977535,
+          0,
+          768
+        ],
+        "examples": {
+          "event": [
+            "event",
+            "1",
+            "236492439820",
+            "688",
+            "1"
+          ],
+          "clock": [
+            "clock",
+            "1",
+            "230144455442",
+            "236553231170.000",
+            "6347984507.062",
+            "0.000002118139"
+          ],
+          "pair": null,
+          "wave_clock": null,
+          "ui": null,
+          "status": [
+            "status",
+            "236740",
+            "1",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "949",
+            "20837211",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "epochs": [
+          0
+        ],
+        "pcm_sha256": "0fc54038454f398ad419211ab04ca8782d149874c42ff1923a36dfd3baaf05be"
+      }
+    },
+    "supported": true
+  },
+  {
+    "folder": "2026-09-29_50cm_source\\R000005",
+    "boards": {
+      "A": {
+        "meta": {
+          "format": "RNG1",
+          "firmware_base": "dd73c22+capture4",
+          "board": "A",
+          "rate": 48000,
+          "channels": 2,
+          "sample_bytes": 2,
+          "frames": 768000,
+          "header_bytes": 4096,
+          "anchor_count": 1000,
+          "anchor_bytes": 24,
+          "log_bytes": 7316,
+          "log_overflow": 0,
+          "triggered": 1,
+          "temperature_deci_c": 250,
+          "profile": 1,
+          "joint": 1,
+          "local_ns": 306607919300,
+          "master_ns": 306607920575,
+          "clock_locked": 1,
+          "sync_error_ns": 945,
+          "sample_period_ps": 20837211,
+          "session": 306063025058241559,
+          "peer_session": 16396052838017017245
+        },
+        "counts": {
+          "trigger": 1,
+          "event": 15,
+          "clock": 15,
+          "candidate": 30,
+          "status": 25,
+          "dsp": 25,
+          "pair": 15
+        },
+        "first_anchor": [
+          13711872,
+          285801852830,
+          0,
+          768
+        ],
+        "last_anchor": [
+          14479104,
+          301788826275,
+          0,
+          768
+        ],
+        "examples": {
+          "event": [
+            "event",
+            "1",
+            "289487120860",
+            "446",
+            "1"
+          ],
+          "clock": [
+            "clock",
+            "1",
+            "289487120860",
+            "0.000",
+            "0.000",
+            "0.000000000000"
+          ],
+          "pair": [
+            "pair",
+            "810",
+            "3311",
+            "289487120860",
+            "289482815292",
+            "1",
+            "0",
+            "-4305454",
+            "-4439454",
+            "267154",
+            "196686",
+            "7573",
+            "5855",
+            "1",
+            "1",
+            "1",
+            "2"
+          ],
+          "wave_clock": null,
+          "ui": null,
+          "status": [
+            "status",
+            "289778",
+            "1",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "948",
+            "20837208",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "epochs": [
+          0
+        ],
+        "pcm_sha256": "c619a41b5ba9d458091f4fbdc4cb36fa62eaa8b90ff4cf9a30fa84b8407ae2a7"
+      },
+      "B": {
+        "meta": {
+          "format": "RNG1",
+          "firmware_base": "dd73c22+capture4",
+          "board": "B",
+          "rate": 48000,
+          "channels": 2,
+          "sample_bytes": 2,
+          "frames": 768000,
+          "header_bytes": 4096,
+          "anchor_count": 1000,
+          "anchor_bytes": 24,
+          "log_bytes": 6694,
+          "log_overflow": 0,
+          "triggered": 1,
+          "temperature_deci_c": 250,
+          "profile": 1,
+          "joint": 1,
+          "local_ns": 312961037615,
+          "master_ns": 306612894017,
+          "clock_locked": 1,
+          "sync_error_ns": 945,
+          "sample_period_ps": 20837211,
+          "session": 16396052838017017245,
+          "peer_session": 306063025058241559
+        },
+        "counts": {
+          "trigger": 1,
+          "event": 15,
+          "clock": 15,
+          "candidate": 45,
+          "status": 25,
+          "dsp": 25
+        },
+        "first_anchor": [
+          14016768,
+          292155050470,
+          0,
+          768
+        ],
+        "last_anchor": [
+          14784000,
+          308142024560,
+          0,
+          768
+        ],
+        "examples": {
+          "event": [
+            "event",
+            "1",
+            "295830923922",
+            "599",
+            "1"
+          ],
+          "clock": [
+            "clock",
+            "1",
+            "289482815292",
+            "296015898630.000",
+            "6348109018.755",
+            "0.000002100524"
+          ],
+          "pair": null,
+          "wave_clock": null,
+          "ui": null,
+          "status": [
+            "status",
+            "296120",
+            "1",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "948",
+            "20837209",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "epochs": [
+          0
+        ],
+        "pcm_sha256": "eb8ebd7bb9e40db001e27fb69ed4ccb1fce88dc5aeba07c748aee533958f0287"
+      }
+    },
+    "supported": true
+  },
+  {
+    "folder": "2026-09-29_50cm_source\\R000006",
+    "boards": {
+      "A": {
+        "meta": {
+          "format": "RNG1",
+          "firmware_base": "dd73c22+capture4",
+          "board": "A",
+          "rate": 48000,
+          "channels": 2,
+          "sample_bytes": 2,
+          "frames": 768000,
+          "header_bytes": 4096,
+          "anchor_count": 1000,
+          "anchor_bytes": 24,
+          "log_bytes": 7442,
+          "log_overflow": 0,
+          "triggered": 1,
+          "temperature_deci_c": 250,
+          "profile": 1,
+          "joint": 1,
+          "local_ns": 359086788965,
+          "master_ns": 359086790240,
+          "clock_locked": 1,
+          "sync_error_ns": 947,
+          "sample_period_ps": 20837208,
+          "session": 306063025058241559,
+          "peer_session": 16396052838017017245
+        },
+        "counts": {
+          "trigger": 1,
+          "event": 15,
+          "clock": 15,
+          "candidate": 33,
+          "status": 25,
+          "dsp": 25,
+          "pair": 15
+        },
+        "first_anchor": [
+          16250112,
+          338691690645,
+          0,
+          768
+        ],
+        "last_anchor": [
+          17017344,
+          354678664900,
+          0,
+          768
+        ],
+        "examples": {
+          "event": [
+            "event",
+            "1",
+            "342350936808",
+            "483",
+            "1"
+          ],
+          "clock": [
+            "clock",
+            "1",
+            "342350936808",
+            "0.000",
+            "0.000",
+            "0.000000000000"
+          ],
+          "pair": [
+            "pair",
+            "929",
+            "3749",
+            "342350936808",
+            "342346634523",
+            "1",
+            "0",
+            "-4302767",
+            "-4435850",
+            "343896",
+            "271446",
+            "8378",
+            "8948",
+            "1",
+            "1",
+            "1",
+            "2"
+          ],
+          "wave_clock": null,
+          "ui": null,
+          "status": [
+            "status",
+            "342655",
+            "1",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "945",
+            "20837208",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "epochs": [
+          0
+        ],
+        "pcm_sha256": "c75f3a3ae35cef13a5c6bdb1a7906c7a8104604ab1b90f8ee69ddc09baeb0432"
+      },
+      "B": {
+        "meta": {
+          "format": "RNG1",
+          "firmware_base": "dd73c22+capture4",
+          "board": "B",
+          "rate": 48000,
+          "channels": 2,
+          "sample_bytes": 2,
+          "frames": 768000,
+          "header_bytes": 4096,
+          "anchor_count": 1000,
+          "anchor_bytes": 24,
+          "log_bytes": 6691,
+          "log_overflow": 0,
+          "triggered": 1,
+          "temperature_deci_c": 250,
+          "profile": 1,
+          "joint": 1,
+          "local_ns": 365439689320,
+          "master_ns": 359091435900,
+          "clock_locked": 1,
+          "sync_error_ns": 947,
+          "sample_period_ps": 20837210,
+          "session": 16396052838017017245,
+          "peer_session": 306063025058241559
+        },
+        "counts": {
+          "trigger": 1,
+          "event": 15,
+          "clock": 15,
+          "candidate": 45,
+          "status": 25,
+          "dsp": 25
+        },
+        "first_anchor": [
+          16552704,
+          344996880025,
+          0,
+          768
+        ],
+        "last_anchor": [
+          17319936,
+          360983853770,
+          0,
+          768
+        ],
+        "examples": {
+          "event": [
+            "event",
+            "1",
+            "348694853804",
+            "700",
+            "1"
+          ],
+          "clock": [
+            "clock",
+            "1",
+            "342346634523",
+            "348799522150.000",
+            "6348219499.092",
+            "0.000002085502"
+          ],
+          "pair": null,
+          "wave_clock": null,
+          "ui": null,
+          "status": [
+            "status",
+            "348963",
+            "1",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "945",
+            "20837209",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "epochs": [
+          0
+        ],
+        "pcm_sha256": "e2e08441b6739485412d7efd290b55ab6b3e1674bf8a8c3442667c555c842064"
+      }
+    },
+    "supported": true
+  },
+  {
+    "folder": "2026-09-29_50cm_source\\R000007",
+    "boards": {
+      "A": {
+        "meta": {
+          "format": "RNG1",
+          "firmware_base": "dd73c22+capture4",
+          "board": "A",
+          "rate": 48000,
+          "channels": 2,
+          "sample_bytes": 2,
+          "frames": 768000,
+          "header_bytes": 4096,
+          "anchor_count": 1000,
+          "anchor_bytes": 24,
+          "log_bytes": 6553,
+          "log_overflow": 0,
+          "triggered": 1,
+          "temperature_deci_c": 250,
+          "profile": 1,
+          "joint": 1,
+          "local_ns": 56351642280,
+          "master_ns": 56351643555,
+          "clock_locked": 1,
+          "sync_error_ns": 949,
+          "sample_period_ps": 20837210,
+          "session": 1265801214084084224,
+          "peer_session": 4666816501680077226
+        },
+        "counts": {
+          "trigger": 1,
+          "event": 13,
+          "clock": 13,
+          "candidate": 23,
+          "status": 25,
+          "dsp": 25,
+          "pair": 13
+        },
+        "first_anchor": [
+          1771008,
+          36987569040,
+          0,
+          768
+        ],
+        "last_anchor": [
+          2538240,
+          52974542495,
+          0,
+          768
+        ],
+        "examples": {
+          "event": [
+            "event",
+            "1",
+            "40683560463",
+            "373",
+            "1"
+          ],
+          "clock": [
+            "clock",
+            "1",
+            "40683560463",
+            "0.000",
+            "0.000",
+            "0.000000000000"
+          ],
+          "pair": [
+            "pair",
+            "121",
+            "599",
+            "40683560463",
+            "40679252312",
+            "1",
+            "0",
+            "-4307767",
+            "-4437434",
+            "284214",
+            "212256",
+            "1679",
+            "3321",
+            "1",
+            "1",
+            "1",
+            "2"
+          ],
+          "wave_clock": null,
+          "ui": null,
+          "status": [
+            "status",
+            "40974",
+            "1",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "949",
+            "20837214",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "epochs": [
+          0
+        ],
+        "pcm_sha256": "f8b9f1466a13518ff2af4b5c22d79e34bcbb558ae5baae618ad44dbefa02fafb"
+      },
+      "B": {
+        "meta": {
+          "format": "RNG1",
+          "firmware_base": "dd73c22+capture4",
+          "board": "B",
+          "rate": 48000,
+          "channels": 2,
+          "sample_bytes": 2,
+          "frames": 768000,
+          "header_bytes": 4096,
+          "anchor_count": 1000,
+          "anchor_bytes": 24,
+          "log_bytes": 6602,
+          "log_overflow": 0,
+          "triggered": 1,
+          "temperature_deci_c": 250,
+          "profile": 1,
+          "joint": 1,
+          "local_ns": 47958765085,
+          "master_ns": 56356951907,
+          "clock_locked": 1,
+          "sync_error_ns": 949,
+          "sample_period_ps": 20837208,
+          "session": 4666816501680077226,
+          "peer_session": 1265801214084084224
+        },
+        "counts": {
+          "trigger": 1,
+          "event": 15,
+          "clock": 15,
+          "candidate": 45,
+          "status": 25,
+          "dsp": 25
+        },
+        "first_anchor": [
+          1367040,
+          28570021355,
+          0,
+          768
+        ],
+        "last_anchor": [
+          2134272,
+          44556994775,
+          0,
+          768
+        ],
+        "examples": {
+          "event": [
+            "event",
+            "1",
+            "32281033529",
+            "707",
+            "1"
+          ],
+          "clock": [
+            "clock",
+            "1",
+            "40679252312",
+            "32382080145.000",
+            "-8398218568.080",
+            "0.000002125288"
+          ],
+          "pair": null,
+          "wave_clock": null,
+          "ui": null,
+          "status": [
+            "status",
+            "32558",
+            "1",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "949",
+            "20837206",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "epochs": [
+          0
+        ],
+        "pcm_sha256": "4671e74919c93b57cc3f1f5eb0efe98623eb4c29bb6cfd4c003c4f995db26f29"
+      }
+    },
+    "supported": true
+  },
+  {
+    "folder": "2026-09-29_50cm_source\\R000008",
+    "boards": {
+      "A": {
+        "meta": {
+          "format": "RNG1",
+          "firmware_base": "dd73c22+capture4",
+          "board": "A",
+          "rate": 48000,
+          "channels": 2,
+          "sample_bytes": 2,
+          "frames": 768000,
+          "header_bytes": 4096,
+          "anchor_count": 1000,
+          "anchor_bytes": 24,
+          "log_bytes": 6962,
+          "log_overflow": 0,
+          "triggered": 1,
+          "temperature_deci_c": 250,
+          "profile": 1,
+          "joint": 1,
+          "local_ns": 110190504590,
+          "master_ns": 110190505865,
+          "clock_locked": 1,
+          "sync_error_ns": 951,
+          "sample_period_ps": 20837210,
+          "session": 1265801214084084224,
+          "peer_session": 4666816501680077226
+        },
+        "counts": {
+          "trigger": 1,
+          "event": 15,
+          "clock": 15,
+          "candidate": 24,
+          "status": 25,
+          "dsp": 25,
+          "pair": 15
+        },
+        "first_anchor": [
+          4313856,
+          89973424680,
+          0,
+          768
+        ],
+        "last_anchor": [
+          5081088,
+          105960398830,
+          0,
+          768
+        ],
+        "examples": {
+          "event": [
+            "event",
+            "1",
+            "93679201578",
+            "467",
+            "1"
+          ],
+          "clock": [
+            "clock",
+            "1",
+            "93679201578",
+            "0.000",
+            "0.000",
+            "0.000000000000"
+          ],
+          "pair": [
+            "pair",
+            "247",
+            "1030",
+            "93679201578",
+            "93672694064",
+            "2",
+            "1",
+            "-6508269",
+            "-6631975",
+            "311022",
+            "296370",
+            "1583",
+            "5097",
+            "1",
+            "1",
+            "2",
+            "1"
+          ],
+          "wave_clock": null,
+          "ui": null,
+          "status": [
+            "status",
+            "93963",
+            "1",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "951",
+            "20837210",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "epochs": [
+          0
+        ],
+        "pcm_sha256": "cd7acacc999ab2c1d95e1cfbab47595424c18056f3c48f857966509b5048f3b6"
+      },
+      "B": {
+        "meta": {
+          "format": "RNG1",
+          "firmware_base": "dd73c22+capture4",
+          "board": "B",
+          "rate": 48000,
+          "channels": 2,
+          "sample_bytes": 2,
+          "frames": 768000,
+          "header_bytes": 4096,
+          "anchor_count": 1000,
+          "anchor_bytes": 24,
+          "log_bytes": 6592,
+          "log_overflow": 0,
+          "triggered": 1,
+          "temperature_deci_c": 250,
+          "profile": 1,
+          "joint": 1,
+          "local_ns": 101795905585,
+          "master_ns": 110193981120,
+          "clock_locked": 1,
+          "sync_error_ns": 951,
+          "sample_period_ps": 20837209,
+          "session": 4666816501680077226,
+          "peer_session": 1265801214084084224
+        },
+        "counts": {
+          "trigger": 1,
+          "event": 15,
+          "clock": 15,
+          "candidate": 45,
+          "status": 25,
+          "dsp": 25
+        },
+        "first_anchor": [
+          3910656,
+          81571880340,
+          0,
+          768
+        ],
+        "last_anchor": [
+          4677888,
+          97558853765,
+          0,
+          768
+        ],
+        "examples": {
+          "event": [
+            "event",
+            "1",
+            "85274585503",
+            "654",
+            "1"
+          ],
+          "clock": [
+            "clock",
+            "1",
+            "93672694064",
+            "85366454165.000",
+            "-8398108373.124",
+            "0.000002044435"
+          ],
+          "pair": null,
+          "wave_clock": null,
+          "ui": null,
+          "status": [
+            "status",
+            "85561",
+            "1",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "951",
+            "20837209",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "epochs": [
+          0
+        ],
+        "pcm_sha256": "3d39b481c3dfa957de47fa07cdab1cb8ca1e7433c7bcfa27f7007a5c10d4f959"
+      }
+    },
+    "supported": true
+  },
+  {
+    "folder": "2026-09-29_50cm_source\\R000009",
+    "boards": {
+      "A": {
+        "meta": {
+          "format": "RNG1",
+          "firmware_base": "dd73c22+capture4",
+          "board": "A",
+          "rate": 48000,
+          "channels": 2,
+          "sample_bytes": 2,
+          "frames": 768000,
+          "header_bytes": 4096,
+          "anchor_count": 1000,
+          "anchor_bytes": 24,
+          "log_bytes": 6074,
+          "log_overflow": 0,
+          "triggered": 1,
+          "temperature_deci_c": 250,
+          "profile": 1,
+          "joint": 1,
+          "local_ns": 26532436500,
+          "master_ns": 26532437775,
+          "clock_locked": 1,
+          "sync_error_ns": 977,
+          "sample_period_ps": 20837210,
+          "session": 263640430770499455,
+          "peer_session": 8983765005884320966
+        },
+        "counts": {
+          "trigger": 1,
+          "event": 11,
+          "clock": 11,
+          "candidate": 22,
+          "status": 25,
+          "dsp": 25,
+          "pair": 10
+        },
+        "first_anchor": [
+          322560,
+          6805957155,
+          0,
+          768
+        ],
+        "last_anchor": [
+          1089792,
+          22792930575,
+          0,
+          768
+        ],
+        "examples": {
+          "event": [
+            "event",
+            "1",
+            "10482163785",
+            "420",
+            "1"
+          ],
+          "clock": [
+            "clock",
+            "1",
+            "10482163785",
+            "0.000",
+            "0.000",
+            "0.000000000000"
+          ],
+          "pair": [
+            "pair",
+            "25",
+            "69",
+            "10482163785",
+            "10475637532",
+            "2",
+            "1",
+            "-6526141",
+            "-6647807",
+            "299880",
+            "297738",
+            "2409",
+            "2338",
+            "1",
+            "1",
+            "2",
+            "1"
+          ],
+          "wave_clock": null,
+          "ui": null,
+          "status": [
+            "status",
+            "10812",
+            "1",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "974",
+            "20837208",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "epochs": [
+          0
+        ],
+        "pcm_sha256": "9ba65ff2e4e8482b3e9619b9390f7bfb6f68125ad5d25990b46a5614076bfda9"
+      },
+      "B": {
+        "meta": {
+          "format": "RNG1",
+          "firmware_base": "dd73c22+capture4",
+          "board": "B",
+          "rate": 48000,
+          "channels": 2,
+          "sample_bytes": 2,
+          "frames": 768000,
+          "header_bytes": 4096,
+          "anchor_count": 1000,
+          "anchor_bytes": 24,
+          "log_bytes": 6327,
+          "log_overflow": 0,
+          "triggered": 1,
+          "temperature_deci_c": 250,
+          "profile": 1,
+          "joint": 1,
+          "local_ns": 20980345025,
+          "master_ns": 26534575251,
+          "clock_locked": 1,
+          "sync_error_ns": 977,
+          "sample_period_ps": 20837205,
+          "session": 8983765005884320966,
+          "peer_session": 263640430770499455
+        },
+        "counts": {
+          "trigger": 1,
+          "event": 14,
+          "clock": 14,
+          "candidate": 42,
+          "status": 25,
+          "dsp": 25
+        },
+        "first_anchor": [
+          54528,
+          1220954875,
+          0,
+          768
+        ],
+        "last_anchor": [
+          821760,
+          17207928900,
+          0,
+          768
+        ],
+        "examples": {
+          "event": [
+            "event",
+            "1",
+            "4921375162",
+            "714",
+            "1"
+          ],
+          "clock": [
+            "clock",
+            "1",
+            "10475637532",
+            "5007543297.500",
+            "-5554262191.184",
+            "0.000002075390"
+          ],
+          "pair": null,
+          "wave_clock": null,
+          "ui": null,
+          "status": [
+            "status",
+            "5224",
+            "1",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "974",
+            "20837209",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "epochs": [
+          0
+        ],
+        "pcm_sha256": "88d25ddbf4a3a8b063ab70b0ffd9e866d232face1c409fffa00bce099070cc4d"
+      }
+    },
+    "supported": true
+  },
+  {
+    "folder": "2026-09-29_50cm_source\\R000010",
+    "boards": {
+      "A": {
+        "meta": {
+          "format": "RNG1",
+          "firmware_base": "dd73c22+capture4",
+          "board": "A",
+          "rate": 48000,
+          "channels": 2,
+          "sample_bytes": 2,
+          "frames": 768000,
+          "header_bytes": 4096,
+          "anchor_count": 1000,
+          "anchor_bytes": 24,
+          "log_bytes": 7307,
+          "log_overflow": 0,
+          "triggered": 1,
+          "temperature_deci_c": 250,
+          "profile": 1,
+          "joint": 1,
+          "local_ns": 127001351470,
+          "master_ns": 127001352745,
+          "clock_locked": 1,
+          "sync_error_ns": 973,
+          "sample_period_ps": 20837214,
+          "session": 263640430770499455,
+          "peer_session": 8983765005884320966
+        },
+        "counts": {
+          "trigger": 1,
+          "event": 15,
+          "clock": 15,
+          "candidate": 30,
+          "status": 25,
+          "dsp": 25,
+          "pair": 15
+        },
+        "first_anchor": [
+          5091072,
+          106168439415,
+          0,
+          768
+        ],
+        "last_anchor": [
+          5858304,
+          122155413520,
+          0,
+          768
+        ],
+        "examples": {
+          "event": [
+            "event",
+            "1",
+            "109884549750",
+            "486",
+            "1"
+          ],
+          "clock": [
+            "clock",
+            "1",
+            "109884549750",
+            "0.000",
+            "0.000",
+            "0.000000000000"
+          ],
+          "pair": [
+            "pair",
+            "352",
+            "1393",
+            "109884549750",
+            "109877445731",
+            "1",
+            "0",
+            "-7103610",
+            "-6966145",
+            "353808",
+            "265720",
+            "3268",
+            "5172",
+            "1",
+            "1",
+            "2",
+            "1"
+          ],
+          "wave_clock": null,
+          "ui": null,
+          "status": [
+            "status",
+            "110157",
+            "1",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "970",
+            "20837208",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "epochs": [
+          0
+        ],
+        "pcm_sha256": "89bdd8a6418bd76d4b4de48a090b403bea9d0beb0fd59384918fa8c600174fe8"
+      },
+      "B": {
+        "meta": {
+          "format": "RNG1",
+          "firmware_base": "dd73c22+capture4",
+          "board": "B",
+          "rate": 48000,
+          "channels": 2,
+          "sample_bytes": 2,
+          "frames": 768000,
+          "header_bytes": 4096,
+          "anchor_count": 1000,
+          "anchor_bytes": 24,
+          "log_bytes": 6706,
+          "log_overflow": 0,
+          "triggered": 1,
+          "temperature_deci_c": 250,
+          "profile": 1,
+          "joint": 1,
+          "local_ns": 121450233390,
+          "master_ns": 127004256040,
+          "clock_locked": 1,
+          "sync_error_ns": 973,
+          "sample_period_ps": 20837210,
+          "session": 8983765005884320966,
+          "peer_session": 263640430770499455
+        },
+        "counts": {
+          "trigger": 1,
+          "event": 15,
+          "clock": 15,
+          "candidate": 45,
+          "status": 25,
+          "dsp": 25
+        },
+        "first_anchor": [
+          4825344,
+          100631446625,
+          0,
+          768
+        ],
+        "last_anchor": [
+          5592576,
+          116618420440,
+          0,
+          768
+        ],
+        "examples": {
+          "event": [
+            "event",
+            "1",
+            "104323388918",
+            "728",
+            "1"
+          ],
+          "clock": [
+            "clock",
+            "1",
+            "109877445731",
+            "104445225640.000",
+            "-5554056561.005",
+            "0.000002069093"
+          ],
+          "pair": null,
+          "wave_clock": null,
+          "ui": null,
+          "status": [
+            "status",
+            "104613",
+            "1",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "970",
+            "20837212",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "epochs": [
+          0
+        ],
+        "pcm_sha256": "12541a4a9909d1261f26f2330b6d64f73ada6593d62d3d893494522312ed164e"
+      }
+    },
+    "supported": true
+  },
+  {
+    "folder": "2026-09-29_50cm_source\\R000011",
+    "boards": {
+      "A": {
+        "meta": {
+          "format": "RNG1",
+          "firmware_base": "dd73c22+capture4",
+          "board": "A",
+          "rate": 48000,
+          "channels": 2,
+          "sample_bytes": 2,
+          "frames": 768000,
+          "header_bytes": 4096,
+          "anchor_count": 1000,
+          "anchor_bytes": 24,
+          "log_bytes": 6936,
+          "log_overflow": 0,
+          "triggered": 1,
+          "temperature_deci_c": 250,
+          "profile": 1,
+          "joint": 1,
+          "local_ns": 178995849785,
+          "master_ns": 178995851060,
+          "clock_locked": 1,
+          "sync_error_ns": 974,
+          "sample_period_ps": 20837206,
+          "session": 263640430770499455,
+          "peer_session": 8983765005884320966
+        },
+        "counts": {
+          "trigger": 1,
+          "event": 15,
+          "clock": 15,
+          "candidate": 21,
+          "status": 25,
+          "dsp": 25,
+          "pair": 15
+        },
+        "first_anchor": [
+          7715328,
+          160850611315,
+          0,
+          768
+        ],
+        "last_anchor": [
+          8482560,
+          176837584720,
+          0,
+          768
+        ],
+        "examples": {
+          "event": [
+            "event",
+            "1",
+            "164539778532",
+            "392",
+            "1"
+          ],
+          "clock": [
+            "clock",
+            "1",
+            "164539778532",
+            "0.000",
+            "0.000",
+            "0.000000000000"
+          ],
+          "pair": [
+            "pair",
+            "478",
+            "1864",
+            "164539778532",
+            "164534871495",
+            "1",
+            "0",
+            "-4907175",
+            "-5038842",
+            "295960",
+            "203840",
+            "5916",
+            "6576",
+            "1",
+            "1",
+            "1",
+            "2"
+          ],
+          "wave_clock": null,
+          "ui": null,
+          "status": [
+            "status",
+            "164821",
+            "1",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "977",
+            "20837211",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "epochs": [
+          0
+        ],
+        "pcm_sha256": "c93da55451f4bc511f1a053f3e9302c784f52bd048c060154e7d10f43ae51b2b"
+      },
+      "B": {
+        "meta": {
+          "format": "RNG1",
+          "firmware_base": "dd73c22+capture4",
+          "board": "B",
+          "rate": 48000,
+          "channels": 2,
+          "sample_bytes": 2,
+          "frames": 768000,
+          "header_bytes": 4096,
+          "anchor_count": 1000,
+          "anchor_bytes": 24,
+          "log_bytes": 6708,
+          "log_overflow": 0,
+          "triggered": 1,
+          "temperature_deci_c": 250,
+          "profile": 1,
+          "joint": 1,
+          "local_ns": 173443177045,
+          "master_ns": 178997093988,
+          "clock_locked": 1,
+          "sync_error_ns": 974,
+          "sample_period_ps": 20837211,
+          "session": 8983765005884320966,
+          "peer_session": 263640430770499455
+        },
+        "counts": {
+          "trigger": 1,
+          "event": 15,
+          "clock": 15,
+          "candidate": 45,
+          "status": 25,
+          "dsp": 25
+        },
+        "first_anchor": [
+          7448064,
+          155281612270,
+          0,
+          768
+        ],
+        "last_anchor": [
+          8215296,
+          171268585700,
+          0,
+          768
+        ],
+        "examples": {
+          "event": [
+            "event",
+            "1",
+            "158980925938",
+            "755",
+            "1"
+          ],
+          "clock": [
+            "clock",
+            "1",
+            "164534871495",
+            "159114328620.000",
+            "-5553945284.845",
+            "0.000002036578"
+          ],
+          "pair": null,
+          "wave_clock": null,
+          "ui": null,
+          "status": [
+            "status",
+            "159265",
+            "1",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "977",
+            "20837211",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "epochs": [
+          0
+        ],
+        "pcm_sha256": "521c2f516f3d5ce4231edb75f96a67fdbc1401b0b5f0a28303aa1f3546ab2b2f"
+      }
+    },
+    "supported": true
+  },
+  {
+    "folder": "2026-09-29_50cm_source\\R000012",
+    "boards": {
+      "A": {
+        "meta": {
+          "format": "RNG1",
+          "firmware_base": "dd73c22+capture4",
+          "board": "A",
+          "rate": 48000,
+          "channels": 2,
+          "sample_bytes": 2,
+          "frames": 768000,
+          "header_bytes": 4096,
+          "anchor_count": 1000,
+          "anchor_bytes": 24,
+          "log_bytes": 7304,
+          "log_overflow": 0,
+          "triggered": 1,
+          "temperature_deci_c": 250,
+          "profile": 1,
+          "joint": 1,
+          "local_ns": 229257525775,
+          "master_ns": 229257527050,
+          "clock_locked": 1,
+          "sync_error_ns": 970,
+          "sample_period_ps": 20837211,
+          "session": 263640430770499455,
+          "peer_session": 8983765005884320966
+        },
+        "counts": {
+          "trigger": 1,
+          "event": 15,
+          "clock": 15,
+          "candidate": 30,
+          "status": 25,
+          "dsp": 25,
+          "pair": 15
+        },
+        "first_anchor": [
+          10106880,
+          210683880890,
+          0,
+          768
+        ],
+        "last_anchor": [
+          10874112,
+          226670854315,
+          0,
+          768
+        ],
+        "examples": {
+          "event": [
+            "event",
+            "1",
+            "214385311096",
+            "369",
+            "1"
+          ],
+          "clock": [
+            "clock",
+            "1",
+            "214385311096",
+            "0.000",
+            "0.000",
+            "0.000000000000"
+          ],
+          "pair": [
+            "pair",
+            "587",
+            "2244",
+            "214385311096",
+            "214380412667",
+            "1",
+            "0",
+            "-4898685",
+            "-5028435",
+            "312018",
+            "218652",
+            "586",
+            "4336",
+            "1",
+            "1",
+            "1",
+            "2"
+          ],
+          "wave_clock": null,
+          "ui": null,
+          "status": [
+            "status",
+            "214656",
+            "1",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "977",
+            "20837210",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "epochs": [
+          0
+        ],
+        "pcm_sha256": "4b718e19a3c31964a223149e8e242bcc5d0181fd71de61eb3a0cb611e004443c"
+      },
+      "B": {
+        "meta": {
+          "format": "RNG1",
+          "firmware_base": "dd73c22+capture4",
+          "board": "B",
+          "rate": 48000,
+          "channels": 2,
+          "sample_bytes": 2,
+          "frames": 768000,
+          "header_bytes": 4096,
+          "anchor_count": 1000,
+          "anchor_bytes": 24,
+          "log_bytes": 6707,
+          "log_overflow": 0,
+          "triggered": 1,
+          "temperature_deci_c": 250,
+          "profile": 1,
+          "joint": 1,
+          "local_ns": 223706686875,
+          "master_ns": 229260500893,
+          "clock_locked": 1,
+          "sync_error_ns": 970,
+          "sample_period_ps": 20837208,
+          "session": 8983765005884320966,
+          "peer_session": 263640430770499455
+        },
+        "counts": {
+          "trigger": 1,
+          "event": 15,
+          "clock": 15,
+          "candidate": 45,
+          "status": 25,
+          "dsp": 25
+        },
+        "first_anchor": [
+          9841152,
+          205146887810,
+          0,
+          768
+        ],
+        "last_anchor": [
+          10608384,
+          221133861250,
+          0,
+          768
+        ],
+        "examples": {
+          "event": [
+            "event",
+            "1",
+            "208826569008",
+            "765",
+            "1"
+          ],
+          "clock": [
+            "clock",
+            "1",
+            "214380412667",
+            "209017764840.000",
+            "-5553843267.390",
+            "0.000002050099"
+          ],
+          "pair": null,
+          "wave_clock": null,
+          "ui": null,
+          "status": [
+            "status",
+            "209129",
+            "1",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "977",
+            "20837211",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "epochs": [
+          0
+        ],
+        "pcm_sha256": "357c45b9d27c3fbdaeb33272640ef6bbc4ea7a7d212b4f5b29e9b0855054ee14"
+      }
+    },
+    "supported": true
+  },
+  {
+    "folder": "2026-09-29_50cm_source\\R000013",
+    "boards": {
+      "A": {
+        "meta": {
+          "format": "RNG1",
+          "firmware_base": "dd73c22+capture4",
+          "board": "A",
+          "rate": 48000,
+          "channels": 2,
+          "sample_bytes": 2,
+          "frames": 768000,
+          "header_bytes": 4096,
+          "anchor_count": 1000,
+          "anchor_bytes": 24,
+          "log_bytes": 4533,
+          "log_overflow": 0,
+          "triggered": 1,
+          "temperature_deci_c": 250,
+          "profile": 1,
+          "joint": 1,
+          "local_ns": 281491827170,
+          "master_ns": 281491828445,
+          "clock_locked": 1,
+          "sync_error_ns": 972,
+          "sample_period_ps": 20837211,
+          "session": 263640430770499455,
+          "peer_session": 8983765005884320966
+        },
+        "counts": {
+          "trigger": 1,
+          "event": 4,
+          "clock": 4,
+          "candidate": 7,
+          "status": 25,
+          "dsp": 25,
+          "pair": 4
+        },
+        "first_anchor": [
+          12530688,
+          261189275495,
+          0,
+          768
+        ],
+        "last_anchor": [
+          13297920,
+          277176248930,
+          0,
+          768
+        ],
+        "examples": {
+          "event": [
+            "event",
+            "1",
+            "264897715451",
+            "449",
+            "1"
+          ],
+          "clock": [
+            "clock",
+            "1",
+            "264897715451",
+            "0.000",
+            "0.000",
+            "0.000000000000"
+          ],
+          "pair": [
+            "pair",
+            "700",
+            "2633",
+            "264897715451",
+            "264890042045",
+            "1",
+            "0",
+            "-7673232",
+            "-7802232",
+            "338995",
+            "234827",
+            "2461",
+            "7173",
+            "1",
+            "1",
+            "1",
+            "2"
+          ],
+          "wave_clock": null,
+          "ui": null,
+          "status": [
+            "status",
+            "265149",
+            "1",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "974",
+            "20837211",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "epochs": [
+          0
+        ],
+        "pcm_sha256": "4a092b8848ad4485810f95ae00ad09eeaf3ef661f7d777d3d0d9aada31379637"
+      },
+      "B": {
+        "meta": {
+          "format": "RNG1",
+          "firmware_base": "dd73c22+capture4",
+          "board": "B",
+          "rate": 48000,
+          "channels": 2,
+          "sample_bytes": 2,
+          "frames": 768000,
+          "header_bytes": 4096,
+          "anchor_count": 1000,
+          "anchor_bytes": 24,
+          "log_bytes": 6681,
+          "log_overflow": 0,
+          "triggered": 1,
+          "temperature_deci_c": 250,
+          "profile": 1,
+          "joint": 1,
+          "local_ns": 275940525865,
+          "master_ns": 281494232052,
+          "clock_locked": 1,
+          "sync_error_ns": 972,
+          "sample_period_ps": 20837209,
+          "session": 8983765005884320966,
+          "peer_session": 263640430770499455
+        },
+        "counts": {
+          "trigger": 1,
+          "event": 15,
+          "clock": 15,
+          "candidate": 45,
+          "status": 25,
+          "dsp": 25
+        },
+        "first_anchor": [
+          12264960,
+          255652282555,
+          0,
+          768
+        ],
+        "last_anchor": [
+          13032192,
+          271639255865,
+          0,
+          768
+        ],
+        "examples": {
+          "event": [
+            "event",
+            "1",
+            "259336302598",
+            "755",
+            "1"
+          ],
+          "clock": [
+            "clock",
+            "1",
+            "264890042045",
+            "259427030140.000",
+            "-5553739260.227",
+            "0.000002053510"
+          ],
+          "pair": null,
+          "wave_clock": null,
+          "ui": null,
+          "status": [
+            "status",
+            "259621",
+            "1",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "974",
+            "20837212",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "epochs": [
+          0
+        ],
+        "pcm_sha256": "a63febbe8aed57086a57a9468ae2d71bd62336737a86d82124a2f2e2c755d550"
+      }
+    },
+    "supported": true
+  },
+  {
+    "folder": "2026-09-29_50cm_source\\R000014",
+    "boards": {
+      "A": {
+        "meta": {
+          "format": "RNG1",
+          "firmware_base": "dd73c22+capture4",
+          "board": "A",
+          "rate": 48000,
+          "channels": 2,
+          "sample_bytes": 2,
+          "frames": 768000,
+          "header_bytes": 4096,
+          "anchor_count": 1000,
+          "anchor_bytes": 24,
+          "log_bytes": 5173,
+          "log_overflow": 0,
+          "triggered": 1,
+          "temperature_deci_c": 250,
+          "profile": 1,
+          "joint": 1,
+          "local_ns": 385889537435,
+          "master_ns": 385889538710,
+          "clock_locked": 1,
+          "sync_error_ns": 967,
+          "sample_period_ps": 20837210,
+          "session": 263640430770499455,
+          "peer_session": 8983765005884320966
+        },
+        "counts": {
+          "trigger": 1,
+          "event": 6,
+          "clock": 6,
+          "candidate": 15,
+          "status": 25,
+          "dsp": 25,
+          "pair": 6
+        },
+        "first_anchor": [
+          17360640,
+          361831995890,
+          0,
+          768
+        ],
+        "last_anchor": [
+          18127872,
+          377818970280,
+          0,
+          768
+        ],
+        "examples": {
+          "event": [
+            "event",
+            "1",
+            "365510137382",
+            "356",
+            "1"
+          ],
+          "clock": [
+            "clock",
+            "1",
+            "365510137382",
+            "0.000",
+            "0.000",
+            "0.000000000000"
+          ],
+          "pair": [
+            "pair",
+            "986",
+            "3992",
+            "365510137382",
+            "365504662161",
+            "1",
+            "0",
+            "-5474854",
+            "-5603104",
+            "275900",
+            "182272",
+            "4204",
+            "7204",
+            "1",
+            "1",
+            "1",
+            "2"
+          ],
+          "wave_clock": null,
+          "ui": null,
+          "status": [
+            "status",
+            "365788",
+            "1",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "971",
+            "20837208",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "epochs": [
+          0
+        ],
+        "pcm_sha256": "5ea7f86d929319846620d9a8e1578a71fc26a5edfbae2b356dcedee9fe7199a9"
+      },
+      "B": {
+        "meta": {
+          "format": "RNG1",
+          "firmware_base": "dd73c22+capture4",
+          "board": "B",
+          "rate": 48000,
+          "channels": 2,
+          "sample_bytes": 2,
+          "frames": 768000,
+          "header_bytes": 4096,
+          "anchor_count": 1000,
+          "anchor_bytes": 24,
+          "log_bytes": 6682,
+          "log_overflow": 0,
+          "triggered": 1,
+          "temperature_deci_c": 250,
+          "profile": 1,
+          "joint": 1,
+          "local_ns": 380337837695,
+          "master_ns": 385891328224,
+          "clock_locked": 1,
+          "sync_error_ns": 967,
+          "sample_period_ps": 20837208,
+          "session": 8983765005884320966,
+          "peer_session": 263640430770499455
+        },
+        "counts": {
+          "trigger": 1,
+          "event": 15,
+          "clock": 15,
+          "candidate": 45,
+          "status": 25,
+          "dsp": 25
+        },
+        "first_anchor": [
+          17093376,
+          356262996895,
+          0,
+          768
+        ],
+        "last_anchor": [
+          17860608,
+          372249970955,
+          0,
+          768
+        ],
+        "examples": {
+          "event": [
+            "event",
+            "1",
+            "359951130638",
+            "769",
+            "1"
+          ],
+          "clock": [
+            "clock",
+            "1",
+            "365504662161",
+            "360115112860.000",
+            "-5553531184.569",
+            "0.000002062562"
+          ],
+          "pair": null,
+          "wave_clock": null,
+          "ui": null,
+          "status": [
+            "status",
+            "360223",
+            "1",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "971",
+            "20837208",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "epochs": [
+          0
+        ],
+        "pcm_sha256": "5202a58971f843c0805738996089d2e67f9cd2938b76c527b6f4b8413633f29c"
+      }
+    },
+    "supported": true
+  },
+  {
+    "folder": "2026-09-29_50cm_source\\R000015",
+    "boards": {
+      "A": {
+        "meta": {
+          "format": "RNG1",
+          "firmware_base": "dd73c22+capture4",
+          "board": "A",
+          "rate": 48000,
+          "channels": 2,
+          "sample_bytes": 2,
+          "frames": 768000,
+          "header_bytes": 4096,
+          "anchor_count": 1000,
+          "anchor_bytes": 24,
+          "log_bytes": 6467,
+          "log_overflow": 0,
+          "triggered": 1,
+          "temperature_deci_c": 250,
+          "profile": 1,
+          "joint": 1,
+          "local_ns": 448307347460,
+          "master_ns": 448307348735,
+          "clock_locked": 1,
+          "sync_error_ns": 975,
+          "sample_period_ps": 20837210,
+          "session": 263640430770499455,
+          "peer_session": 8983765005884320966
+        },
+        "counts": {
+          "trigger": 1,
+          "event": 13,
+          "clock": 13,
+          "candidate": 18,
+          "status": 25,
+          "dsp": 25,
+          "pair": 13
+        },
+        "first_anchor": [
+          20153856,
+          420034822640,
+          0,
+          768
+        ],
+        "last_anchor": [
+          20921088,
+          436021796140,
+          0,
+          768
+        ],
+        "examples": {
+          "event": [
+            "event",
+            "1",
+            "423737719506",
+            "393",
+            "1"
+          ],
+          "clock": [
+            "clock",
+            "1",
+            "423737719506",
+            "0.000",
+            "0.000",
+            "0.000000000000"
+          ],
+          "pair": [
+            "pair",
+            "1110",
+            "4535",
+            "423737719506",
+            "423732246328",
+            "1",
+            "0",
+            "-5472883",
+            "-5602883",
+            "293571",
+            "199251",
+            "1759",
+            "8495",
+            "1",
+            "1",
+            "1",
+            "2"
+          ],
+          "wave_clock": null,
+          "ui": null,
+          "status": [
+            "status",
+            "423983",
+            "1",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "976",
+            "20837210",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "epochs": [
+          0
+        ],
+        "pcm_sha256": "b543ee4fdf4a42f99d38252d53e8117b7d6411e230d2e532533cc1805b49ffc2"
+      },
+      "B": {
+        "meta": {
+          "format": "RNG1",
+          "firmware_base": "dd73c22+capture4",
+          "board": "B",
+          "rate": 48000,
+          "channels": 2,
+          "sample_bytes": 2,
+          "frames": 768000,
+          "header_bytes": 4096,
+          "anchor_count": 1000,
+          "anchor_bytes": 24,
+          "log_bytes": 6698,
+          "log_overflow": 0,
+          "triggered": 1,
+          "temperature_deci_c": 250,
+          "profile": 1,
+          "joint": 1,
+          "local_ns": 442755244305,
+          "master_ns": 448308606740,
+          "clock_locked": 1,
+          "sync_error_ns": 975,
+          "sample_period_ps": 20837208,
+          "session": 8983765005884320966,
+          "peer_session": 263640430770499455
+        },
+        "counts": {
+          "trigger": 1,
+          "event": 15,
+          "clock": 15,
+          "candidate": 45,
+          "status": 25,
+          "dsp": 25
+        },
+        "first_anchor": [
+          19888128,
+          414497829545,
+          0,
+          768
+        ],
+        "last_anchor": [
+          20655360,
+          430484803015,
+          0,
+          768
+        ],
+        "examples": {
+          "event": [
+            "event",
+            "1",
+            "418178834458",
+            "747",
+            "1"
+          ],
+          "clock": [
+            "clock",
+            "1",
+            "423732246328",
+            "418253241260.000",
+            "-5553411716.843",
+            "0.000002057484"
+          ],
+          "pair": null,
+          "wave_clock": null,
+          "ui": null,
+          "status": [
+            "status",
+            "418445",
+            "1",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "976",
+            "20837207",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "epochs": [
+          0
+        ],
+        "pcm_sha256": "93c73a41d758c94ccd71f59d5414bebaf3b9e7d841482be5bf88c87ac4b60ed1"
+      }
+    },
+    "supported": true
+  },
+  {
+    "folder": "2026-09-29_50cm_source\\R000016",
+    "boards": {
+      "A": {
+        "meta": {
+          "format": "RNG1",
+          "firmware_base": "dd73c22+capture4",
+          "board": "A",
+          "rate": 48000,
+          "channels": 2,
+          "sample_bytes": 2,
+          "frames": 768000,
+          "header_bytes": 4096,
+          "anchor_count": 1000,
+          "anchor_bytes": 24,
+          "log_bytes": 6344,
+          "log_overflow": 0,
+          "triggered": 1,
+          "temperature_deci_c": 250,
+          "profile": 1,
+          "joint": 1,
+          "local_ns": 514385038205,
+          "master_ns": 514385039480,
+          "clock_locked": 1,
+          "sync_error_ns": 972,
+          "sample_period_ps": 20837208,
+          "session": 263640430770499455,
+          "peer_session": 8983765005884320966
+        },
+        "counts": {
+          "trigger": 1,
+          "event": 12,
+          "clock": 12,
+          "candidate": 19,
+          "status": 25,
+          "dsp": 25,
+          "pair": 12
+        },
+        "first_anchor": [
+          23784192,
+          495680893365,
+          0,
+          768
+        ],
+        "last_anchor": [
+          24551424,
+          511667867470,
+          0,
+          768
+        ],
+        "examples": {
+          "event": [
+            "event",
+            "1",
+            "499341959327",
+            "400",
+            "1"
+          ],
+          "clock": [
+            "clock",
+            "1",
+            "499341959327",
+            "0.000",
+            "0.000",
+            "0.000000000000"
+          ],
+          "pair": [
+            "pair",
+            "1317",
+            "5412",
+            "499341959327",
+            "499337062141",
+            "1",
+            "0",
+            "-4897749",
+            "-5024416",
+            "301600",
+            "206800",
+            "8118",
+            "4658",
+            "1",
+            "1",
+            "1",
+            "2"
+          ],
+          "wave_clock": null,
+          "ui": null,
+          "status": [
+            "status",
+            "499620",
+            "1",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "970",
+            "20837207",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "epochs": [
+          0
+        ],
+        "pcm_sha256": "6f6d2fd508d08f80f5a66ad6f21210eec2c816ebec307b6e72893a1df3968c4d"
+      },
+      "B": {
+        "meta": {
+          "format": "RNG1",
+          "firmware_base": "dd73c22+capture4",
+          "board": "B",
+          "rate": 48000,
+          "channels": 2,
+          "sample_bytes": 2,
+          "frames": 768000,
+          "header_bytes": 4096,
+          "anchor_count": 1000,
+          "anchor_bytes": 24,
+          "log_bytes": 6681,
+          "log_overflow": 0,
+          "triggered": 1,
+          "temperature_deci_c": 250,
+          "profile": 1,
+          "joint": 1,
+          "local_ns": 508834602320,
+          "master_ns": 514387828951,
+          "clock_locked": 1,
+          "sync_error_ns": 972,
+          "sample_period_ps": 20837210,
+          "session": 8983765005884320966,
+          "peer_session": 263640430770499455
+        },
+        "counts": {
+          "trigger": 1,
+          "event": 15,
+          "clock": 15,
+          "candidate": 45,
+          "status": 25,
+          "dsp": 25
+        },
+        "first_anchor": [
+          23516160,
+          490095891815,
+          0,
+          768
+        ],
+        "last_anchor": [
+          24283392,
+          506082865135,
+          0,
+          768
+        ],
+        "examples": {
+          "event": [
+            "event",
+            "1",
+            "493783805496",
+            "754",
+            "1"
+          ],
+          "clock": [
+            "clock",
+            "1",
+            "499337062141",
+            "493899916697.500",
+            "-5553256405.394",
+            "0.000002067412"
+          ],
+          "pair": null,
+          "wave_clock": null,
+          "ui": null,
+          "status": [
+            "status",
+            "494037",
+            "1",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "970",
+            "20837215",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "epochs": [
+          0
+        ],
+        "pcm_sha256": "f949931b1df5d627869cbe4fc9cfa937fd727b3b076c47536ab1b10e8c96de65"
+      }
+    },
+    "supported": true
+  },
+  {
+    "folder": "2026-09-29_early1_190cm\\R000017",
+    "boards": {
+      "A": {
+        "meta": {
+          "format": "RNG1",
+          "firmware_base": "547e914+early1",
+          "board": "A",
+          "rate": 48000,
+          "channels": 2,
+          "sample_bytes": 2,
+          "frames": 768000,
+          "header_bytes": 4096,
+          "anchor_count": 1000,
+          "anchor_bytes": 24,
+          "log_bytes": 6331,
+          "log_overflow": 0,
+          "triggered": 1,
+          "temperature_deci_c": 250,
+          "profile": 1,
+          "joint": 1,
+          "local_ns": 40618287240,
+          "master_ns": 40618288540,
+          "clock_locked": 1,
+          "sync_error_ns": 951,
+          "sample_period_ps": 20837211,
+          "session": 3613769272427061410,
+          "peer_session": 4709467612995285979
+        },
+        "counts": {
+          "trigger": 1,
+          "event": 15,
+          "clock": 15,
+          "candidate": 15,
+          "status": 25,
+          "dsp": 25,
+          "pair": 15
+        },
+        "first_anchor": [
+          911616,
+          19079250465,
+          0,
+          768
+        ],
+        "last_anchor": [
+          1678848,
+          35066224695,
+          0,
+          768
+        ],
+        "examples": {
+          "event": [
+            "event",
+            "1",
+            "22679217253",
+            "427",
+            "1"
+          ],
+          "clock": [
+            "clock",
+            "1",
+            "22679217253",
+            "0.000",
+            "0.000",
+            "0.000000000000"
+          ],
+          "pair": [
+            "pair",
+            "77",
+            "295",
+            "22679217253",
+            "22671559484",
+            "1",
+            "0",
+            "-7657877",
+            "0",
+            "263032",
+            "0",
+            "5660",
+            "0",
+            "1",
+            "1",
+            "0",
+            "0"
+          ],
+          "wave_clock": null,
+          "ui": null,
+          "status": [
+            "status",
+            "23083",
+            "1",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "951",
+            "20837211",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "epochs": [
+          0
+        ],
+        "pcm_sha256": "5e861e3400604c4f800a12703b60646a7b38b06f6d026db57052986352ec9ece"
+      },
+      "B": {
+        "meta": {
+          "format": "RNG1",
+          "firmware_base": "547e914+early1",
+          "board": "B",
+          "rate": 48000,
+          "channels": 2,
+          "sample_bytes": 2,
+          "frames": 768000,
+          "header_bytes": 4096,
+          "anchor_count": 1000,
+          "anchor_bytes": 24,
+          "log_bytes": 5391,
+          "log_overflow": 0,
+          "triggered": 1,
+          "temperature_deci_c": 250,
+          "profile": 1,
+          "joint": 1,
+          "local_ns": 33866333295,
+          "master_ns": 40619376774,
+          "clock_locked": 1,
+          "sync_error_ns": 951,
+          "sample_period_ps": 20837212,
+          "session": 4709467612995285979,
+          "peer_session": 3613769272427061410
+        },
+        "counts": {
+          "trigger": 1,
+          "event": 15,
+          "clock": 15,
+          "candidate": 15,
+          "status": 25,
+          "dsp": 25
+        },
+        "first_anchor": [
+          587520,
+          12327023070,
+          0,
+          768
+        ],
+        "last_anchor": [
+          1354752,
+          28313997420,
+          0,
+          768
+        ],
+        "examples": {
+          "event": [
+            "event",
+            "1",
+            "15918480023",
+            "616",
+            "1"
+          ],
+          "clock": [
+            "clock",
+            "1",
+            "22671559484",
+            "16309011740.000",
+            "-6753078647.747",
+            "0.000002081653"
+          ],
+          "pair": null,
+          "wave_clock": null,
+          "ui": null,
+          "status": [
+            "status",
+            "16329",
+            "1",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "951",
+            "20837211",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "epochs": [
+          0
+        ],
+        "pcm_sha256": "6403c4e525609cfbb73411f6c4a9d57128ceea4f49fe33c01c5dcdbaa4935b94"
+      }
+    },
+    "supported": true
+  },
+  {
+    "folder": "2026-09-29_early1_190cm\\R000018",
+    "boards": {
+      "A": {
+        "meta": {
+          "format": "RNG1",
+          "firmware_base": "547e914+early1",
+          "board": "A",
+          "rate": 48000,
+          "channels": 2,
+          "sample_bytes": 2,
+          "frames": 613632,
+          "header_bytes": 4096,
+          "anchor_count": 799,
+          "anchor_bytes": 24,
+          "log_bytes": 5221,
+          "log_overflow": 0,
+          "triggered": 1,
+          "temperature_deci_c": 250,
+          "profile": 1,
+          "joint": 1,
+          "local_ns": 91997262120,
+          "master_ns": 91997263420,
+          "clock_locked": 1,
+          "sync_error_ns": 955,
+          "sample_period_ps": 20837208,
+          "session": 3613769272427061410,
+          "peer_session": 4709467612995285979
+        },
+        "counts": {
+          "trigger": 1,
+          "event": 11,
+          "clock": 11,
+          "candidate": 11,
+          "status": 25,
+          "dsp": 25,
+          "pair": 7
+        },
+        "first_anchor": [
+          3385344,
+          70624839045,
+          0,
+          768
+        ],
+        "last_anchor": [
+          3998208,
+          83395214525,
+          0,
+          768
+        ],
+        "examples": {
+          "event": [
+            "event",
+            "1",
+            "70912693647",
+            "373",
+            "1"
+          ],
+          "clock": [
+            "clock",
+            "1",
+            "70912693647",
+            "0.000",
+            "0.000",
+            "0.000000000000"
+          ],
+          "pair": [
+            "pair",
+            "186",
+            "712",
+            "72912697334",
+            "72905046280",
+            "1",
+            "0",
+            "-7651155",
+            "0",
+            "260480",
+            "0",
+            "9077",
+            "0",
+            "1",
+            "1",
+            "0",
+            "0"
+          ],
+          "wave_clock": null,
+          "ui": null,
+          "status": [
+            "status",
+            "71409",
+            "1",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "958",
+            "20837211",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "epochs": [
+          0
+        ],
+        "pcm_sha256": "4534668251f66ec24ce86e74881bafc6b5086551806a20eedd38e45a10e0dc7a"
+      },
+      "B": {
+        "meta": {
+          "format": "RNG1",
+          "firmware_base": "547e914+early1",
+          "board": "B",
+          "rate": 48000,
+          "channels": 2,
+          "sample_bytes": 2,
+          "frames": 615936,
+          "header_bytes": 4096,
+          "anchor_count": 802,
+          "anchor_bytes": 24,
+          "log_bytes": 4423,
+          "log_overflow": 0,
+          "triggered": 1,
+          "temperature_deci_c": 250,
+          "profile": 1,
+          "joint": 1,
+          "local_ns": 85245400490,
+          "master_ns": 91998337848,
+          "clock_locked": 1,
+          "sync_error_ns": 955,
+          "sample_period_ps": 20837210,
+          "session": 4709467612995285979,
+          "peer_session": 3613769272427061410
+        },
+        "counts": {
+          "event": 8,
+          "clock": 8,
+          "candidate": 8,
+          "trigger": 1,
+          "status": 25,
+          "dsp": 25
+        },
+        "first_anchor": [
+          3061248,
+          63872611710,
+          0,
+          768
+        ],
+        "last_anchor": [
+          3676416,
+          76690995420,
+          0,
+          768
+        ],
+        "examples": {
+          "event": [
+            "event",
+            "1",
+            "64152060427",
+            "595",
+            "0"
+          ],
+          "clock": [
+            "clock",
+            "1",
+            "70905040102",
+            "64466196320.000",
+            "-6752979029.901",
+            "0.000002053469"
+          ],
+          "pair": null,
+          "wave_clock": null,
+          "ui": null,
+          "status": [
+            "status",
+            "64700",
+            "1",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "958",
+            "20837207",
+            "0",
+            "0",
+            "0",
+            "1",
+            "0",
+            "0"
+          ]
+        },
+        "epochs": [
+          0
+        ],
+        "pcm_sha256": "78ecd98213ff9371e768f8ff8d09a8d66f6ba2f46d3438cf60937eae7a538501"
+      }
+    },
+    "supported": true
+  },
+  {
+    "folder": "2026-09-29_early1_190cm\\R000019",
+    "boards": {
+      "A": {
+        "meta": {
+          "format": "RNG1",
+          "firmware_base": "547e914+early1",
+          "board": "A",
+          "rate": 48000,
+          "channels": 2,
+          "sample_bytes": 2,
+          "frames": 768000,
+          "header_bytes": 4096,
+          "anchor_count": 1000,
+          "anchor_bytes": 24,
+          "log_bytes": 5417,
+          "log_overflow": 0,
+          "triggered": 1,
+          "temperature_deci_c": 250,
+          "profile": 1,
+          "joint": 1,
+          "local_ns": 139950078180,
+          "master_ns": 139950079480,
+          "clock_locked": 1,
+          "sync_error_ns": 955,
+          "sample_period_ps": 20837205,
+          "session": 3613769272427061410,
+          "peer_session": 4709467612995285979
+        },
+        "counts": {
+          "trigger": 1,
+          "status": 25,
+          "dsp": 25,
+          "event": 11,
+          "clock": 11,
+          "candidate": 11,
+          "pair": 8
+        },
+        "first_anchor": [
+          5736192,
+          119609950375,
+          0,
+          768
+        ],
+        "last_anchor": [
+          6503424,
+          135596924565,
+          0,
+          768
+        ],
+        "examples": {
+          "event": [
+            "event",
+            "1",
+            "123201325562",
+            "451",
+            "1"
+          ],
+          "clock": [
+            "clock",
+            "1",
+            "123201325562",
+            "0.000",
+            "0.000",
+            "0.000000000000"
+          ],
+          "pair": [
+            "pair",
+            "307",
+            "1240",
+            "123201325562",
+            "123193665335",
+            "1",
+            "0",
+            "-7660343",
+            "0",
+            "296758",
+            "0",
+            "1841",
+            "0",
+            "1",
+            "1",
+            "0",
+            "0"
+          ],
+          "wave_clock": null,
+          "ui": null,
+          "status": [
+            "status",
+            "123605",
+            "0",
+            "1",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "950",
+            "20837209",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "epochs": [
+          0
+        ],
+        "pcm_sha256": "841fbdac8fab0fa33bf4b46ec8a3048e7640ee85f5a5fab2a4f7040a60212b67"
+      },
+      "B": {
+        "meta": {
+          "format": "RNG1",
+          "firmware_base": "547e914+early1",
+          "board": "B",
+          "rate": 48000,
+          "channels": 2,
+          "sample_bytes": 2,
+          "frames": 768000,
+          "header_bytes": 4096,
+          "anchor_count": 1000,
+          "anchor_bytes": 24,
+          "log_bytes": 5051,
+          "log_overflow": 0,
+          "triggered": 1,
+          "temperature_deci_c": 250,
+          "profile": 1,
+          "joint": 1,
+          "local_ns": 133199190755,
+          "master_ns": 139952029921,
+          "clock_locked": 1,
+          "sync_error_ns": 955,
+          "sample_period_ps": 20837206,
+          "session": 4709467612995285979,
+          "peer_session": 3613769272427061410
+        },
+        "counts": {
+          "trigger": 1,
+          "event": 12,
+          "clock": 12,
+          "candidate": 12,
+          "status": 25,
+          "dsp": 25
+        },
+        "first_anchor": [
+          5411328,
+          112841720550,
+          0,
+          768
+        ],
+        "last_anchor": [
+          6178560,
+          128828693740,
+          0,
+          768
+        ],
+        "examples": {
+          "event": [
+            "event",
+            "1",
+            "116440793087",
+            "658",
+            "1"
+          ],
+          "clock": [
+            "clock",
+            "1",
+            "123193665335",
+            "116832228720.000",
+            "-6752871453.919",
+            "0.000002028680"
+          ],
+          "pair": null,
+          "wave_clock": null,
+          "ui": null,
+          "status": [
+            "status",
+            "116846",
+            "1",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "950",
+            "20837206",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "epochs": [
+          0
+        ],
+        "pcm_sha256": "d1370a252759c643e6043844391896c9ed27739ea873ab3d60cc47833bb54d8c"
+      }
+    },
+    "supported": true
+  },
+  {
+    "folder": "2026-10-02_clap-module_R000009_215010",
+    "boards": {
+      "A": {
+        "meta": {
+          "format": "RNG1",
+          "firmware_base": "48k-standard",
+          "board": "A",
+          "rate": 48000,
+          "channels": 2,
+          "sample_bytes": 2,
+          "frames": 768000,
+          "header_bytes": 4096,
+          "anchor_count": 1000,
+          "anchor_bytes": 24,
+          "log_bytes": 7838,
+          "log_overflow": 0,
+          "triggered": 1,
+          "temperature_deci_c": 260,
+          "profile": 1,
+          "joint": 1,
+          "local_ns": 507058498200,
+          "master_ns": 507058499905,
+          "clock_locked": 1,
+          "sync_error_ns": 943,
+          "sample_period_ps": 20837209,
+          "session": 1465062772356696601,
+          "peer_session": 13505131213066283693
+        },
+        "counts": {
+          "ui": 3,
+          "trigger": 1,
+          "event": 15,
+          "clock": 15,
+          "candidate": 45,
+          "status": 25,
+          "dsp": 25,
+          "pair": 15
+        },
+        "first_anchor": [
+          23339520,
+          486646173465,
+          0,
+          768
+        ],
+        "last_anchor": [
+          24106752,
+          502633146890,
+          0,
+          768
+        ],
+        "examples": {
+          "event": [
+            "event",
+            "1",
+            "490303307670",
+            "890",
+            "1"
+          ],
+          "clock": [
+            "clock",
+            "1",
+            "490303307670",
+            "0.000",
+            "0.000",
+            "0.000000000000"
+          ],
+          "pair": [
+            "pair",
+            "1834",
+            "9463",
+            "490303307670",
+            "490303725053",
+            "1",
+            "0",
+            "418074",
+            "535908",
+            "759450",
+            "527955",
+            "1323",
+            "1007",
+            "1",
+            "1",
+            "1",
+            "2"
+          ],
+          "wave_clock": null,
+          "ui": [
+            "ui",
+            "482976",
+            "0",
+            "250",
+            "6"
+          ],
+          "status": [
+            "status",
+            "490557",
+            "1",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "947",
+            "20837208",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "epochs": [
+          0
+        ],
+        "pcm_sha256": "e4ef1da72f03dd61aaf12a85c6af321e323aa91fedd629a41ad7930f7d4408ad"
+      },
+      "B": {
+        "meta": {
+          "format": "RNG1",
+          "firmware_base": "48k-standard",
+          "board": "B",
+          "rate": 48000,
+          "channels": 2,
+          "sample_bytes": 2,
+          "frames": 768000,
+          "header_bytes": 4096,
+          "anchor_count": 1000,
+          "anchor_bytes": 24,
+          "log_bytes": 6737,
+          "log_overflow": 0,
+          "triggered": 1,
+          "temperature_deci_c": 260,
+          "profile": 1,
+          "joint": 1,
+          "local_ns": 500630205960,
+          "master_ns": 507059680306,
+          "clock_locked": 1,
+          "sync_error_ns": 943,
+          "sample_period_ps": 20837207,
+          "session": 13505131213066283693,
+          "peer_session": 1465062772356696601
+        },
+        "counts": {
+          "ui": 3,
+          "trigger": 1,
+          "event": 15,
+          "clock": 15,
+          "candidate": 45,
+          "status": 25,
+          "dsp": 25
+        },
+        "first_anchor": [
+          23026944,
+          480132980135,
+          0,
+          768
+        ],
+        "last_anchor": [
+          23794176,
+          496119954355,
+          0,
+          768
+        ],
+        "examples": {
+          "event": [
+            "event",
+            "1",
+            "483874219752",
+            "830",
+            "1"
+          ],
+          "clock": [
+            "clock",
+            "1",
+            "490303725053",
+            "483915402590.000",
+            "-6429505220.415",
+            "0.000001951489"
+          ],
+          "pair": null,
+          "wave_clock": null,
+          "ui": [
+            "ui",
+            "476605",
+            "0",
+            "250",
+            "6"
+          ],
+          "status": [
+            "status",
+            "484050",
+            "1",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "947",
+            "20837208",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "epochs": [
+          0
+        ],
+        "pcm_sha256": "422a962f086c325d3efb03c4e65db1db87d4020102a7fd4631b7013bbb2cf54b"
+      }
+    },
+    "supported": true
+  },
+  {
+    "folder": "2026-10-02_memory-wave_R000008_211920",
+    "boards": {
+      "A": {
+        "meta": {
+          "format": "RNG1",
+          "firmware_base": "48k-standard",
+          "board": "A",
+          "rate": 48000,
+          "channels": 2,
+          "sample_bytes": 2,
+          "frames": 768000,
+          "header_bytes": 4096,
+          "anchor_count": 1000,
+          "anchor_bytes": 24,
+          "log_bytes": 11607,
+          "log_overflow": 0,
+          "triggered": 1,
+          "temperature_deci_c": 250,
+          "profile": 1,
+          "joint": 1,
+          "local_ns": 334573930580,
+          "master_ns": 334573932490,
+          "clock_locked": 1,
+          "sync_error_ns": 932,
+          "sample_period_ps": 20837203,
+          "session": 3654786294006007563,
+          "peer_session": 9445351651092108059
+        },
+        "counts": {
+          "ui": 1,
+          "trigger": 1,
+          "event": 29,
+          "clock": 29,
+          "candidate": 86,
+          "status": 25,
+          "dsp": 25,
+          "pair": 28
+        },
+        "first_anchor": [
+          13367808,
+          278862535005,
+          0,
+          768
+        ],
+        "last_anchor": [
+          14135040,
+          294849508670,
+          0,
+          768
+        ],
+        "examples": {
+          "event": [
+            "event",
+            "1",
+            "282592677012",
+            "766",
+            "1"
+          ],
+          "clock": [
+            "clock",
+            "1",
+            "282592677012",
+            "0.000",
+            "0.000",
+            "0.000000000000"
+          ],
+          "pair": [
+            "pair",
+            "634",
+            "5481",
+            "282592677012",
+            "282592978353",
+            "1",
+            "0",
+            "301610",
+            "687610",
+            "549744",
+            "460763",
+            "5161",
+            "589",
+            "1",
+            "1",
+            "1",
+            "2"
+          ],
+          "wave_clock": null,
+          "ui": [
+            "ui",
+            "275918",
+            "0",
+            "250",
+            "8"
+          ],
+          "status": [
+            "status",
+            "282843",
+            "1",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "931",
+            "20837210",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "epochs": [
+          0
+        ],
+        "pcm_sha256": "809db596bb589efbce700fe8ea84a751288ebed5c698256e84b276c5f1d2bc30"
+      },
+      "B": {
+        "meta": {
+          "format": "RNG1",
+          "firmware_base": "48k-standard",
+          "board": "B",
+          "rate": 48000,
+          "channels": 2,
+          "sample_bytes": 2,
+          "frames": 768000,
+          "header_bytes": 4096,
+          "anchor_count": 1000,
+          "anchor_bytes": 24,
+          "log_bytes": 9433,
+          "log_overflow": 0,
+          "triggered": 1,
+          "temperature_deci_c": 250,
+          "profile": 1,
+          "joint": 1,
+          "local_ns": 328353000955,
+          "master_ns": 334578057981,
+          "clock_locked": 1,
+          "sync_error_ns": 932,
+          "sample_period_ps": 20837212,
+          "session": 9445351651092108059,
+          "peer_session": 3654786294006007563
+        },
+        "counts": {
+          "ui": 1,
+          "trigger": 1,
+          "event": 28,
+          "clock": 28,
+          "candidate": 84,
+          "status": 25,
+          "dsp": 25
+        },
+        "first_anchor": [
+          13071360,
+          272684413000,
+          0,
+          768
+        ],
+        "last_anchor": [
+          13838592,
+          288671386550,
+          0,
+          768
+        ],
+        "examples": {
+          "event": [
+            "event",
+            "1",
+            "276367834454",
+            "624",
+            "1"
+          ],
+          "clock": [
+            "clock",
+            "1",
+            "282592978353",
+            "276501533420.000",
+            "-6225143673.044",
+            "0.000001688763"
+          ],
+          "pair": null,
+          "wave_clock": null,
+          "ui": [
+            "ui",
+            "269694",
+            "0",
+            "250",
+            "8"
+          ],
+          "status": [
+            "status",
+            "276665",
+            "1",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "931",
+            "20837207",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "epochs": [
+          0
+        ],
+        "pcm_sha256": "35f8cd48d6fcbc4ec87354474ab343b9c38f3c93e7a27f3b7d1fc708682e5de5"
+      }
+    },
+    "supported": true
+  },
+  {
+    "folder": "2026-10-02_phase4_R000006_202853",
+    "boards": {
+      "A": {
+        "meta": {
+          "format": "RNG1",
+          "firmware_base": "48k-standard",
+          "board": "A",
+          "rate": 48000,
+          "channels": 2,
+          "sample_bytes": 2,
+          "frames": 768000,
+          "header_bytes": 4096,
+          "anchor_count": 1000,
+          "anchor_bytes": 24,
+          "log_bytes": 11528,
+          "log_overflow": 0,
+          "triggered": 1,
+          "temperature_deci_c": 250,
+          "profile": 1,
+          "joint": 1,
+          "local_ns": 706713244675,
+          "master_ns": 706713246620,
+          "clock_locked": 1,
+          "sync_error_ns": 968,
+          "sample_period_ps": 20837206,
+          "session": 3096068504898031187,
+          "peer_session": 2233578708751191288
+        },
+        "counts": {
+          "ui": 5,
+          "trigger": 1,
+          "event": 28,
+          "clock": 28,
+          "candidate": 84,
+          "status": 25,
+          "dsp": 25,
+          "pair": 28
+        },
+        "first_anchor": [
+          30431232,
+          634413662420,
+          0,
+          768
+        ],
+        "last_anchor": [
+          31198464,
+          650400635430,
+          0,
+          768
+        ],
+        "examples": {
+          "event": [
+            "event",
+            "1",
+            "638155803350",
+            "726",
+            "1"
+          ],
+          "clock": [
+            "clock",
+            "1",
+            "638155803350",
+            "0.000",
+            "0.000",
+            "0.000000000000"
+          ],
+          "pair": [
+            "pair",
+            "2493",
+            "11699",
+            "638155803350",
+            "638154987912",
+            "2",
+            "1",
+            "-816019",
+            "-682957",
+            "628474",
+            "575960",
+            "5068",
+            "4745",
+            "1",
+            "1",
+            "2",
+            "1"
+          ],
+          "wave_clock": null,
+          "ui": [
+            "ui",
+            "626699",
+            "0",
+            "250",
+            "4"
+          ],
+          "status": [
+            "status",
+            "638304",
+            "1",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "966",
+            "20837213",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "epochs": [
+          0
+        ],
+        "pcm_sha256": "a2396ae8f01b7f5398955eb8ef62259c4d575522703fc05c31e6bd8fcf4f6c72"
+      },
+      "B": {
+        "meta": {
+          "format": "RNG1",
+          "firmware_base": "48k-standard",
+          "board": "B",
+          "rate": 48000,
+          "channels": 2,
+          "sample_bytes": 2,
+          "frames": 768000,
+          "header_bytes": 4096,
+          "anchor_count": 1000,
+          "anchor_bytes": 24,
+          "log_bytes": 9713,
+          "log_overflow": 0,
+          "triggered": 1,
+          "temperature_deci_c": 250,
+          "profile": 1,
+          "joint": 1,
+          "local_ns": 678766733155,
+          "master_ns": 706718438701,
+          "clock_locked": 1,
+          "sync_error_ns": 968,
+          "sample_period_ps": 20837210,
+          "session": 2233578708751191288,
+          "peer_session": 3096068504898031187
+        },
+        "counts": {
+          "ui": 5,
+          "trigger": 1,
+          "event": 29,
+          "clock": 29,
+          "candidate": 87,
+          "status": 25,
+          "dsp": 25
+        },
+        "first_anchor": [
+          29091840,
+          606507486620,
+          0,
+          768
+        ],
+        "last_anchor": [
+          29859072,
+          622494459530,
+          0,
+          768
+        ],
+        "examples": {
+          "event": [
+            "event",
+            "1",
+            "610203151139",
+            "838",
+            "1"
+          ],
+          "clock": [
+            "clock",
+            "1",
+            "638154987912",
+            "610268229715.000",
+            "-27951836645.847",
+            "0.000001960622"
+          ],
+          "pair": null,
+          "wave_clock": null,
+          "ui": [
+            "ui",
+            "598451",
+            "0",
+            "250",
+            "4"
+          ],
+          "status": [
+            "status",
+            "610102",
+            "1",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "966",
+            "20837211",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "epochs": [
+          0
+        ],
+        "pcm_sha256": "14d0541620c73c752acb1cb2a7376c0af6a013da1e7f125c50d48078808a73b1"
+      }
+    },
+    "supported": true
+  },
+  {
+    "folder": "2026-10-02_phase4_R000007_203929",
+    "boards": {
+      "A": {
+        "meta": {
+          "format": "RNG1",
+          "firmware_base": "48k-standard",
+          "board": "A",
+          "rate": 48000,
+          "channels": 2,
+          "sample_bytes": 2,
+          "frames": 768000,
+          "header_bytes": 4096,
+          "anchor_count": 1000,
+          "anchor_bytes": 24,
+          "log_bytes": 7632,
+          "log_overflow": 0,
+          "triggered": 1,
+          "temperature_deci_c": 250,
+          "profile": 1,
+          "joint": 1,
+          "local_ns": 57373802690,
+          "master_ns": 57373804635,
+          "clock_locked": 1,
+          "sync_error_ns": 949,
+          "sample_period_ps": 20837208,
+          "session": 6787350481308860153,
+          "peer_session": 9905448876512614793
+        },
+        "counts": {
+          "trigger": 1,
+          "event": 15,
+          "clock": 15,
+          "candidate": 45,
+          "status": 25,
+          "dsp": 25,
+          "pair": 15
+        },
+        "first_anchor": [
+          1191168,
+          25132326965,
+          0,
+          768
+        ],
+        "last_anchor": [
+          1958400,
+          41119301280,
+          0,
+          768
+        ],
+        "examples": {
+          "event": [
+            "event",
+            "1",
+            "28843272807",
+            "820",
+            "1"
+          ],
+          "clock": [
+            "clock",
+            "1",
+            "28843272807",
+            "0.000",
+            "0.000",
+            "0.000000000000"
+          ],
+          "pair": [
+            "pair",
+            "73",
+            "367",
+            "28843272807",
+            "28843728546",
+            "1",
+            "0",
+            "455696",
+            "569946",
+            "719940",
+            "572544",
+            "1799",
+            "8918",
+            "1",
+            "1",
+            "1",
+            "2"
+          ],
+          "wave_clock": null,
+          "ui": null,
+          "status": [
+            "status",
+            "29125",
+            "1",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "948",
+            "20837207",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "epochs": [
+          0
+        ],
+        "pcm_sha256": "f4fad8d2fdefb666099d70e1c0aa7bbd2b0f3c9e4d2f45c8eccd5174b49c7877"
+      },
+      "B": {
+        "meta": {
+          "format": "RNG1",
+          "firmware_base": "48k-standard",
+          "board": "B",
+          "rate": 48000,
+          "channels": 2,
+          "sample_bytes": 2,
+          "frames": 768000,
+          "header_bytes": 4096,
+          "anchor_count": 1000,
+          "anchor_bytes": 24,
+          "log_bytes": 6603,
+          "log_overflow": 0,
+          "triggered": 1,
+          "temperature_deci_c": 250,
+          "profile": 1,
+          "joint": 1,
+          "local_ns": 48777381745,
+          "master_ns": 57378056599,
+          "clock_locked": 1,
+          "sync_error_ns": 949,
+          "sample_period_ps": 20837211,
+          "session": 9905448876512614793,
+          "peer_session": 6787350481308860153
+        },
+        "counts": {
+          "ui": 1,
+          "trigger": 1,
+          "event": 15,
+          "clock": 15,
+          "candidate": 45,
+          "status": 25,
+          "dsp": 25
+        },
+        "first_anchor": [
+          779520,
+          16557769870,
+          0,
+          768
+        ],
+        "last_anchor": [
+          1546752,
+          32544744525,
+          0,
+          768
+        ],
+        "examples": {
+          "event": [
+            "event",
+            "1",
+            "20243005790",
+            "757",
+            "1"
+          ],
+          "clock": [
+            "clock",
+            "1",
+            "28843728546",
+            "20382054865.000",
+            "-8600722515.501",
+            "0.000001729343"
+          ],
+          "pair": null,
+          "wave_clock": null,
+          "ui": [
+            "ui",
+            "1647",
+            "0",
+            "250",
+            "1"
+          ],
+          "status": [
+            "status",
+            "20556",
+            "1",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "948",
+            "20837208",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "epochs": [
+          0
+        ],
+        "pcm_sha256": "737fdcdb804112b7012947cb2fca1d43198788b704ea87e8ade58c7c5dd67a63"
+      }
+    },
+    "supported": true
+  },
+  {
+    "folder": "2026-10-02_position-module_R000010_222150",
+    "boards": {
+      "A": {
+        "meta": {
+          "format": "RNG1",
+          "firmware_base": "48k-standard",
+          "board": "A",
+          "rate": 48000,
+          "channels": 2,
+          "sample_bytes": 2,
+          "frames": 768000,
+          "header_bytes": 4096,
+          "anchor_count": 1000,
+          "anchor_bytes": 24,
+          "log_bytes": 7816,
+          "log_overflow": 0,
+          "triggered": 1,
+          "temperature_deci_c": 250,
+          "profile": 1,
+          "joint": 1,
+          "local_ns": 655508671570,
+          "master_ns": 655508673710,
+          "clock_locked": 1,
+          "sync_error_ns": 945,
+          "sample_period_ps": 20837208,
+          "session": 13429609040420858387,
+          "peer_session": 2319434454461129279
+        },
+        "counts": {
+          "ui": 1,
+          "trigger": 1,
+          "event": 15,
+          "clock": 15,
+          "candidate": 45,
+          "status": 25,
+          "dsp": 25,
+          "pair": 15
+        },
+        "first_anchor": [
+          30014208,
+          625726047145,
+          0,
+          768
+        ],
+        "last_anchor": [
+          30781440,
+          641713021200,
+          0,
+          768
+        ],
+        "examples": {
+          "event": [
+            "event",
+            "1",
+            "629440255579",
+            "924",
+            "1"
+          ],
+          "clock": [
+            "clock",
+            "1",
+            "629440255579",
+            "0.000",
+            "0.000",
+            "0.000000000000"
+          ],
+          "pair": [
+            "pair",
+            "2434",
+            "12094",
+            "629440255579",
+            "629440662346",
+            "1",
+            "0",
+            "406894",
+            "288638",
+            "816788",
+            "558124",
+            "875",
+            "961",
+            "1",
+            "1",
+            "2",
+            "1"
+          ],
+          "wave_clock": null,
+          "ui": [
+            "ui",
+            "616755",
+            "0",
+            "250",
+            "9"
+          ],
+          "status": [
+            "status",
+            "629316",
+            "1",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "946",
+            "20837205",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "epochs": [
+          0
+        ],
+        "pcm_sha256": "344947ae30f29f80c78f7ef5520d4e82c066b0f88a24ebe8ed2b6b4d5d66e517"
+      },
+      "B": {
+        "meta": {
+          "format": "RNG1",
+          "firmware_base": "48k-standard",
+          "board": "B",
+          "rate": 48000,
+          "channels": 2,
+          "sample_bytes": 2,
+          "frames": 768000,
+          "header_bytes": 4096,
+          "anchor_count": 1000,
+          "anchor_bytes": 24,
+          "log_bytes": 6702,
+          "log_overflow": 0,
+          "triggered": 1,
+          "temperature_deci_c": 250,
+          "profile": 1,
+          "joint": 1,
+          "local_ns": 649003562630,
+          "master_ns": 655514247086,
+          "clock_locked": 1,
+          "sync_error_ns": 945,
+          "sample_period_ps": 20837209,
+          "session": 2319434454461129279,
+          "peer_session": 13429609040420858387
+        },
+        "counts": {
+          "ui": 1,
+          "trigger": 1,
+          "event": 15,
+          "clock": 15,
+          "candidate": 45,
+          "status": 25,
+          "dsp": 25
+        },
+        "first_anchor": [
+          29700864,
+          619197861580,
+          0,
+          768
+        ],
+        "last_anchor": [
+          30468096,
+          635184835945,
+          0,
+          768
+        ],
+        "examples": {
+          "event": [
+            "event",
+            "1",
+            "622929931226",
+            "868",
+            "1"
+          ],
+          "clock": [
+            "clock",
+            "1",
+            "629440662346",
+            "623052218420.000",
+            "-6510730890.944",
+            "0.000001869103"
+          ],
+          "pair": null,
+          "wave_clock": null,
+          "ui": [
+            "ui",
+            "610532",
+            "0",
+            "250",
+            "9"
+          ],
+          "status": [
+            "status",
+            "623073",
+            "1",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "946",
+            "20837211",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "epochs": [
+          0
+        ],
+        "pcm_sha256": "e87557b6624951912c1a7a37e17f34d3205b9deab06444dd7a62f26534c44367"
+      }
+    },
+    "supported": true
+  },
+  {
+    "folder": "2026-10-02_range-protocol_R000011_225444",
+    "boards": {
+      "A": {
+        "meta": {
+          "format": "RNG1",
+          "firmware_base": "48k-standard",
+          "board": "A",
+          "rate": 48000,
+          "channels": 2,
+          "sample_bytes": 2,
+          "frames": 768000,
+          "header_bytes": 4096,
+          "anchor_count": 1000,
+          "anchor_bytes": 24,
+          "log_bytes": 8402,
+          "log_overflow": 0,
+          "triggered": 1,
+          "temperature_deci_c": 240,
+          "profile": 1,
+          "joint": 1,
+          "local_ns": 1221251204070,
+          "master_ns": 1221251205830,
+          "clock_locked": 1,
+          "sync_error_ns": 928,
+          "sample_period_ps": 20837221,
+          "session": 4084045016012948580,
+          "peer_session": 10685633291074006422
+        },
+        "counts": {
+          "ui": 5,
+          "trigger": 1,
+          "event": 17,
+          "clock": 17,
+          "candidate": 51,
+          "status": 25,
+          "dsp": 25,
+          "pair": 17
+        },
+        "first_anchor": [
+          56961792,
+          1187236483545,
+          0,
+          768
+        ],
+        "last_anchor": [
+          57729024,
+          1203223457475,
+          0,
+          768
+        ],
+        "examples": {
+          "event": [
+            "event",
+            "1",
+            "1190964289595",
+            "558",
+            "1"
+          ],
+          "clock": [
+            "clock",
+            "1",
+            "1190964289595",
+            "0.000",
+            "0.000",
+            "0.000000000000"
+          ],
+          "pair": [
+            "pair",
+            "4494",
+            "23062",
+            "1190964289595",
+            "1190964123370",
+            "2",
+            "1",
+            "556760",
+            "-50990",
+            "268540",
+            "262740",
+            "1022",
+            "2478",
+            "1",
+            "1",
+            "1",
+            "2"
+          ],
+          "wave_clock": null,
+          "ui": [
+            "ui",
+            "533267",
+            "0",
+            "250",
+            "9"
+          ],
+          "status": [
+            "status",
+            "1191106",
+            "1",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "928",
+            "20837207",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "epochs": [
+          0
+        ],
+        "pcm_sha256": "f32942386dfa436d86e456dac342f295ed85b982d5e8be2587e2de9acc478568"
+      },
+      "B": {
+        "meta": {
+          "format": "RNG1",
+          "firmware_base": "48k-standard",
+          "board": "B",
+          "rate": 48000,
+          "channels": 2,
+          "sample_bytes": 2,
+          "frames": 768000,
+          "header_bytes": 4096,
+          "anchor_count": 1000,
+          "anchor_bytes": 24,
+          "log_bytes": 7208,
+          "log_overflow": 0,
+          "triggered": 1,
+          "temperature_deci_c": 240,
+          "profile": 1,
+          "joint": 1,
+          "local_ns": 1215202293420,
+          "master_ns": 1221256162882,
+          "clock_locked": 1,
+          "sync_error_ns": 928,
+          "sample_period_ps": 20837212,
+          "session": 10685633291074006422,
+          "peer_session": 4084045016012948580
+        },
+        "counts": {
+          "ui": 5,
+          "trigger": 1,
+          "event": 17,
+          "clock": 17,
+          "candidate": 51,
+          "status": 25,
+          "dsp": 25
+        },
+        "first_anchor": [
+          56673792,
+          1181235415945,
+          0,
+          768
+        ],
+        "last_anchor": [
+          57441024,
+          1197222389270,
+          0,
+          768
+        ],
+        "examples": {
+          "event": [
+            "event",
+            "1",
+            "1184910201343",
+            "447",
+            "1"
+          ],
+          "clock": [
+            "clock",
+            "1",
+            "1190964123370",
+            "1185024559980.000",
+            "-6053921822.386",
+            "0.000001788680"
+          ],
+          "pair": null,
+          "wave_clock": null,
+          "ui": [
+            "ui",
+            "527224",
+            "0",
+            "250",
+            "9"
+          ],
+          "status": [
+            "status",
+            "1185024",
+            "1",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "928",
+            "20837211",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "epochs": [
+          0
+        ],
+        "pcm_sha256": "ccc1193fcc46809e2063840cab92a641e84ecd0c26539d24bd7e68eefa2977fd"
+      }
+    },
+    "supported": true
+  },
+  {
+    "folder": "2026-10-02_range-protocol_R000012_232358",
+    "boards": {
+      "A": {
+        "meta": {
+          "format": "RNG1",
+          "firmware_base": "48k-standard",
+          "board": "A",
+          "rate": 48000,
+          "channels": 2,
+          "sample_bytes": 2,
+          "frames": 768000,
+          "header_bytes": 4096,
+          "anchor_count": 1000,
+          "anchor_bytes": 24,
+          "log_bytes": 7572,
+          "log_overflow": 0,
+          "triggered": 1,
+          "temperature_deci_c": 250,
+          "profile": 1,
+          "joint": 1,
+          "local_ns": 27510316470,
+          "master_ns": 27510318230,
+          "clock_locked": 1,
+          "sync_error_ns": 929,
+          "sample_period_ps": 20837207,
+          "session": 14300716767763874880,
+          "peer_session": 7018959620420429165
+        },
+        "counts": {
+          "trigger": 1,
+          "event": 15,
+          "clock": 15,
+          "candidate": 44,
+          "status": 25,
+          "dsp": 25,
+          "pair": 15
+        },
+        "first_anchor": [
+          236544,
+          5240618470,
+          0,
+          768
+        ],
+        "last_anchor": [
+          1003776,
+          21227592070,
+          0,
+          768
+        ],
+        "examples": {
+          "event": [
+            "event",
+            "1",
+            "9033323693",
+            "832",
+            "1"
+          ],
+          "clock": [
+            "clock",
+            "1",
+            "9033323693",
+            "0.000",
+            "0.000",
+            "0.000000000000"
+          ],
+          "pair": [
+            "pair",
+            "29",
+            "143",
+            "9033323693",
+            "9033736783",
+            "1",
+            "0",
+            "413309",
+            "305796",
+            "764608",
+            "560590",
+            "14894",
+            "3326",
+            "1",
+            "1",
+            "2",
+            "1"
+          ],
+          "wave_clock": null,
+          "ui": null,
+          "status": [
+            "status",
+            "9248",
+            "1",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "929",
+            "20837212",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "epochs": [
+          0
+        ],
+        "pcm_sha256": "ae8ba73928bcff4a1f0750ce7116bd36033e749393d6da9e004dd7d57fa4b83d"
+      },
+      "B": {
+        "meta": {
+          "format": "RNG1",
+          "firmware_base": "48k-standard",
+          "board": "B",
+          "rate": 48000,
+          "channels": 2,
+          "sample_bytes": 2,
+          "frames": 768000,
+          "header_bytes": 4096,
+          "anchor_count": 1000,
+          "anchor_bytes": 24,
+          "log_bytes": 6572,
+          "log_overflow": 0,
+          "triggered": 1,
+          "temperature_deci_c": 250,
+          "profile": 1,
+          "joint": 1,
+          "local_ns": 27363927765,
+          "master_ns": 27528139907,
+          "clock_locked": 1,
+          "sync_error_ns": 929,
+          "sample_period_ps": 20837208,
+          "session": 7018959620420429165,
+          "peer_session": 14300716767763874880
+        },
+        "counts": {
+          "ui": 1,
+          "trigger": 1,
+          "event": 15,
+          "clock": 15,
+          "candidate": 45,
+          "status": 25,
+          "dsp": 25
+        },
+        "first_anchor": [
+          233472,
+          5176634880,
+          0,
+          768
+        ],
+        "last_anchor": [
+          1000704,
+          21163608150,
+          0,
+          768
+        ],
+        "examples": {
+          "event": [
+            "event",
+            "1",
+            "8869492920",
+            "902",
+            "1"
+          ],
+          "clock": [
+            "clock",
+            "1",
+            "9033736783",
+            "8987971110.000",
+            "-164243649.066",
+            "0.000001809566"
+          ],
+          "pair": null,
+          "wave_clock": null,
+          "ui": [
+            "ui",
+            "1866",
+            "0",
+            "250",
+            "1"
+          ],
+          "status": [
+            "status",
+            "9185",
+            "1",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "929",
+            "20837208",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "epochs": [
+          0
+        ],
+        "pcm_sha256": "929d158c19bf6c71665a1c6b018ab5e82f9e55df08ed1f4bc945d60568929f65"
+      }
+    },
+    "supported": true
+  },
+  {
+    "folder": "2026-10-02_range-protocol_R000013_232358",
+    "boards": {
+      "A": {
+        "meta": {
+          "format": "RNG1",
+          "firmware_base": "48k-standard",
+          "board": "A",
+          "rate": 48000,
+          "channels": 2,
+          "sample_bytes": 2,
+          "frames": 768000,
+          "header_bytes": 4096,
+          "anchor_count": 1000,
+          "anchor_bytes": 24,
+          "log_bytes": 7645,
+          "log_overflow": 0,
+          "triggered": 1,
+          "temperature_deci_c": 250,
+          "profile": 1,
+          "joint": 1,
+          "local_ns": 95412324510,
+          "master_ns": 95412326270,
+          "clock_locked": 1,
+          "sync_error_ns": 928,
+          "sample_period_ps": 20837210,
+          "session": 14300716767763874880,
+          "peer_session": 7018959620420429165
+        },
+        "counts": {
+          "trigger": 1,
+          "event": 15,
+          "clock": 15,
+          "candidate": 45,
+          "status": 25,
+          "dsp": 25,
+          "pair": 15
+        },
+        "first_anchor": [
+          3600384,
+          75333656725,
+          0,
+          768
+        ],
+        "last_anchor": [
+          4367616,
+          91320629855,
+          0,
+          768
+        ],
+        "examples": {
+          "event": [
+            "event",
+            "1",
+            "79075205988",
+            "936",
+            "1"
+          ],
+          "clock": [
+            "clock",
+            "1",
+            "79075205988",
+            "0.000",
+            "0.000",
+            "0.000000000000"
+          ],
+          "pair": [
+            "pair",
+            "204",
+            "852",
+            "79075205988",
+            "79075634521",
+            "1",
+            "0",
+            "428621",
+            "545038",
+            "860184",
+            "603720",
+            "835",
+            "174",
+            "1",
+            "1",
+            "1",
+            "2"
+          ],
+          "wave_clock": null,
+          "ui": null,
+          "status": [
+            "status",
+            "79333",
+            "1",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "927",
+            "20837209",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "epochs": [
+          0
+        ],
+        "pcm_sha256": "f078fef263370f2b2031fa8b2d02ada3410f5bb39a2e101cfc55e73e6293db61"
+      },
+      "B": {
+        "meta": {
+          "format": "RNG1",
+          "firmware_base": "48k-standard",
+          "board": "B",
+          "rate": 48000,
+          "channels": 2,
+          "sample_bytes": 2,
+          "frames": 768000,
+          "header_bytes": 4096,
+          "anchor_count": 1000,
+          "anchor_bytes": 24,
+          "log_bytes": 6574,
+          "log_overflow": 0,
+          "triggered": 1,
+          "temperature_deci_c": 250,
+          "profile": 1,
+          "joint": 1,
+          "local_ns": 95249917930,
+          "master_ns": 95414007036,
+          "clock_locked": 1,
+          "sync_error_ns": 928,
+          "sample_period_ps": 20837211,
+          "session": 7018959620420429165,
+          "peer_session": 14300716767763874880
+        },
+        "counts": {
+          "trigger": 1,
+          "event": 15,
+          "clock": 15,
+          "candidate": 45,
+          "status": 25,
+          "dsp": 25
+        },
+        "first_anchor": [
+          3595008,
+          75221663600,
+          0,
+          768
+        ],
+        "last_anchor": [
+          4362240,
+          91208637850,
+          0,
+          768
+        ],
+        "examples": {
+          "event": [
+            "event",
+            "1",
+            "78911517321",
+            "919",
+            "1"
+          ],
+          "clock": [
+            "clock",
+            "1",
+            "79075634521",
+            "78985083570.000",
+            "-164117065.643",
+            "0.000001824402"
+          ],
+          "pair": null,
+          "wave_clock": null,
+          "ui": null,
+          "status": [
+            "status",
+            "79216",
+            "1",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "927",
+            "20837211",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "epochs": [
+          0
+        ],
+        "pcm_sha256": "8c21c13a248d1bb5ff62454a81641cb099996a8a58fc997cfac58ed569ffd015"
+      }
+    },
+    "supported": true
+  },
+  {
+    "folder": "R000004",
+    "boards": {
+      "A": {
+        "meta": {
+          "format": "RNG1",
+          "firmware_base": "dd73c22+capture4",
+          "board": "A",
+          "rate": 48000,
+          "channels": 2,
+          "sample_bytes": 2,
+          "frames": 768000,
+          "header_bytes": 4096,
+          "anchor_count": 1000,
+          "anchor_bytes": 24,
+          "log_bytes": 7640,
+          "log_overflow": 0,
+          "triggered": 1,
+          "temperature_deci_c": 250,
+          "profile": 1,
+          "joint": 1,
+          "local_ns": 49957347440,
+          "master_ns": 49957348715,
+          "clock_locked": 1,
+          "sync_error_ns": 958,
+          "sample_period_ps": 20837211,
+          "session": 11452650551045558808,
+          "peer_session": 16462169916042631731
+        },
+        "counts": {
+          "trigger": 1,
+          "event": 15,
+          "clock": 15,
+          "candidate": 45,
+          "status": 25,
+          "dsp": 25,
+          "pair": 15
+        },
+        "first_anchor": [
+          941568,
+          19704357030,
+          0,
+          768
+        ],
+        "last_anchor": [
+          1708800,
+          35691330340,
+          0,
+          768
+        ],
+        "examples": {
+          "event": [
+            "event",
+            "1",
+            "23403743969",
+            "837",
+            "1"
+          ],
+          "clock": [
+            "clock",
+            "1",
+            "23403743969",
+            "0.000",
+            "0.000",
+            "0.000000000000"
+          ],
+          "pair": [
+            "pair",
+            "87",
+            "429",
+            "23403743969",
+            "23404130580",
+            "1",
+            "0",
+            "385832",
+            "265306",
+            "637602",
+            "514794",
+            "1101",
+            "1377",
+            "1",
+            "1",
+            "2",
+            "1"
+          ],
+          "wave_clock": null,
+          "ui": null,
+          "status": [
+            "status",
+            "23711",
+            "1",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "970",
+            "20837209",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "epochs": [
+          0
+        ],
+        "pcm_sha256": "75ceebbd95f199abbc77cb69af7bb32f97161d32d0123b047a1244a48860303f"
+      },
+      "B": {
+        "meta": {
+          "format": "RNG1",
+          "firmware_base": "dd73c22+capture4",
+          "board": "B",
+          "rate": 48000,
+          "channels": 2,
+          "sample_bytes": 2,
+          "frames": 768000,
+          "header_bytes": 4096,
+          "anchor_count": 1000,
+          "anchor_bytes": 24,
+          "log_bytes": 6535,
+          "log_overflow": 0,
+          "triggered": 1,
+          "temperature_deci_c": 250,
+          "profile": 1,
+          "joint": 1,
+          "local_ns": 49976981570,
+          "master_ns": 49959749500,
+          "clock_locked": 1,
+          "sync_error_ns": 958,
+          "sample_period_ps": 20837211,
+          "session": 16462169916042631731,
+          "peer_session": 11452650551045558808
+        },
+        "counts": {
+          "trigger": 1,
+          "event": 15,
+          "clock": 15,
+          "candidate": 45,
+          "status": 25,
+          "dsp": 25
+        },
+        "first_anchor": [
+          943104,
+          19736420080,
+          0,
+          768
+        ],
+        "last_anchor": [
+          1710336,
+          35723393735,
+          0,
+          768
+        ],
+        "examples": {
+          "event": [
+            "event",
+            "1",
+            "23421308069",
+            "681",
+            "1"
+          ],
+          "clock": [
+            "clock",
+            "1",
+            "23404130580",
+            "23599320685.000",
+            "17177862.919",
+            "0.000002098833"
+          ],
+          "pair": null,
+          "wave_clock": null,
+          "ui": null,
+          "status": [
+            "status",
+            "23728",
+            "1",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "970",
+            "20837211",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "epochs": [
+          0
+        ],
+        "pcm_sha256": "ddbf2e040bdf027a4d7545790088e00db5e20537537568460811e85aca87c02a"
+      }
+    },
+    "supported": true
+  }
+]

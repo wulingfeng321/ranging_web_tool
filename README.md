@@ -1,0 +1,69 @@
+# Ranging Studio · 测距实验分析
+
+本地可运行的第一版。使用 React / Plotly.js 展示实验数据，FastAPI 校验、分析 RNG1 采集，SQLite 保存实验记录。Windows 开发，Linux 部署将在后续阶段验证。
+
+## 启动
+
+当前电脑已经安装项目依赖并生成前端构建。双击项目根目录的 **`start-local.cmd`**，浏览器会打开 **http://127.0.0.1:8000**。
+
+保持启动窗口运行；在窗口按 Ctrl+C 停止服务。程序只监听本机，首版没有公网登录功能，不应直接对公网开放。
+
+## 怎么使用
+
+1. 点击“导入实验”，一次选择同一轮的 `A.RNG`、`B.RNG`、`COMPLETE.TXT`。也可以将三个文件拖入上传框。
+2. 填写名称、备注；真实距离可选，单位为 mm。
+3. 完成校验后，查看配对曲线与音频。点击图中点或表格行，会同时放大时间范围并显示候选详情。
+4. 波形可切换 A/B 的两个通道；拖动框选缩放，双击或点击“全览”复位。悬停图表可使用工具栏导出 PNG。
+5. “时钟与采集状态”展示同步误差、音频计数及固件实际显示距离；其时间轴使用各板 tick，不与音频主时钟强行联动。
+6. “实验对比”最多选择四轮，对比换算距离分布。填写真实距离后可查看偏差、MAE 和 RMSE。
+7. “导出 CSV”导出配对记录、原始协议编号、匹配的本地事件编号与分析条件。
+
+当前已导入三轮真实样本供体验。原始样本目录未被改动，项目的 `data/` 中保存独立副本；这部分不进入 Git。
+
+## 如何解读
+
+- **唯一配对 ≠ 最终测距通过**：pair.outcome 只反映候选配对结果，固件还可能执行距离拒绝或批次统计。
+- **换算距离**为 `abs(best_ns) × (331.3 + 0.606 × 封存温度°C) / 1e6` mm，假设固定偏置为零。它不冒充固件最终输出；历史实验若温度在采集期间改变，封存温度可能不代表每个事件。
+- 配对记录中的 `event_a_id/event_b_id` 是通信序号。本地事件依赖 `pair.*_master_ns == clock.master_ns` 唯一匹配，再通过本地事件号关联 candidate。
+- A 音频使用块末锚点建立时间。B 音频仅在同 epoch、无断流、两端锁定且间隔不超过 1.1 s 的事件间进行诊断性线性插值。它不是采样级同步精度保证，缺少依据的范围留空。
+- “各板录音时间”模式可查看全段 B 音频，但 A/B 起点各自归零，不能用于判断传播时差。
+- 原始纳秒时间和日志数值保留为字符串；大整数元数据亦转换为字符串，避免浏览器精度丢失。
+- 图表概览保留极值。距离统计由日志原值计算，不使用音频抽稀点。
+
+## 开发与测试
+
+首次在新电脑准备环境：
+
+```powershell
+python -m venv backend/.venv
+.\backend\.venv\Scripts\python.exe -m pip install -r backend/requirements.txt
+cd frontend
+npm.cmd ci
+npm.cmd run build
+```
+
+开发时分别打开两个终端：
+
+```powershell
+# 项目根目录
+.\backend\.venv\Scripts\python.exe -m uvicorn app.main:app --app-dir backend --host 127.0.0.1 --port 8000
+```
+
+```powershell
+# frontend 目录，开发地址 http://127.0.0.1:5173
+npm.cmd run dev
+```
+
+后端测试：在 `backend/` 执行 `.\.venv\Scripts\python.exe -m pytest tests -q`。测试使用隔离的临时数据库，不写入正式 `data/`。
+
+只读审计样本：`python scripts/audit_samples.py <样本根目录>`。
+
+通过本地 API 导入代表样本：`.\backend\.venv\Scripts\python.exe scripts/import_samples.py <样本根目录> --limit 3`。使用 `--limit 0` 导入全部；按实验名称跳过已有导入，不自动推定真实距离。
+
+`RANGING_DATA_DIR` 可指定独立数据目录。SQLite、原始文件与报告均位于该目录；部署前应制定备份和认证方案。
+
+## 当前边界
+
+首版已实现本地单轮分析与基础多轮对比，尚未实现公网认证、Linux 实机验证、实验删除、ZIP/文件夹上传、完整频谱与算法复算。后台解析单任务运行，重启会把中断任务标记为失败，可点击重试。
+
+服务器已确认：Ubuntu Server 24.04 LTS 64 位、2 核、2 GiB 内存、50 GiB SSD、3 Mbps 带宽，SSH 可登录。本轮没有连接或修改服务器。
