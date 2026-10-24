@@ -3,7 +3,7 @@ from pathlib import Path
 import struct
 import numpy as np
 import pytest
-from app.analysis import read_capture, build_report, waveform, alignment_segments, json_safe
+from app.analysis import read_capture, build_report, waveform, alignment_segments, waveform_alignment_segments, json_safe
 from app.legacy_decoder import fnv1a, parse
 
 def write_fixture(folder, broken=False):
@@ -44,14 +44,14 @@ def test_checksum_failure(tmp_path):
 def test_missing_marker(tmp_path):
     with pytest.raises(FileNotFoundError):read_capture(tmp_path)
 
-def test_wave_envelope_and_no_extrapolation(tmp_path):
+def test_wave_envelope_and_event_model_margins(tmp_path):
     boards,_=read_capture(write_fixture(tmp_path))
     result=waveform(boards,0,.01,pixels=2)
     a,b=result['traces'][0],result['traces'][2]
     assert max(v for v in a['y'] if v is not None)==30000
     assert min(v for v in a['y'] if v is not None)==-29000
-    assert min(v for v in b['x'] if v is not None)>=.001
-    assert max(v for v in b['x'] if v is not None)<=.008
+    assert min(v for v in b['x'] if v is not None)==0
+    assert .009 <= max(v for v in b['x'] if v is not None)<.01
     for x,y in zip(a['x'],a['y']):
         if y==30000:assert x==pytest.approx(100/48000,abs=1e-9)
 
@@ -102,3 +102,83 @@ def test_large_timestamp_translation_preserves_relative_samples(tmp_path):
     shifted=waveform(boards,0,.01,pixels=30)
     assert original==shifted
     assert build_report(boards)['pairs'][0]['time_s']==pytest.approx(.001)
+
+
+def long_wave_fixture(tmp_path):
+    boards,_=read_capture(write_fixture(tmp_path))
+    b=boards['B']
+    b['pcm']=np.zeros((48000,2),dtype='<i2')
+    b['anchors']=[(i*48,1_001_000_000+i*1_000_000,1,48) for i in range(1,1001)]
+    b['meta']['frames']=48000
+    b['logs']['event']=[{'event':str(i),'local_ns':str(1_001_000_000+t),'quality':'800','locked':'1'} for i,t in [(1,200_000_000),(2,700_000_000)]]
+    b['logs']['clock']=[{'event':str(i),'master_ns':str(1_000_000_000+t),'origin':'0','offset':'1000000','slope':'0'} for i,t in [(1,200_000_000),(2,700_000_000)]]
+    b['pcm'][int(.72*48000),0]=21000
+    b['pcm'][int(.85*48000),0]=-22000
+    b['pcm'][int(.91*48000),0]=31000
+    return boards
+
+
+def test_last_onset_keeps_burst_but_not_distant_unmapped_samples(tmp_path):
+    boards=long_wave_fixture(tmp_path)
+    b=waveform(boards,0,1,pixels=1000)['traces'][2]
+    assert 21000 in b['y'] and -22000 in b['y']
+    assert 31000 not in b['y']
+    assert min(x for x in b['x'] if x is not None)>=.1
+    assert max(x for x in b['x'] if x is not None)<=.86
+    # With no usable model, retain the original event-to-event interpolation only.
+    boards['B']['logs']['clock'][1]['offset']='2000000'
+    b=waveform(boards,0,1,pixels=1000)['traces'][2]
+    assert 21000 not in b['y']
+    assert max(x for x in b['x'] if x is not None)<=.7
+
+
+@pytest.mark.parametrize('break_kind',['epoch','sample_gap','unlock'])
+def test_model_margins_never_cross_discontinuity_or_unlock(tmp_path,break_kind):
+    boards=long_wave_fixture(tmp_path);b=boards['B']
+    if break_kind=='unlock':
+        b['logs']['event'].append({'event':'3','local_ns':'1731000000','quality':'1','locked':'0'})
+    else:
+        b['anchors']=[(count+(48 if break_kind=='sample_gap' and i>=750 else 0),ns,
+                       2 if break_kind=='epoch' and i>=750 else ep,frames)
+                      for i,(count,ns,ep,frames) in enumerate(b['anchors'])]
+    trace=waveform(boards,0,1,pixels=1000)['traces'][2]
+    assert -22000 not in trace['y']
+    assert max(x for x in trace['x'] if x is not None)<=(.7 if break_kind=='unlock' else .75)
+
+
+def test_isolated_event_model_and_unlocked_event(tmp_path):
+    boards=long_wave_fixture(tmp_path);b=boards['B']
+    b['logs']['event']=b['logs']['event'][1:]
+    b['logs']['clock']=b['logs']['clock'][1:]
+    assert alignment_segments(b)==[]
+    assert waveform_alignment_segments(b)
+    assert 21000 in waveform(boards,0,1)['traces'][2]['y']
+    b['logs']['event'][0]['locked']='0'
+    assert waveform_alignment_segments(b)==[]
+
+
+def test_unmapped_interval_inside_one_block_breaks_trace(tmp_path):
+    boards=long_wave_fixture(tmp_path);b=boards['B']
+    b['anchors']=[(48000,2_001_000_000,1,48000)]
+    b['logs']['event'].append({'event':'3','local_ns':'1451000000','quality':'1','locked':'0'})
+    b['pcm'][24000,0]=32000
+    trace=waveform(boards,0,1)['traces'][2]
+    assert None in trace['x']
+    assert 32000 not in trace['y']
+    assert 21000 in trace['y']
+
+
+def test_model_margins_preserve_precision_with_drift_and_large_timestamps(tmp_path):
+    boards=long_wave_fixture(tmp_path)
+    for c in boards['B']['logs']['clock']:
+        c['slope']='0.00005';c['origin']='1001000000'
+        c['master_ns']=str(int(c['master_ns'])-(10000 if c['event']=='1' else 35000))
+    original=waveform(boards,0,1)
+    shift=10**18+7
+    for b in boards.values():
+        b['anchors']=[(count,ns+shift,epoch,frames) for count,ns,epoch,frames in b['anchors']]
+        for e in b['logs']['event']:e['local_ns']=str(int(e['local_ns'])+shift)
+        for c in b['logs']['clock']:
+            c['master_ns']=str(int(c['master_ns'])+shift)
+            c['origin']=str(int(c['origin'])+shift)
+    assert waveform(boards,0,1)==original

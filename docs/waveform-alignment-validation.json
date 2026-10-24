@@ -1,0 +1,162 @@
+[
+  {
+    "id": "9899b15760134a7bafcfe64b83e32950",
+    "name": "2026-09-29_50cm_source  /  R000001",
+    "old_end_of_group_s": [
+      5.688389,
+      9.688405,
+      13.688421
+    ],
+    "restored_peak_pcm": [
+      5755,
+      5014,
+      5940
+    ],
+    "old_segments": 12,
+    "new_segments": 18
+  },
+  {
+    "id": "a55ccb112d1e474aa23b089d535b1e24",
+    "name": "2026-09-29_early1_190cm  /  R000017",
+    "old_end_of_group_s": [
+      5.608317,
+      9.608326,
+      13.608337
+    ],
+    "restored_peak_pcm": [
+      6350,
+      5360,
+      4848
+    ],
+    "old_segments": 12,
+    "new_segments": 18
+  },
+  {
+    "id": "aa0102a44e014d88aae377d3b8df230f",
+    "name": "2026-10-02_clap-module_R000009_215010",
+    "old_end_of_group_s": [
+      5.673555,
+      9.673559,
+      13.673566
+    ],
+    "restored_peak_pcm": [
+      14347,
+      13283,
+      14334
+    ],
+    "old_segments": 12,
+    "new_segments": 18
+  },
+  {
+    "id": "ff149f243fb24469978ccd694082888b",
+    "name": "R000004 · 配对诊断样本",
+    "old_end_of_group_s": [
+      5.715777,
+      9.71577,
+      13.715768
+    ],
+    "restored_peak_pcm": [
+      10532,
+      10773,
+      9785
+    ],
+    "old_segments": 12,
+    "new_segments": 18
+  },
+  {
+    "id": "7a795e1470a04de3a9a5366ab52fa6d9",
+    "name": "early1 190cm r19 10月",
+    "old_end_of_group_s": [
+      4.599717,
+      9.599731,
+      13.599742
+    ],
+    "restored_peak_pcm": [
+      4156,
+      4857,
+      4978
+    ],
+    "old_segments": 9,
+    "new_segments": 15
+  },
+  {
+    "id": "3d2f3125114a4fb0881370c464dd98bc",
+    "name": "10.24 r01",
+    "old_end_of_group_s": [
+      5.684246,
+      9.684272,
+      13.684294
+    ],
+    "restored_peak_pcm": [
+      8504,
+      6990,
+      8513
+    ],
+    "old_segments": 12,
+    "new_segments": 18
+  },
+  {
+    "id": "a565108770704252badd8725c484fef4",
+    "name": "10.24 r02",
+    "old_end_of_group_s": [
+      5.691935,
+      9.691941,
+      13.691964
+    ],
+    "restored_peak_pcm": [
+      8515,
+      7701,
+      7712
+    ],
+    "old_segments": 12,
+    "new_segments": 18
+  },
+  {
+    "id": "23a6df6513e947c191622cde3ee1c0a2",
+    "name": "10.24 r03",
+    "old_end_of_group_s": [
+      5.686757,
+      9.686777,
+      13.686797
+    ],
+    "restored_peak_pcm": [
+      7305,
+      5606,
+      7049
+    ],
+    "old_segments": 12,
+    "new_segments": 18
+  },
+  {
+    "id": "eb8ecce8311848c0bbf2484c86125c11",
+    "name": "10.24 r04",
+    "old_end_of_group_s": [
+      5.726738,
+      9.726758,
+      13.726778
+    ],
+    "restored_peak_pcm": [
+      5595,
+      6888,
+      6579
+    ],
+    "old_segments": 12,
+    "new_segments": 18
+  },
+  {
+    "id": "7a9eab7257564646bccdfce6f4591e44",
+    "name": "10.24 r05",
+    "old_end_of_group_s": [
+      5.745221,
+      9.745241,
+      13.74526
+    ],
+    "restored_peak_pcm": [
+      5894,
+      7029,
+      6078
+    ],
+    "old_segments": 12,
+    "new_segments": 18
+  }
+]

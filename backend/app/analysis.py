@@ -1,5 +1,6 @@
 """RNG1 analysis. Raw records remain strings; time math stays on the server."""
 from collections import defaultdict
+from decimal import Decimal, InvalidOperation
 from pathlib import Path
 import hashlib
 import math
@@ -7,7 +8,11 @@ import re
 import numpy as np
 from .legacy_decoder import parse, fnv1a, SCHEMAS
 
-VERSION = 'rng1-analysis-0.1.0'
+VERSION = 'rng1-analysis-0.2.0'
+MODEL_BEFORE_NS = 100_000_000
+MODEL_AFTER_NS = 160_000_000
+ALIGNMENT_NOTE = ('A 使用音频块锚点；B 在有效事件间插值，并使用事件时钟模型补齐事件前 100 ms、后 160 ms 的局部波形。'
+                  '补齐仅限同一连续采集段，失锁或模型无效处不延伸；其余未知区间留空，不代表采样级同步精度。')
 REASONS = {0: '唯一配对', 1: '次佳候选过于接近', 2: '候选溢出', 3: '脉冲间时差不一致', 4: '候选数量无效'}
 
 def read_capture(folder: Path):
@@ -83,6 +88,69 @@ def alignment_segments(board):
             if not invalid: segments.append((la,lb,ma,mb,a['epoch']))
     return segments
 
+
+def waveform_alignment_segments(board):
+    """Keep event interpolation; fill only short event margins with logged clock models.
+
+    Events timestamp the onset, not the end of the recorded burst. Restrict model
+    projection to a diagnostic window and one uninterrupted audio run. Do not
+    infer a clock model from nominal sample rate or extend across invalid events.
+    """
+    segments = alignment_segments(board)
+    runs = []
+    for _, frames, end, step, epoch, contiguous in block_times(board):
+        start = end - int(round(frames * step))
+        if contiguous and runs:
+            runs[-1][1] = end
+        else:
+            runs.append([start, end, epoch])
+    events = sorted(event_records(board), key=lambda e: int(e['local_ns']))
+    stamps = [int(e['local_ns']) for e in events]
+    models = []
+    for event, local in zip(events, stamps):
+        clock = event['clock']
+        model = None
+        if clock and event['locked'] == '1' and event['epoch'] is not None and stamps.count(local) == 1:
+            try:
+                slope = Decimal(clock['slope'])
+                predicted = Decimal(local) - Decimal(clock['offset']) - slope * (Decimal(local) - Decimal(clock['origin']))
+                master = int(clock['master_ns'])
+                if slope.is_finite() and abs(slope) < Decimal('0.001') and abs(predicted - master) <= 1000:
+                    model = (master, Decimal(1) - slope)
+            except (InvalidOperation, ValueError, KeyError):
+                pass
+        models.append(model)
+    for i, (event, local, model) in enumerate(zip(events, stamps, models)):
+        if model is None:
+            continue
+        run = next((r for r in runs if r[0] <= local < r[1] and r[2] == event['epoch']), None)
+        if run is None:
+            continue
+        lo, hi = max(run[0], local - MODEL_BEFORE_NS), min(run[1], local + MODEL_AFTER_NS)
+        # A nearby invalid/ambiguous/unlocked event blocks extension on that side.
+        if i > 0 and models[i-1] is None and local - stamps[i-1] <= MODEL_BEFORE_NS:
+            lo = local
+        if i+1 < len(events) and models[i+1] is None and stamps[i+1] - local <= MODEL_AFTER_NS:
+            hi = local
+        missing = [(lo, hi)] if hi > lo else []
+        for a, b, _, _, epoch in segments:
+            if epoch != event['epoch']:
+                continue
+            remaining = []
+            for left, right in missing:
+                if b <= left or a >= right:
+                    remaining.append((left, right))
+                else:
+                    if left < a: remaining.append((left, a))
+                    if right > b: remaining.append((b, right))
+            missing = remaining
+        master, scale = model
+        for left, right in missing:
+            ma = master + int(round(Decimal(left-local) * scale))
+            mb = master + int(round(Decimal(right-local) * scale))
+            segments.append((left, right, ma, mb, event['epoch']))
+    return sorted(segments, key=lambda s: s[0])
+
 def base_time(boards):
     _,frames,ns,step,_,_=next(block_times(boards['A']))
     return ns-int(round(frames*step))
@@ -127,8 +195,8 @@ def build_report(boards):
     missing=sum(any(e is None for e in p['events'].values()) for p in pairs)
     if missing: warnings.append(f'{missing} 个配对无法通过主时钟时间唯一关联两侧事件。')
     if not pairs: warnings.append('本轮没有 pair 日志，无法计算配对统计；仍可查看音频与状态。')
-    segments=alignment_segments(boards['B'])
-    if not segments: warnings.append('B 板缺少连续且锁定的时钟事件，主时钟视图不绘制 B 音频。可切换到各板录音时间查看。')
+    segments=waveform_alignment_segments(boards['B'])
+    if not segments: warnings.append('B 板缺少有效事件插值或局部时钟模型，主时钟视图不绘制 B 音频。可切换到各板录音时间查看。')
     end=max(ns for _,_,ns,_,_,_ in block_times(boards['A']))
     return {'analysis_version':VERSION,'base_master_ns':str(base),'duration_s':(end-base)/1e9,
             'boards':board_reports,'pairs':pairs,'warnings':warnings,
@@ -137,7 +205,7 @@ def build_report(boards):
                 'mean_mm':float(np.mean(accepted)) if accepted else None,
                 'std_mm':float(np.std(accepted)) if accepted else None,
                 'temperature_c':temperature},
-            'alignment':{'method':'A 使用音频块锚点；B 仅在同 epoch、无断流且间隔 ≤1.1 s 的锁定事件间按记录时钟线性插值，不向区间外推。',
+            'alignment':{'method':ALIGNMENT_NOTE,
                          'b_ranges': [[(s[2]-base)/1e9,(s[3]-base)/1e9] for s in segments]},
             'distance_note':'按 pair.best_ns 与封存温度换算，偏置假设为 0；不是固件最终显示距离，也不等于测距通过率。'}
 
@@ -154,7 +222,7 @@ def waveform(boards, start, end, pixels=1200, mode='master'):
         parts=[]
         ownbase=next(block_times(board))
         ownbase=ownbase[2]-int(round(ownbase[1]*ownbase[3]))
-        segments=alignment_segments(board) if b=='B' and mode=='master' else []
+        segments=waveform_alignment_segments(board) if b=='B' and mode=='master' else []
         for pos,frames,ns,step,epoch,continuous in block_times(board):
             # Subtract the integer reference before converting to float.
             local_relative=(ns-ownbase)-np.arange(frames,0,-1)*step
@@ -169,7 +237,12 @@ def waveform(boards, start, end, pixels=1200, mode='master'):
                     t[mask]=((ma-base)+(local_relative[mask]-rel_la)*(mb-ma)/(lb-la))/1e9
             valid=np.isfinite(t)&(t>=start)&(t<=end)
             indices=np.flatnonzero(valid)
-            if indices.size: parts.append((t[indices],board['pcm'][pos+indices],continuous,epoch))
+            if indices.size:
+                # Missing clock ranges can split even one audio block; never join across them.
+                splits=np.r_[0,np.flatnonzero(np.diff(indices)>1)+1,len(indices)]
+                for j,(lo,hi) in enumerate(zip(splits[:-1],splits[1:])):
+                    selected=indices[lo:hi]
+                    parts.append((t[selected],board['pcm'][pos+selected],continuous if j==0 else False,epoch))
         for channel in range(2):
             xs=[]; ys=[]
             previous=None

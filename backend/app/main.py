@@ -18,7 +18,7 @@ from fastapi import FastAPI, File, Form, HTTPException, Query, UploadFile
 from fastapi.responses import Response, FileResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
-from .analysis import read_capture, build_report, json_safe, waveform
+from .analysis import read_capture, build_report, json_safe, waveform, VERSION
 from .data_views import TABLES, table_page, csv_chunks
 from . import ai_analysis as ai
 
@@ -88,6 +88,12 @@ def process(experiment_id):
 def loaded(experiment_id):
     return read_capture(ROOT/experiment_id/'raw')[0]
 
+@lru_cache(maxsize=8)
+def current_report(experiment_id):
+    report=json.loads((ROOT/experiment_id/'report.json').read_text('utf-8'))
+    # Existing experiments gain the corrected waveform coverage without reimporting.
+    return json_safe(build_report(loaded(experiment_id))) if report.get('analysis_version')!=VERSION else report
+
 @app.get('/api/health')
 def health(): return {'status':'ok','version':'0.1.0','mode':'local'}
 
@@ -134,7 +140,7 @@ async def upload(files:Annotated[list[UploadFile],File()], name:Annotated[str,Fo
 def detail(experiment_id:str):
     row=public_row(row_by_id(experiment_id))
     if row['status']=='ready':
-        row['report']=json.loads((ROOT/experiment_id/'report.json').read_text('utf-8'))
+        row['report']=current_report(experiment_id)
         with database() as db:
             row['duplicate_count']=db.execute('SELECT COUNT(*) FROM experiments WHERE digest=? AND id<>?',(row['digest'],experiment_id)).fetchone()[0]
     return row

@@ -9,7 +9,7 @@
 - raw 的纳秒整数与原始日志数值以字符串保留。delay_us 是有符号时差，distance_mm 使用绝对值；不要混淆 ns、μs、ms、s 或 mm、m。
 - candidate.index_zero_based 从 0 开始；pair.raw.best_a/b、runner_a/b 从 1 开始。三个 pulse*_offset_ns 是各板本地脉冲偏移。最佳与次佳评分差距可辅助诊断，不自造可靠性阈值。
 - status、dsp 中不少计数是累计快照，不能相加为总事件数；min/max/first/last 也不等同本轮新增量。计数下降可能是复位或分段。tick_ms 是各板本地时间，不能直接比较成传播时差。
-- clock.locked、epoch、discontinuities 与 warnings 用于判断证据范围。B 音频时钟映射仅在同 epoch、无断流且间隔不超过 1.1 s 的锁定事件之间插值，不外推，也不保证采样级同步精度。
+- clock.locked、epoch、discontinuities 与 warnings 用于判断证据范围。B 音频时钟映射在同 epoch、无断流且间隔不超过 1.1 s 的锁定事件之间插值，另用有效事件时钟模型补齐事件前 100 ms / 后 160 ms 的局部波形。补齐不能跨断流或邻近失锁事件，其余未知区间留空，也不保证采样级同步精度。具体以输入的 alignment_method 为准。
 - coverage 说明每组记录的原始总数、已发送数量和采样方法。记录超出上限时是等间隔抽样，包含首尾；不得把抽样记录当全量，也不得据此声称不存在异常。全局统计仍来自完整记录。
 
 写作要求：
