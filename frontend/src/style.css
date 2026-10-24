@@ -523,6 +523,7 @@ h1 {
 }
 .channel-controls {
   display: flex;
+  flex-wrap: wrap;
   gap: 14px;
   padding: 0 22px 8px;
   font-size: 10px;
@@ -530,6 +531,8 @@ h1 {
 }
 .channel-controls label {
   display: flex;
+  flex-shrink: 0;
+  white-space: nowrap;
   gap: 4px;
   align-items: center;
 }
@@ -1779,4 +1782,34 @@ footer {
   .tabs > div {
     display: none;
   }
+}
+.wave-event-note {
+  padding: 4px 20px 14px;
+  font-size: 12px;
+  line-height: 1.8;
+  color: #526b87;
+}
+.wave-arrival-delta {
+  margin: 0 20px 16px;
+  padding: 14px 16px;
+  border: 1px solid #cddff2;
+  border-radius: 7px;
+  background: #f1f7fe;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  color: #284c74;
+  font-size: 13px;
+}
+.wave-arrival-delta strong {
+  font-size: 16px;
+  font-variant-numeric: tabular-nums;
+}
+.wave-arrival-delta small {
+  font-size: 12px;
+  line-height: 1.7;
+  color: #526b87;
+}
+.channel-controls .event-toggle {
+  color: #365774;
 }

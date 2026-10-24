@@ -24,10 +24,14 @@ import type { Data, Layout } from "plotly.js";
 import Chart from "./Chart";
 import DecodedData from "./DecodedData";
 import AIAnalysis from "./AIAnalysis";
+import { waveEvents, type EventMarker } from "./waveEvents";
 import "./style.css";
 
 type Raw = Record<string, string>;
 type EventRecord = Raw & {
+  event: string;
+  local_ns: string;
+  locked: string;
   clock: Raw | null;
   candidates: Raw[];
   epoch: number | null;
@@ -39,6 +43,7 @@ type Pair = {
   reason_label: string;
   distance_mm: number | null;
   delay_us: number;
+  arrival_delta_us: number;
   raw: Raw;
   events: Record<string, EventRecord | null>;
 };
@@ -60,6 +65,7 @@ type Board = {
   clock_events: { time_s: number; offset_us: number; locked: boolean }[];
   discontinuities: number;
   epochs: number[];
+  event_markers: EventMarker[];
 };
 type Report = {
   analysis_version: string;
@@ -138,6 +144,7 @@ function App() {
     [waveError, setWaveError] = useState("");
   const [mode, setMode] = useState("master"),
     [channels, setChannels] = useState([true, false, true, false]);
+  const [showEvents, setShowEvents] = useState(true);
   const [compared, setCompared] = useState<string[]>([]);
   const selectedRef = useRef("");
   selectedRef.current = selectedId;
@@ -290,6 +297,24 @@ function App() {
       connectgaps: false,
       hovertemplate: "%{x:.6f} s<br>%{y} PCM<extra>%{fullData.name}</extra>",
     }));
+  const eventPlot = report
+    ? waveEvents(
+        report.boards,
+        report.pairs,
+        mode,
+        range ?? [0, duration],
+        channels,
+        pairIndex,
+        showEvents,
+      )
+    : { events: [], traces: [], shapes: [], unpositioned: 0 };
+  const arrivalPair =
+    mode === "master" &&
+    typeof pair?.arrival_delta_us === "number" &&
+    pair?.events.A?.locked === "1" &&
+    pair?.events.B?.locked === "1"
+      ? pair
+      : null;
   const readyCount = experiments.filter((e) => e.status === "ready").length;
   return (
     <div className="app-shell">
@@ -704,41 +729,110 @@ function App() {
                                   </label>
                                 ),
                               )}
-                              <span>拖动框选放大 · 双击复位</span>
+                              <label className="event-toggle">
+                                <input
+                                  type="checkbox"
+                                  checked={showEvents}
+                                  onChange={(e) =>
+                                    setShowEvents(e.target.checked)
+                                  }
+                                />
+                                检出事件
+                              </label>
+                              <span>点击事件标记放大 · 双击复位</span>
                             </div>
                             {waveError ? (
                               <div className="alert error">{waveError}</div>
                             ) : (
                               <Chart
-                                data={waveTraces}
+                                data={[...waveTraces, ...eventPlot.traces]}
                                 layout={{
                                   ...layout,
                                   yaxis: {
+                                    domain: showEvents ? [0, 0.76] : [0, 1],
                                     title: { text: "PCM 幅值" },
                                     gridcolor: "#edf0f5",
                                   },
-                                  shapes:
-                                    pair && mode === "master"
-                                      ? [
-                                          {
-                                            type: "line",
-                                            x0: pair.time_s,
-                                            x1: pair.time_s,
-                                            yref: "paper",
-                                            y0: 0,
-                                            y1: 1,
-                                            line: {
-                                              color: "#d39b46",
-                                              dash: "dot",
-                                              width: 1,
-                                            },
-                                          },
-                                        ]
-                                      : [],
+                                  yaxis2: {
+                                    domain: [0.82, 1],
+                                    range: [0, 2],
+                                    anchor: "x",
+                                    tickvals: [0.5, 1.5],
+                                    ticktext: ["B 检出", "A 检出"],
+                                    showgrid: false,
+                                    zeroline: false,
+                                    fixedrange: true,
+                                  },
+                                  shapes: eventPlot.shapes,
                                 }}
-                                height={250}
+                                height={showEvents ? 310 : 250}
                                 onRange={changeRange}
+                                onClick={(e) => {
+                                  const key = e.points[0]?.customdata;
+                                  const event = eventPlot.events.find(
+                                    (v) => `${v.board}:${v.index}` === key,
+                                  );
+                                  if (!event) return;
+                                  setPairIndex(event.pairIndex);
+                                  const peers =
+                                    mode === "master" &&
+                                    event.pairIndex !== null
+                                      ? waveEvents(
+                                          report.boards,
+                                          report.pairs,
+                                          mode,
+                                          [0, duration],
+                                          [true, true, true, true],
+                                          pairIndex,
+                                          false,
+                                        ).events.filter(
+                                          (v) =>
+                                            v.pairIndex === event.pairIndex,
+                                        )
+                                      : [event];
+                                  const times = peers.map((v) => v.time);
+                                  changeRange([
+                                    Math.max(0, Math.min(...times) - 0.01),
+                                    Math.min(
+                                      duration,
+                                      Math.max(...times) + 0.03,
+                                    ),
+                                  ]);
+                                }}
                               />
+                            )}
+                            {showEvents && (
+                              <div className="wave-event-note">
+                                {!report.boards.A.event_markers &&
+                                  "请重启本地服务以加载检出事件标记。"}
+                                A / B
+                                两行标记对应各板本地检出事件；悬停查看时间，空心标记表示未锁定。
+                                {eventPlot.unpositioned > 0 &&
+                                  ` ${eventPlot.unpositioned} 个事件缺少时钟映射，切换“各板录音时间”查看。`}
+                              </div>
+                            )}
+                            {arrivalPair && (
+                              <div className="wave-arrival-delta">
+                                <strong>
+                                  检出时差 B−A：
+                                  {fmt(arrivalPair.arrival_delta_us, 3)} μs
+                                </strong>
+                                <span>
+                                  {arrivalPair.arrival_delta_us > 0
+                                    ? "A 板先检出"
+                                    : arrivalPair.arrival_delta_us < 0
+                                      ? "B 板先检出"
+                                      : "两板检出时间相同"}{" "}
+                                  · 配对记录 #
+                                  {String(arrivalPair.index + 1).padStart(
+                                    2,
+                                    "0",
+                                  )}
+                                </span>
+                                <small>
+                                  按两板检出时间戳直接相减；不同于候选组合的最佳配对时差。
+                                </small>
+                              </div>
                             )}
                             <div className="panel-foot">
                               <Info size={13} />

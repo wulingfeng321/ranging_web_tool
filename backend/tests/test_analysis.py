@@ -182,3 +182,36 @@ def test_model_margins_preserve_precision_with_drift_and_large_timestamps(tmp_pa
             c['master_ns']=str(int(c['master_ns'])+shift)
             c['origin']=str(int(c['origin'])+shift)
     assert waveform(boards,0,1)==original
+
+
+def test_detection_marker_times_and_signed_arrival_difference(tmp_path):
+    boards,_=read_capture(write_fixture(tmp_path))
+    # Large common origin must not lose a 3 ns inter-board arrival difference.
+    shift=10**18+7
+    for b in boards.values():
+        b['anchors']=[(count,ns+shift,ep,frames) for count,ns,ep,frames in b['anchors']]
+        for e in b['logs']['event']:e['local_ns']=str(int(e['local_ns'])+shift)
+        for c in b['logs']['clock']:c['master_ns']=str(int(c['master_ns'])+shift)
+    p=boards['A']['logs']['pair'][0]
+    p['a_master_ns']=str(1_001_000_000+shift)
+    p['b_master_ns']=str(1_001_000_003+shift)
+    boards['B']['logs']['clock'][0]['master_ns']=p['b_master_ns']
+    report=build_report(boards)
+    assert report['pairs'][0]['arrival_delta_ns']=='3'
+    assert report['pairs'][0]['arrival_delta_us']==.003
+    assert report['pairs'][0]['delay_us']==1  # Algorithm best_ns is a different quantity.
+    assert report['boards']['A']['event_markers'][0]['master_time_s']==.001
+    assert report['boards']['B']['event_markers'][0]['master_time_s']==.001000003
+    assert report['boards']['B']['event_markers'][0]['local_time_s']==.001
+
+
+def test_markers_include_unpaired_unlocked_and_missing_clock_events(tmp_path):
+    boards,_=read_capture(write_fixture(tmp_path))
+    boards['B']['logs']['clock']=boards['B']['logs']['clock'][:1]
+    boards['B']['logs']['event'][0]['locked']='0'
+    report=build_report(boards)
+    markers=report['boards']['B']['event_markers']
+    assert len(markers)==2
+    assert markers[0]['locked'] is False
+    assert markers[1]['master_time_s'] is None
+    assert markers[1]['local_time_s']==.008

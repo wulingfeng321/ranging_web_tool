@@ -8,7 +8,7 @@ import re
 import numpy as np
 from .legacy_decoder import parse, fnv1a, SCHEMAS
 
-VERSION = 'rng1-analysis-0.2.0'
+VERSION = 'rng1-analysis-0.3.0'
 MODEL_BEFORE_NS = 100_000_000
 MODEL_AFTER_NS = 160_000_000
 ALIGNMENT_NOTE = ('A 使用音频块锚点；B 在有效事件间插值，并使用事件时钟模型补齐事件前 100 ms、后 160 ms 的局部波形。'
@@ -174,11 +174,24 @@ def build_report(boards):
         pairs.append({'index':i, 'time_s':(int(p['a_master_ns'])-base)/1e9,
                       'outcome':outcome,'reason_label':REASONS.get(int(p['reason']),'未知原因'),
                       'distance_mm':abs(int(p['best_ns']))*speed/1e6 if int(p['best_score'])>0 else None,
-                      'delay_us':int(p['best_ns'])/1000, 'raw':p,'events':associated})
+                      'delay_us':int(p['best_ns'])/1000,
+                      'arrival_delta_ns':str(int(p['b_master_ns'])-int(p['a_master_ns'])),
+                      'arrival_delta_us':(int(p['b_master_ns'])-int(p['a_master_ns']))/1000,
+                      'raw':p,'events':associated})
     accepted=[p['distance_mm'] for p in pairs if p['outcome']==1 and p['distance_mm'] is not None]
     board_reports={}
     for b,v in boards.items():
         rows=v['logs'].get('status',[])
+        first=next(block_times(v))
+        local_base=first[2]-int(round(first[1]*first[3]))
+        markers=[]
+        for i,e in enumerate(events[b]):
+            local=int(e['local_ns'])
+            master=local if b=='A' else (int(e['clock']['master_ns']) if e['clock'] else None)
+            markers.append({'index':i,'event':e['event'],'local_ns':e['local_ns'],
+                            'local_time_s':(local-local_base)/1e9,
+                            'master_time_s':(master-base)/1e9 if master is not None else None,
+                            'locked':e['locked']=='1'})
         clock_events=[]
         for e in events[b]:
             if e['clock']:
@@ -186,7 +199,7 @@ def build_report(boards):
                     'offset_us':float(e['clock']['offset'])/1000,'locked':e['locked']=='1'})
         board_reports[b]={'meta':v['meta'], 'duration_s':v['meta']['frames']/v['meta']['rate'],
             'counts':{k:len(rows) for k,rows in v['logs'].items()}, 'clock_events':clock_events,
-            'status':rows,'dsp':v['logs'].get('dsp',[]),'events':events[b],
+            'status':rows,'dsp':v['logs'].get('dsp',[]),'events':events[b],'event_markers':markers,
             'discontinuities':sum(not row[5] for row in list(block_times(v))[1:]),
             'epochs':sorted(set(a[2] for a in v['anchors']))}
     warnings=[]

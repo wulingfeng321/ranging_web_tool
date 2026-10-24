@@ -7,6 +7,7 @@
 - std_mm 是所有有换算距离的唯一配对的总体标准差。truth_metrics 由程序使用同一子集计算，bias_mm 是有符号平均误差，MAE 是绝对误差均值，RMSE 是均方根误差。没有用户核实的 truth_mm 时不能推断准确度，更不能从实验名称猜真实距离。
 - pair.index 从 0 开始，对应界面事件号 index+1。pair.raw 中的 event_a_id/event_b_id 是通信序号，不能当成本地 event。events 通过主时钟时间唯一关联；null 表示缺少可靠关联。
 - raw 的纳秒整数与原始日志数值以字符串保留。delay_us 是有符号时差，distance_mm 使用绝对值；不要混淆 ns、μs、ms、s 或 mm、m。
+- arrival_delta_ns / arrival_delta_us 是日志中 B 检出主时钟时间减 A 检出主时钟时间，负值表示 B 先检出。这是固件记录的检出时间戳差，不是候选组合的 best_ns / delay_us，也不能直接声称等于无检测误差的真实声学传播时差。
 - candidate.index_zero_based 从 0 开始；pair.raw.best_a/b、runner_a/b 从 1 开始。三个 pulse*_offset_ns 是各板本地脉冲偏移。最佳与次佳评分差距可辅助诊断，不自造可靠性阈值。
 - status、dsp 中不少计数是累计快照，不能相加为总事件数；min/max/first/last 也不等同本轮新增量。计数下降可能是复位或分段。tick_ms 是各板本地时间，不能直接比较成传播时差。
 - clock.locked、epoch、discontinuities 与 warnings 用于判断证据范围。B 音频时钟映射在同 epoch、无断流且间隔不超过 1.1 s 的锁定事件之间插值，另用有效事件时钟模型补齐事件前 100 ms / 后 160 ms 的局部波形。补齐不能跨断流或邻近失锁事件，其余未知区间留空，也不保证采样级同步精度。具体以输入的 alignment_method 为准。
