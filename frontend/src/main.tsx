@@ -279,6 +279,7 @@ function App() {
       type: "scatter",
       mode: "lines",
       name: `${t.board} · CH${t.channel}`,
+      opacity: 0.6,
       x: t.x,
       y: t.y,
       line: {
