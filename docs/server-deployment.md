@@ -6,9 +6,9 @@
 
 - 网站：https://ranging.wulingfeng.top
 - 服务器：43.142.15.59，SSH 用户 ubuntu，端口 22。
-- 网站用户名：analyst。初始密码保存在本机 `artifacts/服务器访问凭据.txt`，不进入 Git，也不放进网页代码。
-- Nginx 对全部页面、接口和音频实施密码认证，只通过 HTTPS 提供应用；HTTP 跳转 HTTPS。后端仅监听 127.0.0.1:8000。
-- 这是共享实验工作区，持有网站密码的人可以查看、上传、编辑同一批实验；没有多用户数据隔离。
+- 按用户要求于 2026-10-25 取消网站登录限制，用于约半个月的课程展示。网站无需用户名或密码，旧访问凭据不再使用。
+- Nginx 通过 HTTPS 公开提供应用；HTTP 跳转 HTTPS。后端仅监听 127.0.0.1:8000。
+- 这是公开共享的实验工作区，访问者可以查看、上传、编辑同一批实验；没有多用户数据隔离。课程结束后由用户通知关闭，本次没有设置自动关闭任务。
 - 域名解析和证书签发均已成功；当前计算机的 DNS 负缓存已自然刷新。如其他设备暂时打不开新域名，可等待缓存刷新后重试。
 
 ## 目录
@@ -19,7 +19,7 @@
 | 当前发布软链接 | `/opt/ranging-studio/current` |
 | 数据库、原始文件、报告和音频缓存 | `/var/lib/ranging-studio` |
 | AI 配置 | `/etc/ranging-studio/ai.local.toml` |
-| 网站密码哈希 | `/etc/nginx/ranging-studio.htpasswd` |
+| 旧网站密码哈希（不再启用） | `/etc/nginx/ranging-studio.htpasswd` |
 | Nginx 网站配置 | `/etc/nginx/sites-available/ranging-studio` |
 | 系统服务 | `/etc/systemd/system/ranging-studio.service` |
 | 数据备份 | `/var/backups/ranging-studio` |
@@ -37,11 +37,7 @@ sudo nginx -t
 
 重启前请等待解析和 AI 任务结束；中断的任务会标记为失败，需要手动重试。
 
-修改网站访问密码（交互输入，不把密码写进命令）：
-
-```bash
-sudo htpasswd -B /etc/nginx/ranging-studio.htpasswd analyst
-```
+网站现为公开访问，不需要维护登录密码。旧密码文件保留用于配置回退，当前 Nginx 配置不引用它。
 
 ## HTTPS
 
@@ -62,7 +58,7 @@ sudo certbot renew --dry-run --run-deploy-hooks
 sudo nano /etc/ranging-studio/ai.local.toml
 ```
 
-设置 `enabled = true` 并填写 `api_key`，保存后下次请求自动生效。不要把密钥写入 Git 或聊天。网站访问密码与 DeepSeek API Key 是两个独立凭据。
+设置 `enabled = true` 并填写 `api_key`，保存后下次请求自动生效。不要把密钥写入 Git 或聊天。当前网站公开，启用后访问者可提交 AI 分析并消耗该 Key 的额度。
 
 ## 备份与恢复
 
@@ -81,7 +77,7 @@ sudo bash /opt/ranging-studio/current/deploy/backup.sh
 1. Windows 完成修改、测试并提交 Git。运行 `npm.cmd run build`（frontend 目录）。
 2. 在项目根目录运行 `backend/.venv/Scripts/python.exe scripts/package_release.py`。只打包 Git 跟踪的后端、部署配置、示例配置、提示词和前端构建；排除本地数据、密钥、node_modules 和 Windows 虚拟环境。
 3. 上传 `artifacts/ranging-release.tar.gz`，解压到新的 `/opt/ranging-studio/releases/<版本>`，使用 Linux Python 创建该版本自己的 `backend/.venv` 并安装固定依赖。
-4. 先执行 Linux 后端测试，备份数据，再停止服务、切换 current 软链接、启动服务。检查健康接口、网站认证、波形与音频。不要自动覆盖 `/etc/ranging-studio` 或数据目录。
+4. 先执行 Linux 后端测试，备份数据，再停止服务、切换 current 软链接、启动服务。检查健康接口、公开访问、波形与音频。不要自动覆盖 `/etc/ranging-studio` 或数据目录。
 5. 如需回退，停止服务并将 current 切回前一发布目录，再启动服务。未来涉及数据库结构变更时，需要另行验证数据兼容性。
 
 ## 本次数据迁移
@@ -93,7 +89,7 @@ sudo bash /opt/ranging-studio/current/deploy/backup.sh
 ## 验证范围
 
 - Linux 后端 40 项测试通过；前端 4 项测试及生产构建通过。
-- HTTPS 证书校验开启，正确密码可访问；缺少或错误密码返回 401，页面、API、文档入口均受保护。
+- 初次部署曾验证密码认证；按用户要求取消后，验证 HTTPS 页面和实验接口无需凭据即可访问。
 - 10 轮报告和事件标记正常；两种时间模式、双板 WAV 范围请求、CSV、解析数据接口验证通过。
 - 浏览器通过 SSH 隧道连接同一云端后端检查真实迁移数据；公网 HTTPS 和认证另行通过外部请求验证。截图不代表通过公开 HTTP 暴露后端。
 - 证书模拟续期成功；服务开机启动已启用，未为验证而重启整台服务器。
