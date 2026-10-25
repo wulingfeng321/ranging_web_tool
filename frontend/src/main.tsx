@@ -129,6 +129,7 @@ async function request<T>(url: string, options?: RequestInit): Promise<T> {
 }
 
 function App() {
+  const [serverMode, setServerMode] = useState(false);
   const [experiments, setExperiments] = useState<Experiment[]>([]),
     [selectedId, setSelectedId] = useState("");
   const [detail, setDetail] = useState<Experiment | null>(null),
@@ -160,6 +161,9 @@ function App() {
     }
   }
   useEffect(() => {
+    request<{ mode: string }>("/api/health")
+      .then((health) => setServerMode(health.mode === "server"))
+      .catch(() => {});
     refresh();
     const t = setInterval(refresh, 2500);
     return () => clearInterval(t);
@@ -328,7 +332,7 @@ function App() {
           </div>
         </div>
         <div className="workspace-label">
-          工作空间 <span>LOCAL</span>
+          工作空间 <span>{serverMode ? "CLOUD" : "LOCAL"}</span>
         </div>
         <button
           className={`nav-item ${tab !== "compare" ? "active" : ""}`}
@@ -387,7 +391,7 @@ function App() {
         </div>
         <div className="sidebar-bottom">
           <span className="live-dot" />
-          本地数据工作区<small>{readyCount} 轮已解析 · v0.1</small>
+          {serverMode ? "云端数据工作区" : "本地数据工作区"}<small>{readyCount} 轮已解析 · v0.1</small>
         </div>
       </aside>
       <main>
@@ -399,7 +403,7 @@ function App() {
           <div className="top-actions">
             <span className="local-badge">
               <span className="live-dot" />
-              本地运行
+              {serverMode ? "云端运行" : "本地运行"}
             </span>
             <button
               className="button primary"
@@ -928,7 +932,7 @@ function App() {
                     </>
                   )}
                   <footer>
-                    原始数据保持不变<span>Ranging Studio · 本地分析预览</span>
+                    原始数据保持不变<span>Ranging Studio · {serverMode ? "云端实验分析" : "本地分析预览"}</span>
                   </footer>
                 </>
               )}

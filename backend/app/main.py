@@ -95,7 +95,7 @@ def current_report(experiment_id):
     return json_safe(build_report(loaded(experiment_id))) if report.get('analysis_version')!=VERSION else report
 
 @app.get('/api/health')
-def health(): return {'status':'ok','version':'0.1.0','mode':'local'}
+def health(): return {'status':'ok','version':'0.1.0','mode':os.environ.get('RANGING_MODE','local')}
 
 @app.get('/api/experiments')
 def listing():

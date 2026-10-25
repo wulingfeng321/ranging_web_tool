@@ -1,0 +1,28 @@
+[Unit]
+Description=Ranging Studio analysis service
+After=network.target
+
+[Service]
+Type=simple
+User=ranging
+Group=ranging
+WorkingDirectory=/opt/ranging-studio/current
+Environment=RANGING_DATA_DIR=/var/lib/ranging-studio
+Environment=RANGING_AI_CONFIG=/etc/ranging-studio/ai.local.toml
+Environment=RANGING_MODE=server
+Environment=PYTHONDONTWRITEBYTECODE=1
+Environment=PYTHONUNBUFFERED=1
+Environment=OPENBLAS_NUM_THREADS=1
+ExecStart=/opt/ranging-studio/current/backend/.venv/bin/python -m uvicorn app.main:app --app-dir backend --host 127.0.0.1 --port 8000 --workers 1 --proxy-headers --forwarded-allow-ips=127.0.0.1
+Restart=on-failure
+RestartSec=5
+TimeoutStopSec=180
+UMask=0027
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/lib/ranging-studio
+
+[Install]
+WantedBy=multi-user.target
