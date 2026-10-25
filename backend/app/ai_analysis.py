@@ -53,16 +53,16 @@ def settings(require_ready=False):
         raise AIError('base_url 必须是 HTTPS API 基础地址，不能包含账号、查询参数或片段。')
     if require_ready:
         if not value.enabled:
-            raise AIError('请在 config/ai.local.toml 中设置 enabled = true。')
+            raise AIError('请在右上角管理页面启用 AI 分析。')
         if not value.api_key:
-            raise AIError('尚未配置 API Key，请填写本地配置或 DEEPSEEK_API_KEY 环境变量。')
+            raise AIError('尚未配置 API Key，请在管理页面填写。')
     return value
 
 
 def public_settings():
     try:
         value = settings()
-        reason = '' if value.enabled and value.api_key else ('AI 功能未启用，请编辑 config/ai.local.toml。' if not value.enabled else '尚未配置 API Key。')
+        reason = '' if value.enabled and value.api_key else ('AI 功能未启用，请在右上角管理页面配置。' if not value.enabled else '尚未配置 API Key。')
         return {'ready': not reason, 'message': reason, 'model': value.model,
                 'base_url': value.base_url, 'presets': PRESETS}
     except AIError as exc:

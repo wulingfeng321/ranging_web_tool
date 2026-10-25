@@ -8,7 +8,8 @@ User=ranging
 Group=ranging
 WorkingDirectory=/opt/ranging-studio/current
 Environment=RANGING_DATA_DIR=/var/lib/ranging-studio
-Environment=RANGING_AI_CONFIG=/etc/ranging-studio/ai.local.toml
+Environment=RANGING_AI_CONFIG=/var/lib/ranging-studio-settings/ai.local.toml
+Environment=RANGING_ADMIN_CONFIG=/etc/ranging-studio/admin.local.json
 Environment=RANGING_MODE=server
 Environment=PYTHONDONTWRITEBYTECODE=1
 Environment=PYTHONUNBUFFERED=1
@@ -22,7 +23,7 @@ NoNewPrivileges=true
 PrivateTmp=true
 ProtectSystem=strict
 ProtectHome=true
-ReadWritePaths=/var/lib/ranging-studio
+ReadWritePaths=/var/lib/ranging-studio /var/lib/ranging-studio-settings
 
 [Install]
 WantedBy=multi-user.target

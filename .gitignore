@@ -7,5 +7,6 @@ data/
 *.log
 .env
 config/ai.local.toml
+config/admin.local.json
 artifacts/
 *.tsbuildinfo

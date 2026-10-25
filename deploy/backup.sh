@@ -12,7 +12,7 @@ restore_service() {
 }
 trap restore_service EXIT
 systemctl stop ranging-studio
-tar -czf "$backup" -C / var/lib/ranging-studio etc/ranging-studio \
+tar -czf "$backup" -C / var/lib/ranging-studio var/lib/ranging-studio-settings etc/ranging-studio \
     etc/nginx/ranging-studio.htpasswd etc/nginx/sites-available/ranging-studio \
     etc/systemd/system/ranging-studio.service opt/ranging-studio/current
 printf 'Backup created: %s\n' "$backup"

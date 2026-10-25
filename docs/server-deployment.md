@@ -9,6 +9,7 @@
 - 按用户要求于 2026-10-25 取消网站登录限制，用于约半个月的课程展示。网站无需用户名或密码，旧访问凭据不再使用。
 - Nginx 通过 HTTPS 公开提供应用；HTTP 跳转 HTTPS。后端仅监听 127.0.0.1:8000。
 - 这是公开共享的实验工作区，访问者可以查看、上传、编辑同一批实验；没有多用户数据隔离。课程结束后由用户通知关闭，本次没有设置自动关闭任务。
+- 右上角“管理”为独立的密码保护入口，可配置 AI 服务和删除/恢复实验。管理密码仅以 scrypt 加盐哈希保存，不写入前端或 Git。管理会话有效期 8 小时；退出或服务重启失效。同一来源连续 5 次错误密码后限制登录 15 分钟。
 - 域名解析和证书签发均已成功；当前计算机的 DNS 负缓存已自然刷新。如其他设备暂时打不开新域名，可等待缓存刷新后重试。
 
 ## 目录
@@ -18,13 +19,14 @@
 | 初始发布 | `/opt/ranging-studio/releases/20261025-initial` |
 | 当前发布软链接 | `/opt/ranging-studio/current` |
 | 数据库、原始文件、报告和音频缓存 | `/var/lib/ranging-studio` |
-| AI 配置 | `/etc/ranging-studio/ai.local.toml` |
+| AI 配置 | `/var/lib/ranging-studio-settings/ai.local.toml` |
+| 管理密码哈希 | `/etc/ranging-studio/admin.local.json` |
 | 旧网站密码哈希（不再启用） | `/etc/nginx/ranging-studio.htpasswd` |
 | Nginx 网站配置 | `/etc/nginx/sites-available/ranging-studio` |
 | 系统服务 | `/etc/systemd/system/ranging-studio.service` |
 | 数据备份 | `/var/backups/ranging-studio` |
 
-程序使用独立的 ranging 系统用户，无登录权限；代码和配置由 root 持有，服务只可写数据目录。保持单个后端进程，避免多个进程重复管理后台任务。
+程序使用独立的 ranging 系统用户，无登录权限；代码和管理密码配置由 root 持有，服务只可写数据目录和 AI 配置目录。保持单个后端进程，避免多个进程重复管理后台任务。
 
 ## 日常操作（SSH 登录服务器后）
 
@@ -39,6 +41,17 @@ sudo nginx -t
 
 网站现为公开访问，不需要维护登录密码。旧密码文件保留用于配置回退，当前 Nginx 配置不引用它。
 
+更换管理页面密码（交互输入，不把密码写在命令行中）：
+
+```bash
+sudo /opt/ranging-studio/current/backend/.venv/bin/python /opt/ranging-studio/current/scripts/set_admin_password.py --output /etc/ranging-studio/admin.local.json
+sudo chown root:ranging /etc/ranging-studio/admin.local.json
+sudo chmod 640 /etc/ranging-studio/admin.local.json
+sudo systemctl restart ranging-studio
+```
+
+本机可运行 `backend/.venv/Scripts/python.exe scripts/set_admin_password.py` 设置本地管理密码，再重启本地服务。没有密码配置时，管理入口拒绝登录，不使用内置默认密码。
+
 ## HTTPS
 
 使用 Let's Encrypt，首张证书到期日为 2027-01-23。`certbot.timer` 已启用，续期成功后自动检查并重载 Nginx。已通过模拟续期和重载钩子验证。
@@ -52,13 +65,21 @@ sudo certbot renew --dry-run --run-deploy-hooks
 
 ## AI 配置
 
-已迁移历史 AI 报告，没有迁移本地 API Key；服务器默认关闭新的 AI 请求。若需启用，在服务器编辑配置：
+已迁移历史 AI 报告，没有迁移本地 API Key；服务器默认关闭新的 AI 请求。推荐通过网站管理页配置；也可以在服务器编辑配置：
 
 ```bash
-sudo nano /etc/ranging-studio/ai.local.toml
+sudo nano /var/lib/ranging-studio-settings/ai.local.toml
 ```
 
 设置 `enabled = true` 并填写 `api_key`，保存后下次请求自动生效。不要把密钥写入 Git 或聊天。当前网站公开，启用后访问者可提交 AI 分析并消耗该 Key 的额度。
+
+网页不会回显 API Key；留空表示保留旧值，也可明确勾选清除。更换 API 地址时必须重新提供密钥或清除旧密钥，避免将原服务的密钥发给新地址。环境变量密钥存在时，网页只允许修改普通参数，不能更改密钥和 API 地址。
+
+## 数据管理
+
+实验移入回收站后，公开列表、报告、波形、下载和 AI 历史接口均不再提供该实验。管理员可以恢复，回收站暂时不释放磁盘空间。永久删除须输入完整实验名称，清除数据库中的实验和关联 AI 记录，以及原始文件和音频缓存；已经生成的独立备份不受影响。正在解析或生成 AI 报告的实验不能删除。
+
+升级新增 `experiments.deleted_at` 字段，原有实验自动保留。回退到不支持该字段的旧版本会重新显示回收站数据，因此使用回收站后不应直接回退旧代码。
 
 ## 备份与恢复
 

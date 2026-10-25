@@ -24,6 +24,7 @@ import type { Data, Layout } from "plotly.js";
 import Chart from "./Chart";
 import DecodedData from "./DecodedData";
 import AIAnalysis from "./AIAnalysis";
+import Admin from "./Admin";
 import { waveEvents, type EventMarker } from "./waveEvents";
 import "./style.css";
 
@@ -155,7 +156,7 @@ function App() {
       setExperiments((old) =>
         JSON.stringify(old) === JSON.stringify(rows) ? old : rows,
       );
-      if (!selectedRef.current && rows.length) setSelectedId(rows[0].id);
+      if (!rows.some((row) => row.id === selectedRef.current)) setSelectedId(rows[0]?.id ?? "");
     } catch (e) {
       setError(String(e));
     }
@@ -398,9 +399,10 @@ function App() {
         <header className="topbar">
           <div>
             工作空间 <ChevronRight size={13} />
-            <span>{tab === "compare" ? "实验对比" : "实验分析"}</span>
+            <span>{tab === "admin" ? "网站管理" : tab === "compare" ? "实验对比" : "实验分析"}</span>
           </div>
           <div className="top-actions">
+            <button className="button" onClick={() => setTab("admin")}><Settings2 size={16} />管理</button>
             <span className="local-badge">
               <span className="live-dot" />
               {serverMode ? "云端运行" : "本地运行"}
@@ -423,7 +425,7 @@ function App() {
               </button>
             </div>
           )}
-          {tab === "compare" ? (
+          {tab === "admin" ? <Admin onChanged={refresh} /> : tab === "compare" ? (
             <Compare
               experiments={experiments}
               ids={compared}

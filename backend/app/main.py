@@ -14,8 +14,10 @@ from datetime import datetime, timezone
 from functools import lru_cache
 from pathlib import Path
 from typing import Annotated, Literal
-from fastapi import FastAPI, File, Form, HTTPException, Query, UploadFile
-from fastapi.responses import Response, FileResponse, StreamingResponse
+from fastapi import FastAPI, File, Form, HTTPException, Query, UploadFile, Request
+from fastapi.exceptions import RequestValidationError
+from fastapi.exception_handlers import request_validation_exception_handler
+from fastapi.responses import Response, FileResponse, StreamingResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 from .analysis import read_capture, build_report, json_safe, waveform, VERSION
@@ -48,10 +50,13 @@ with database() as db:
         status TEXT NOT NULL, preset TEXT NOT NULL, focus TEXT NOT NULL, model TEXT NOT NULL,
         base_url TEXT NOT NULL, source_hash TEXT NOT NULL, snapshot TEXT NOT NULL,
         result TEXT, error TEXT)''')
+    if 'deleted_at' not in {r[1] for r in db.execute('PRAGMA table_info(experiments)')}:
+        db.execute('ALTER TABLE experiments ADD COLUMN deleted_at TEXT')
 
 @asynccontextmanager
 async def lifespan(app):
-    global AI_POOL
+    global AI_POOL, POOL
+    POOL=ThreadPoolExecutor(max_workers=1,thread_name_prefix='analysis')
     AI_POOL=ThreadPoolExecutor(max_workers=1,thread_name_prefix='ai-analysis')
     with database() as db:
         db.execute("UPDATE experiments SET status='failed',error='服务重启中断了分析，请重试' WHERE status IN ('queued','processing')")
@@ -62,8 +67,21 @@ async def lifespan(app):
 
 app=FastAPI(title='Ranging Studio',version='0.1.0',lifespan=lifespan)
 
+@app.middleware('http')
+async def private_admin_responses(request:Request, call_next):
+    response=await call_next(request)
+    if request.url.path.startswith('/api/admin/'):
+        response.headers['Cache-Control']='no-store'
+    return response
+
+@app.exception_handler(RequestValidationError)
+async def safe_admin_validation(request:Request, exc:RequestValidationError):
+    if request.url.path.startswith('/api/admin/'):
+        return JSONResponse(status_code=422,content={'detail':'提交的参数格式或范围不正确，请检查后重试。'})
+    return await request_validation_exception_handler(request,exc)
+
 def row_by_id(experiment_id):
-    with database() as db: row=db.execute('SELECT * FROM experiments WHERE id=?',(experiment_id,)).fetchone()
+    with database() as db: row=db.execute('SELECT * FROM experiments WHERE id=? AND deleted_at IS NULL',(experiment_id,)).fetchone()
     if not row: raise HTTPException(404,'实验不存在')
     return dict(row)
 
@@ -99,7 +117,7 @@ def health(): return {'status':'ok','version':'0.1.0','mode':os.environ.get('RAN
 
 @app.get('/api/experiments')
 def listing():
-    with database() as db: rows=db.execute('SELECT * FROM experiments ORDER BY created_at DESC').fetchall()
+    with database() as db: rows=db.execute('SELECT * FROM experiments WHERE deleted_at IS NULL ORDER BY created_at DESC').fetchall()
     return [public_row(r) for r in rows]
 
 @app.post('/api/experiments',status_code=202)
@@ -142,7 +160,7 @@ def detail(experiment_id:str):
     if row['status']=='ready':
         row['report']=current_report(experiment_id)
         with database() as db:
-            row['duplicate_count']=db.execute('SELECT COUNT(*) FROM experiments WHERE digest=? AND id<>?',(row['digest'],experiment_id)).fetchone()[0]
+            row['duplicate_count']=db.execute('SELECT COUNT(*) FROM experiments WHERE digest=? AND id<>? AND deleted_at IS NULL',(row['digest'],experiment_id)).fetchone()[0]
     return row
 
 class Metadata(BaseModel):
@@ -284,6 +302,8 @@ def ai_generate(experiment_id:str,data:AIGenerateRequest):
     run_id=uuid.uuid4().hex
     with database() as db:
         db.execute('BEGIN IMMEDIATE')
+        if not db.execute('SELECT 1 FROM experiments WHERE id=? AND deleted_at IS NULL',(experiment_id,)).fetchone():
+            raise HTTPException(404,'实验不存在')
         if db.execute("SELECT 1 FROM ai_runs WHERE status='running' LIMIT 1").fetchone():
             raise HTTPException(409,'已有 AI 分析正在运行，请等待完成后再提交。')
         db.execute('INSERT INTO ai_runs (id,experiment_id,created_at,status,preset,focus,model,base_url,source_hash,snapshot) VALUES (?,?,?,?,?,?,?,?,?,?)',
@@ -293,6 +313,9 @@ def ai_generate(experiment_id:str,data:AIGenerateRequest):
         with database() as db:db.execute("UPDATE ai_runs SET status='failed',error='服务正在关闭，请重新启动后再试。' WHERE id=?",(run_id,))
         raise HTTPException(503,'服务正在关闭，请重新启动后再试。') from None
     return {'id':run_id,'status':'running'}
+
+from .admin import router as admin_router
+app.include_router(admin_router)
 
 # Built frontend and API share one origin for the local launcher.
 STATIC=Path(__file__).resolve().parents[2]/'frontend'/'dist'

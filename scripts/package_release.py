@@ -9,7 +9,8 @@ files = subprocess.check_output(['git', 'ls-files', '-z'], cwd=ROOT).decode().sp
 allowed = ('backend/app/', 'backend/tests/', 'config/prompts/', 'deploy/')
 sources = [ROOT / name for name in files if name and (
     name.startswith(allowed) or name in (
-        'backend/requirements.txt', 'backend/requirements.in', 'config/ai.example.toml'))]
+        'backend/requirements.txt', 'backend/requirements.in', 'config/ai.example.toml',
+        'scripts/set_admin_password.py'))]
 dist = ROOT / 'frontend' / 'dist'
 if not (dist / 'index.html').is_file():
     raise SystemExit('Build frontend first.')
