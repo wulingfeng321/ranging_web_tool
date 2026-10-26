@@ -8,7 +8,7 @@
 
 本项目作为开发板工程的 Git 子模块，位于 `tools/web_tools/`；当前本机路径为 `E:\IARprojects\STM32CubeF7_cut\Project\ranging_bsp\tools\web_tools`。源码和提交历史独立维护，主工程记录所使用的子模块提交。迁移时本地数据、私有配置和依赖一并保留，这些内容仍被 Git 忽略。
 
-目前子模块来源为本机裸仓库 `E:/个人项目/ranging-data-studio.git`，尚未托管到远程；跨电脑克隆前需先将子仓库发布到可访问的 Git 服务，并更新主工程 `.gitmodules` 中的地址。修改网页工具后先在本目录提交并执行 `git push origin wlf/local-analysis`，再到主工程提交 `tools/web_tools` 的版本指针。
+子仓库托管于 [GitHub · ranging_web_tool](https://github.com/wulingfeng321/ranging_web_tool)，SSH 地址为 `git@github.com:wulingfeng321/ranging_web_tool.git`。修改网页工具后先在本目录提交并执行 `git push origin wlf/local-analysis`，再到主工程提交 `tools/web_tools` 的版本指针。克隆主工程时使用 `git clone --recurse-submodules <主工程地址>`；已有工作目录执行 `git submodule update --init -- tools/web_tools`。
 
 当前电脑已经安装项目依赖并生成前端构建。双击项目根目录的 **`start-local.cmd`**，浏览器会打开 **http://127.0.0.1:8000**。
 
