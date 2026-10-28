@@ -69,7 +69,7 @@ export function waveEvents(
   if (show)
     for (const board of ["A", "B"] as const) {
       const rows = events.filter((e) => e.board === board);
-      const color = board === "A" ? "#2377c7" : "#8053ba";
+      const color = board === "A" ? "#b76b38" : "#3e7377";
       const label = range[1] - range[0] <= 1 || events.length <= 6;
       traces.push({
         type: "scatter",

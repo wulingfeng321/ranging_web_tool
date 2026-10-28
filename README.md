@@ -1,5 +1,7 @@
 # Ranging Studio · 测距实验分析
 
+**当前实验分支：`wlf/rhine-ui`**。新增莱茵风格档案首页与分析工作台，启动后从档案卡进入实验；“录音与记录”中可展开完整解析数据。设计、截图、验证及切回原版的方法见[界面实验说明](docs/rhine-ui.md)。线上网站仍使用原发布版本。
+
 使用 React / Plotly.js 展示实验数据，FastAPI 校验、分析 RNG1 采集，SQLite 保存实验记录。支持 Windows 本地运行，已部署到腾讯云 Ubuntu 24.04。
 
 云端地址：**https://ranging.wulingfeng.top**（公开访问，无需登录）。已迁移 10 轮实验与 4 条 AI 分析记录；本地和云端后续数据各自独立。部署、备份和配置方法见 [服务器维护说明](docs/server-deployment.md)。

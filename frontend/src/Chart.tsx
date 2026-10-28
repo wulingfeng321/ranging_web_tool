@@ -27,7 +27,16 @@ export default function Chart({
   useEffect(() => {
     const el = ref.current!;
     const observer = new ResizeObserver(() => {
-      if (el.querySelector(".plot-container")) Plotly.Plots.resize(el);
+      if (
+        !el.isConnected ||
+        !el.getClientRects().length ||
+        !el.querySelector(".plot-container")
+      )
+        return;
+      // Plotly defers resize internally; navigation can remove the chart meanwhile.
+      Promise.resolve(Plotly.Plots.resize(el)).catch((error) => {
+        if (el.isConnected && el.getClientRects().length) console.error(error);
+      });
     });
     observer.observe(el);
     return () => {
@@ -46,27 +55,27 @@ export default function Chart({
         autosize: true,
         margin: { l: 65, r: 24, t: 12, b: 46 },
         paper_bgcolor: "transparent",
-        plot_bgcolor: "#ffffff",
+        plot_bgcolor: "#f6f4ef",
         font: {
           family: "Inter, Segoe UI, Microsoft YaHei, sans-serif",
-          color: "#7b8596",
+          color: "#687257",
           size: 11,
-        },
-        xaxis: {
-          gridcolor: "#edf0f5",
-          zeroline: false,
-          title: { text: "相对主时钟 / s" },
-          ...layout.xaxis,
-        },
-        yaxis: {
-          gridcolor: "#edf0f5",
-          zerolinecolor: "#e1e6ed",
-          ...layout.yaxis,
         },
         showlegend: false,
         hovermode: "closest",
         dragmode: "zoom",
         ...layout,
+        xaxis: {
+          gridcolor: "#dedfd2",
+          zeroline: false,
+          title: { text: "相对主时钟 / s" },
+          ...layout.xaxis,
+        },
+        yaxis: {
+          gridcolor: "#dedfd2",
+          zerolinecolor: "#c6cbb7",
+          ...layout.yaxis,
+        },
       },
       {
         responsive: true,

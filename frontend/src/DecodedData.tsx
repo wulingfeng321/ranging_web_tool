@@ -88,7 +88,12 @@ export default function DecodedData({
           按各板录音起点独立播放，切换播放板卡时暂停另一板，不代表两板同步。保留原始采样率和幅度，高频信号可能不易听见。
         </div>
       </section>
-      <DataExplorer key={experimentId} experimentId={experimentId} />
+      <details className="raw-data-disclosure">
+        <summary>
+          展开完整解析记录 <span>RAW DATA / 原始日志与逐帧数据</span>
+        </summary>
+        <DataExplorer key={experimentId} experimentId={experimentId} />
+      </details>
     </div>
   );
 }
