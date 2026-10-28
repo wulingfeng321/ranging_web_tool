@@ -13,6 +13,7 @@ import {
   archivePosition,
   groupArchives,
   moveArchive,
+  moveAllArchives,
   type ArchiveRecord,
 } from "./archiveNavigation";
 const ArchiveScene = lazy(() => import("./ArchiveScene"));
@@ -45,6 +46,8 @@ export default function Archive({
   const { column, row } = archivePosition(groups, selectedId);
   const current = groups[column];
   const dialog = useRef<HTMLDialogElement>(null);
+  const room = useRef<HTMLElement>(null);
+  const wheelState = useRef({ total: 0, lastEvent: 0, lastSwitch: -Infinity });
   const [query, setQuery] = useState("");
   const filtered = experiments.filter((e) =>
     `${e.name} ${e.notes} ${e.created_at}`
@@ -55,6 +58,58 @@ export default function Archive({
     const id = moveArchive(groups, selectedId, axis, delta);
     if (id) onSelect(id);
   }
+  useEffect(() => {
+    const element = room.current;
+    if (!element) return;
+    function wheel(event: WheelEvent) {
+      if (
+        event.ctrlKey ||
+        event.metaKey ||
+        dialog.current?.open ||
+        document.querySelector(".modal-backdrop") ||
+        (event.target instanceof Element &&
+          event.target.closest(
+            "input,textarea,select,[contenteditable=true],dialog,[role=dialog]",
+          ))
+      )
+        return;
+      if (
+        !event.deltaY ||
+        Math.abs(event.deltaX) > Math.abs(event.deltaY) ||
+        groups.length === 0
+      )
+        return;
+      event.preventDefault();
+      const now = performance.now();
+      const state = wheelState.current;
+      const delta =
+        event.deltaY *
+        (event.deltaMode === 1
+          ? 16
+          : event.deltaMode === 2
+            ? window.innerHeight
+            : 1);
+      if (
+        now - state.lastEvent > 180 ||
+        Math.sign(delta) !== Math.sign(state.total)
+      )
+        state.total = 0;
+      state.lastEvent = now;
+      if (now - state.lastSwitch < 450) {
+        state.total = 0;
+        return;
+      }
+      state.total += delta;
+      if (Math.abs(state.total) < 30) return;
+      const id = moveAllArchives(groups, selectedId, state.total);
+      state.total = 0;
+      state.lastSwitch = now;
+      if (id && id !== selectedId) onSelect(id);
+    }
+    element.addEventListener("wheel", wheel, { passive: false });
+    return () => element.removeEventListener("wheel", wheel);
+  }, [groups, selectedId, onSelect]);
+
   function search() {
     setQuery("");
     dialog.current?.showModal();
@@ -99,7 +154,7 @@ export default function Archive({
     return () => window.removeEventListener("keydown", key);
   });
   return (
-    <section className="archive-room" aria-label="实验档案库">
+    <section ref={room} className="archive-room" aria-label="实验档案库">
       <Suspense fallback={<div className="archive-scene scene-loading" />}>
         <ArchiveScene
           groups={groups}
@@ -242,7 +297,7 @@ export default function Archive({
           SOUND INTO <b>EVIDENCE.</b>
         </div>
         <div className="room-hint">
-          ← → 切换日期列　 /　 ↑ ↓ 前后档案　 /　 ENTER 读取
+          滚轮 循环档案　 /　 ← → 切换日期列　 /　 ↑ ↓ 前后档案　 /　 ENTER 读取
           <span>{experiments.length} 份真实实验 · 空白载体为场景装饰</span>
         </div>
       </footer>

@@ -51,3 +51,18 @@ export function moveArchive(
       : Math.min(row, records.length - 1);
   return records[nextRow]?.id ?? null;
 }
+
+/** Traverse the entire archive, including date-column boundaries. */
+export function moveAllArchives(
+  groups: ArchiveGroup[],
+  id: string,
+  direction: number,
+) {
+  const records = groups.flatMap((group) => group.records);
+  if (!records.length) return null;
+  const index = records.findIndex((record) => record.id === id);
+  if (index < 0) return records[direction < 0 ? records.length - 1 : 0].id;
+  return records[
+    (index + Math.sign(direction) + records.length) % records.length
+  ].id;
+}

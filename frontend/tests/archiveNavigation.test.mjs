@@ -4,6 +4,7 @@ import {
   groupArchives,
   archivePosition,
   moveArchive,
+  moveAllArchives,
 } from "../src/archiveNavigation.ts";
 const record = (id, date) => ({
   id,
@@ -44,4 +45,15 @@ test("empty archives have no navigation target", () => {
   assert.deepEqual(groupArchives([]), []);
   assert.equal(moveArchive([], "", "row", 1), null);
   assert.deepEqual(archivePosition([], ""), { column: 0, row: 0 });
+});
+
+test("all-archive navigation crosses columns and wraps at both ends", () => {
+  const groups = groupArchives(records);
+  assert.equal(moveAllArchives(groups, "b", 1), "c");
+  assert.equal(moveAllArchives(groups, "c", -1), "b");
+  assert.equal(moveAllArchives(groups, "c", 1), "a");
+  assert.equal(moveAllArchives(groups, "a", -1), "c");
+  assert.equal(moveAllArchives([], "", 1), null);
+  assert.equal(moveAllArchives(groupArchives([records[0]]), "a", 1), "a");
+  assert.equal(moveAllArchives(groups, "missing", 1), "a");
 });
