@@ -510,3 +510,105 @@
     animation: none;
   }
 }
+
+/* Clear archive action and a single desktop workbench brand. */
+.archive-room .room-access {
+  width: fit-content;
+  min-height: 46px;
+  border: 1px solid #626b53;
+  background: #f5f3e8e8;
+  padding: 12px 18px !important;
+  margin: 18px 0 14px;
+  box-shadow: 3px 3px 0 #626b5322;
+}
+.archive-room .room-access:hover {
+  background: #dfe3d2;
+  border-color: #35432d;
+}
+.is-workbench .sidebar {
+  padding-bottom: 144px;
+}
+.sidebar-brand {
+  padding: 0 0 20px;
+  border-bottom: 1px solid var(--line);
+}
+.sidebar-brand .terminal-brand {
+  gap: 9px;
+  width: 100%;
+}
+.sidebar-brand .terminal-brand > span {
+  font-size: 23px;
+  font-weight: 800;
+  letter-spacing: -1px;
+  line-height: 1.1;
+  white-space: nowrap;
+}
+.sidebar-brand .terminal-brand small {
+  font-size: 10px;
+  letter-spacing: 1px;
+}
+.is-workbench .topbar .terminal-brand,
+.is-workbench .topbar .terminal-divider {
+  display: none;
+}
+.workbench-actions {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 236px;
+  z-index: 11;
+  padding: 16px;
+  background: #e1dfd7;
+  border-top: 1px solid var(--line);
+  border-right: 1px solid var(--line);
+}
+.workbench-actions .top-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px 8px;
+}
+.workbench-actions .local-badge {
+  justify-self: end;
+  font-size: 11px;
+  padding: 0;
+}
+.workbench-actions .primary {
+  grid-column: 1/-1;
+  justify-content: center;
+}
+@media (min-width: 651px) and (max-width: 1200px) {
+  .workbench-actions {
+    width: 205px;
+    padding: 12px;
+  }
+  .sidebar-brand .terminal-brand > span {
+    font-size: 20px;
+  }
+  .sidebar-brand .terminal-brand > svg {
+    width: 21px;
+  }
+}
+@media (max-width: 650px) {
+  .is-workbench .topbar .terminal-brand {
+    display: flex;
+  }
+  .is-workbench main {
+    padding-bottom: 82px;
+  }
+  .workbench-actions {
+    width: 100%;
+    padding: 10px 15px calc(10px + env(safe-area-inset-bottom));
+    border-right: 0;
+  }
+  .workbench-actions .top-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: space-between;
+  }
+  .workbench-actions .local-badge {
+    display: inline-flex;
+  }
+  .workbench-actions .button {
+    padding: 10px 12px;
+  }
+}

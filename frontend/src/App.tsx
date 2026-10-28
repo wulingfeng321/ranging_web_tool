@@ -283,7 +283,7 @@ export default function App() {
             .map((p) => p.index),
           marker: {
             color:
-              outcome === 1 ? "#b76b38" : outcome === 2 ? "#db9b32" : "#d76f70",
+              outcome === 1 ? "#708b70" : outcome === 2 ? "#b6a04f" : "#b57470",
             size: 9,
             symbol: outcome === 1 ? "circle" : "diamond",
           },
@@ -334,13 +334,18 @@ export default function App() {
       className={`app-shell ${tab === "archive" ? "is-archive" : "is-workbench"}`}
     >
       <aside className="sidebar">
-        <div className="brand">
-          <span className="brand-icon">
-            <AudioLines size={23} />
-          </span>
-          <div>
-            RANGING<span>ACOUSTIC RESEARCH / 声学研究</span>
-          </div>
+        <div className="sidebar-brand">
+          <button
+            className="terminal-brand"
+            onClick={() => setTab("archive")}
+            aria-label="返回实验档案"
+          >
+            <AudioLines size={25} />
+            <span>
+              RANGING <b>LAB</b>
+              <small>声学实验分析终端</small>
+            </span>
+          </button>
         </div>
         <div className="workspace-label">
           ANALYSIS TERMINAL <span>{serverMode ? "CLOUD" : "LOCAL"}</span>
@@ -406,6 +411,27 @@ export default function App() {
           <small>{readyCount} 轮已解析 · v0.1</small>
         </div>
       </aside>
+      {tab !== "archive" && (
+        <nav className="workbench-actions" aria-label="工作区操作">
+          <div className="top-actions">
+            <button className="button" onClick={() => setTab("admin")}>
+              <Settings2 size={16} />
+              管理
+            </button>
+            <span className="local-badge">
+              <span className="live-dot" />
+              {serverMode ? "云端运行" : "本地运行"}
+            </span>
+            <button
+              className="button primary"
+              onClick={() => setUploadOpen(true)}
+            >
+              <Plus size={16} />
+              导入实验
+            </button>
+          </div>
+        </nav>
+      )}
       <main>
         <header className="topbar">
           <div>
@@ -434,23 +460,6 @@ export default function App() {
                     ? "实验对比"
                     : "分析工作台"}
             </span>
-          </div>
-          <div className="top-actions">
-            <button className="button" onClick={() => setTab("admin")}>
-              <Settings2 size={16} />
-              管理
-            </button>
-            <span className="local-badge">
-              <span className="live-dot" />
-              {serverMode ? "云端运行" : "本地运行"}
-            </span>
-            <button
-              className="button primary"
-              onClick={() => setUploadOpen(true)}
-            >
-              <Plus size={16} />
-              导入实验
-            </button>
           </div>
         </header>
         {tab !== "archive" && (
@@ -702,15 +711,15 @@ export default function App() {
                             </div>
                             <div className="legend">
                               <span>
-                                <i style={{ background: "#b76b38" }} />
+                                <i style={{ background: "#708b70" }} />
                                 唯一配对
                               </span>
                               <span>
-                                <i style={{ background: "#db9b32" }} />
+                                <i style={{ background: "#b6a04f" }} />
                                 歧义候选
                               </span>
                               <span>
-                                <i style={{ background: "#d76f70" }} />
+                                <i style={{ background: "#b57470" }} />
                                 不一致
                               </span>
                             </div>
