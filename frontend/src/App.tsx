@@ -28,6 +28,7 @@ import Archive from "./Archive";
 import { waveEvents, type EventMarker } from "./waveEvents";
 import "./style.css";
 import "./rhine.css";
+import "./archive-room.css";
 
 type Raw = Record<string, string>;
 type EventRecord = Raw & {
@@ -489,6 +490,7 @@ export default function App() {
               onSelect={setSelectedId}
               onOpen={() => setTab("analysis")}
               onUpload={() => setUploadOpen(true)}
+              onManage={() => setTab("admin")}
             />
           ) : tab === "admin" ? (
             <Admin onChanged={refresh} />

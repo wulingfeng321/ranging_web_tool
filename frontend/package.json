@@ -15,12 +15,14 @@
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-markdown": "^10.1.0",
-    "remark-gfm": "^4.0.1"
+    "remark-gfm": "^4.0.1",
+    "three": "^0.183.0"
   },
   "devDependencies": {
     "@types/plotly.js": "^3.0.0",
     "@types/react": "^19.2.0",
     "@types/react-dom": "^19.2.0",
+    "@types/three": "^0.183.0",
     "@vitejs/plugin-react": "^5.0.0",
     "prettier": "^3.9.10",
     "typescript": "~5.9.3",

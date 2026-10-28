@@ -1,34 +1,30 @@
-import { useState } from "react";
+import { lazy, Suspense, useEffect, useMemo, useRef, useState } from "react";
 import {
-  ArrowDownRight,
+  ArrowDown,
   ArrowLeft,
   ArrowRight,
-  AudioLines,
+  ArrowUp,
   Plus,
   Search,
+  Settings2,
+  X,
 } from "lucide-react";
-
-type ArchiveRecord = {
-  id: string;
-  name: string;
-  created_at: string;
-  status: string;
-  notes: string;
-  summary: {
-    pairs: number;
-    accepted: number;
-    mean_mm: number | null;
-    std_mm: number | null;
-  } | null;
-};
+import {
+  archivePosition,
+  groupArchives,
+  moveArchive,
+  type ArchiveRecord,
+} from "./archiveNavigation";
+const ArchiveScene = lazy(() => import("./ArchiveScene"));
 type Props = {
   experiments: ArchiveRecord[];
   selectedId: string;
   onSelect: (id: string) => void;
   onOpen: () => void;
   onUpload: () => void;
+  onManage: () => void;
 };
-const status: Record<string, string> = {
+const statuses: Record<string, string> = {
   ready: "可读取",
   failed: "解析失败",
   queued: "等待解析",
@@ -36,251 +32,260 @@ const status: Record<string, string> = {
 };
 const number = (n: number | null | undefined) =>
   n == null ? "—" : n.toLocaleString("zh-CN", { maximumFractionDigits: 2 });
-
 export default function Archive({
   experiments,
   selectedId,
   onSelect,
   onOpen,
   onUpload,
+  onManage,
 }: Props) {
-  const [query, setQuery] = useState("");
+  const groups = useMemo(() => groupArchives(experiments), [experiments]);
   const selected = experiments.find((e) => e.id === selectedId);
-  const index = experiments.findIndex((e) => e.id === selectedId);
+  const { column, row } = archivePosition(groups, selectedId);
+  const current = groups[column];
+  const dialog = useRef<HTMLDialogElement>(null);
+  const [query, setQuery] = useState("");
   const filtered = experiments.filter((e) =>
-    `${e.name} ${e.notes}`.toLowerCase().includes(query.toLowerCase()),
+    `${e.name} ${e.notes} ${e.created_at}`
+      .toLowerCase()
+      .includes(query.toLowerCase()),
   );
-  function step(delta: number) {
-    if (!filtered.length) return;
-    const current = filtered.findIndex((e) => e.id === selectedId);
-    const next =
-      current < 0
-        ? delta > 0
-          ? 0
-          : filtered.length - 1
-        : (current + delta + filtered.length) % filtered.length;
-    onSelect(filtered[next].id);
+  function step(axis: "row" | "column", delta: number) {
+    const id = moveArchive(groups, selectedId, axis, delta);
+    if (id) onSelect(id);
   }
+  function search() {
+    setQuery("");
+    dialog.current?.showModal();
+  }
+  useEffect(() => {
+    function key(e: KeyboardEvent) {
+      if (
+        dialog.current?.open ||
+        document.querySelector(".modal-backdrop") ||
+        (e.target instanceof HTMLElement &&
+          e.target.closest(
+            "input,textarea,select,[contenteditable=true],[role=dialog]",
+          ))
+      )
+        return;
+      if (e.altKey || e.ctrlKey || e.metaKey) return;
+      if (
+        e.key === "Enter" &&
+        e.target instanceof HTMLElement &&
+        e.target.closest("button,a")
+      )
+        return;
+      if (
+        [
+          "ArrowUp",
+          "ArrowDown",
+          "ArrowLeft",
+          "ArrowRight",
+          "Enter",
+          "/",
+        ].includes(e.key)
+      )
+        e.preventDefault();
+      if (e.key === "/") search();
+      if (e.key === "Enter" && selected) onOpen();
+      if (e.key === "ArrowUp") step("row", -1);
+      if (e.key === "ArrowDown") step("row", 1);
+      if (e.key === "ArrowLeft") step("column", -1);
+      if (e.key === "ArrowRight") step("column", 1);
+    }
+    window.addEventListener("keydown", key);
+    return () => window.removeEventListener("keydown", key);
+  });
   return (
-    <div className="archive-page">
-      <div className="archive-masthead">
-        <span>ACOUSTIC RESEARCH DIVISION</span>
-        <span>实验数据档案 / ARCHIVE INDEX</span>
-        <span>RNG / 01</span>
-      </div>
-      <section className="archive-hero" aria-label="当前实验档案">
-        <div className="archive-intro">
-          <div className="archive-kicker">
-            <i /> RANGING STUDIO <span>研究档案系统</span>
+    <section className="archive-room" aria-label="实验档案库">
+      <Suspense fallback={<div className="archive-scene scene-loading" />}>
+        <ArchiveScene
+          groups={groups}
+          selectedId={selectedId}
+          onSelect={onSelect}
+          onStep={step}
+        />
+      </Suspense>
+      <div className="room-shade" aria-hidden="true" />
+      <header className="room-header">
+        <div className="room-brand">
+          <strong>RANGING LAB</strong>
+          <span>ACOUSTIC RESEARCH DIVISION</span>
+          <div>
+            ANALYSIS <b>OS</b>
           </div>
-          <h1>
-            让声音
-            <br />
-            留下<span>坐标。</span>
-          </h1>
-          <p className="archive-description">
-            从一次声音，到一组证据。
-            <br />
-            探索双板采集的波形、时间与距离。
+        </div>
+        <nav aria-label="档案操作">
+          <button onClick={search}>
+            <Search size={18} />
+            <span>档案检索</span>
+            <kbd>/</kbd>
+          </button>
+          <button onClick={onUpload}>
+            <Plus size={18} />
+            <span>导入实验</span>
+          </button>
+          <button onClick={onManage}>
+            <Settings2 size={18} />
+            <span>管理</span>
+          </button>
+        </nav>
+      </header>
+      <article className="room-record" aria-live="polite">
+        <div className="room-eyebrow">
+          EXPERIMENT DATABASE <span>/ 实验档案</span>
+        </div>
+        <h1>
+          {selected
+            ? `FILE NUMBER: ${String(experiments.indexOf(selected) + 1).padStart(3, "0")}`
+            : "ARCHIVE / EMPTY"}
+        </h1>
+        <div className="room-record-body">
+          <h2>{selected?.name ?? "等待第一份声音档案"}</h2>
+          <p>
+            {selected
+              ? `${selected.created_at.slice(0, 10)} · ${statuses[selected.status] ?? selected.status}`
+              : "导入 SD 卡数据，开始探索声音的时间与距离。"}
           </p>
-          <div className="archive-selection" key={selectedId}>
-            <div className="archive-file-label">
-              SELECTED RECORD{" "}
-              <span>
-                {selected
-                  ? `NO.${String(index + 1).padStart(3, "0")}`
-                  : "NO RECORD"}
-              </span>
-            </div>
-            <h2>{selected?.name ?? "等待第一份实验档案"}</h2>
-            <p>
-              {selected
-                ? `${new Date(selected.created_at).toLocaleDateString("zh-CN")} · ${status[selected.status] ?? selected.status}`
-                : "导入 A.RNG、B.RNG 与 COMPLETE.TXT 开始分析。"}
-            </p>
-            <div className="archive-data">
+          {selected && (
+            <dl>
               <div>
-                <span>配对记录</span>
-                <strong>
-                  {number(selected?.summary?.pairs)}
-                  <small>组</small>
-                </strong>
+                <dt>配对事件</dt>
+                <dd>{number(selected.summary?.pairs)}</dd>
               </div>
               <div>
-                <span>换算距离均值</span>
-                <strong>
-                  {number(selected?.summary?.mean_mm)}
-                  <small>mm</small>
-                </strong>
+                <dt>平均距离 / mm</dt>
+                <dd>{number(selected.summary?.mean_mm)}</dd>
               </div>
               <div>
-                <span>标准差</span>
-                <strong>
-                  {number(selected?.summary?.std_mm)}
-                  <small>mm</small>
-                </strong>
+                <dt>标准差 / mm</dt>
+                <dd>{number(selected.summary?.std_mm)}</dd>
               </div>
-            </div>
-            <button
-              className="archive-access"
-              onClick={selected ? onOpen : onUpload}
-            >
-              <span>
-                {selected ? "进入实验分析" : "导入实验数据"}
-                <small>
-                  {selected ? "ACCESS EXPERIMENT" : "IMPORT RECORD"}
-                </small>
-              </span>
-              <ArrowRight size={24} />
-            </button>
+            </dl>
+          )}
+          <button
+            className="room-access"
+            onClick={selected ? onOpen : onUpload}
+          >
+            {selected ? "进入分析" : "导入实验"}
+            <span>{selected ? "ACCESS FILE" : "IMPORT DATA"}</span>
+            <ArrowRight size={25} />
+          </button>
+        </div>
+      </article>
+      <footer className="room-footer">
+        <div className="room-counter">
+          <span>ARCHIVE / SELECT</span>
+          <div>
+            {selected ? String(row + 1).padStart(2, "0") : "00"}
+            <small>
+              / {String(current?.records.length ?? 0).padStart(2, "0")}
+            </small>
           </div>
         </div>
-        <div className="specimen-stage" aria-hidden="true">
-          <div className="stage-coordinate coordinate-top">
-            DUAL-BOARD ACOUSTIC CAPTURE <span>01 / 02</span>
-          </div>
-          <div className="stage-orbit orbit-one" />
-          <div className="stage-orbit orbit-two" />
-          <div className="specimen-shadow" />
-          <div className="specimen-stack">
-            <div className="specimen-plate plate-back" />
-            <div className="specimen-plate plate-middle" />
-            <div className="specimen-plate plate-front">
-              <div className="plate-top">
-                <span>
-                  RANGING
-                  <br />
-                  <b>ACOUSTICS LAB.</b>
-                </span>
-                <AudioLines size={25} />
-              </div>
-              <div className="plate-id">
-                {selected
-                  ? `NO.${String(index + 1).padStart(3, "0")}`
-                  : "NO.000"}
-                <small>EXPERIMENT / DATA CARRIER</small>
-              </div>
-              <div className="receiver receiver-a">
-                <span>A</span>
+        <div className="room-record-nav">
+          <button
+            aria-label="上一份记录"
+            disabled={!experiments.length}
+            onClick={() => step("row", -1)}
+          >
+            <ArrowUp />
+          </button>
+          <div className="room-ticks">
+            {current?.records.map((r, i) => (
+              <button
+                key={r.id}
+                className={r.id === selectedId ? "active" : ""}
+                aria-label={`选择记录 ${i + 1}：${r.name}`}
+                aria-pressed={r.id === selectedId}
+                onClick={() => onSelect(r.id)}
+              >
                 <i />
-                <b />
-              </div>
-              <div className="receiver receiver-b">
-                <span>B</span>
-                <i />
-                <b />
-              </div>
-              <svg className="plate-circuit" viewBox="0 0 420 440">
-                <path d="M130 195v110q0 40 45 40h90q45 0 45-40V150" />
-                <path d="M146 195v102q0 30 33 30h80q33 0 33-30V150" />
-              </svg>
-              <div className="plate-scan" />
-              <div className="plate-bottom">
-                <span>
-                  48 kHz
-                  <br />
-                  DUAL CHANNEL
-                </span>
-                <div className="barcode" />
-                <span>RNG1</span>
-              </div>
-              <i className="plate-screw screw-one" />
-              <i className="plate-screw screw-two" />
-            </div>
+              </button>
+            ))}
           </div>
-          <div className="stage-caption">
-            <span>双板声学采集 / 结构示意</span>
-            <b>TIME → DISTANCE</b>
-          </div>
-          <span className="stage-cross cross-one">+</span>
-          <span className="stage-cross cross-two">+</span>
+          <button
+            aria-label="下一份记录"
+            disabled={!experiments.length}
+            onClick={() => step("row", 1)}
+          >
+            <ArrowDown />
+          </button>
         </div>
-      </section>
-      <section className="archive-catalog" aria-label="实验档案列表">
-        <div className="catalog-toolbar">
-          <h2>
-            <span>01 —</span> 实验档案{" "}
-            <small>{String(experiments.length).padStart(2, "0")} RECORDS</small>
+        <div className="room-column-nav">
+          <button
+            aria-label="前一日期列"
+            disabled={groups.length < 2}
+            onClick={() => step("column", -1)}
+          >
+            <ArrowLeft />
+          </button>
+          <div>
+            <small>
+              COLUMN{" "}
+              {groups.length ? String(column + 1).padStart(2, "0") : "00"} /{" "}
+              {String(groups.length).padStart(2, "0")}
+            </small>
+            <span>{current?.date ?? "暂无记录"}</span>
+          </div>
+          <button
+            aria-label="后一日期列"
+            disabled={groups.length < 2}
+            onClick={() => step("column", 1)}
+          >
+            <ArrowRight />
+          </button>
+        </div>
+        <div className="room-signature">
+          SOUND INTO <b>EVIDENCE.</b>
+        </div>
+        <div className="room-hint">
+          ← → 切换日期列　 /　 ↑ ↓ 前后档案　 /　 ENTER 读取
+          <span>{experiments.length} 份真实实验 · 空白载体为场景装饰</span>
+        </div>
+      </footer>
+      <dialog
+        className="room-search"
+        ref={dialog}
+        aria-labelledby="archive-search-title"
+      >
+        <div className="room-search-heading">
+          <h2 id="archive-search-title">
+            档案检索 <small>ARCHIVE INDEX</small>
           </h2>
-          <label className="archive-search">
-            <Search size={16} />
-            <input
-              aria-label="检索实验档案"
-              placeholder="检索名称 / 备注"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-            />
-          </label>
-          <div className="archive-pagination">
-            <button
-              aria-label="上一份档案"
-              disabled={!filtered.length}
-              onClick={() => step(-1)}
-            >
-              <ArrowLeft size={18} />
-            </button>
-            <span>
-              {index < 0 ? "00" : String(index + 1).padStart(2, "0")} /{" "}
-              {String(experiments.length).padStart(2, "0")}
-            </span>
-            <button
-              aria-label="下一份档案"
-              disabled={!filtered.length}
-              onClick={() => step(1)}
-            >
-              <ArrowRight size={18} />
-            </button>
-          </div>
+          <button aria-label="关闭检索" onClick={() => dialog.current?.close()}>
+            <X />
+          </button>
         </div>
-        <div className="archive-records">
+        <input
+          autoFocus
+          aria-label="搜索实验"
+          placeholder="搜索名称、备注或日期…"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+        />
+        <p>{filtered.length} 份记录</p>
+        <div className="room-results">
           {filtered.map((e) => (
             <button
               key={e.id}
-              className={`archive-record ${e.id === selectedId ? "active" : ""}`}
-              aria-pressed={e.id === selectedId}
-              onClick={() => onSelect(e.id)}
-              onDoubleClick={onOpen}
+              onClick={() => {
+                onSelect(e.id);
+                dialog.current?.close();
+              }}
             >
-              <div className="record-top">
-                <span>
-                  R / {String(experiments.indexOf(e) + 1).padStart(3, "0")}
-                </span>
-                <span className={`record-status ${e.status}`}>
-                  {status[e.status] ?? e.status}
-                </span>
-              </div>
-              <h3>{e.name}</h3>
-              <div className="record-bottom">
-                <span>
-                  {e.summary
-                    ? `${e.summary.accepted} / ${e.summary.pairs} 唯一配对`
-                    : "尚无分析结果"}
-                </span>
-                <ArrowDownRight size={20} />
-              </div>
+              <span>{e.name}</span>
+              <small>
+                {e.created_at.slice(0, 10)} / {statuses[e.status] ?? e.status}
+              </small>
+              <ArrowRight size={18} />
             </button>
           ))}
-          {query && !filtered.length && (
-            <p className="archive-no-results">
-              没有匹配的档案。试试其他名称或清空检索。
-            </p>
-          )}
-          <button className="archive-import" onClick={onUpload}>
-            <Plus size={24} />
-            <span>
-              导入新实验<small>ADD RECORD</small>
-            </span>
-          </button>
+          {!filtered.length && <p>没有匹配的实验。试试其他关键词。</p>}
         </div>
-      </section>
-      <div className="archive-footer">
-        <span>
-          <i /> 原始记录 · 可追溯分析
-        </span>
-        <span>
-          RANGING / RESEARCH TERMINAL <b>↗</b>
-        </span>
-      </div>
-    </div>
+      </dialog>
+    </section>
   );
 }
