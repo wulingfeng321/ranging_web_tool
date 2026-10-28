@@ -39,37 +39,37 @@ export default function ArchiveScene({
       return;
     }
     renderer.setClearColor("#e8e5e0");
-    renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5));
+    renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFShadowMap;
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.15;
+    renderer.toneMappingExposure = 1.0;
     renderer.domElement.setAttribute("aria-hidden", "true");
     el.append(renderer.domElement);
     const scene = new THREE.Scene();
-    scene.fog = new THREE.Fog("#e8e5e0", 43, 95);
+    scene.fog = new THREE.Fog("#e8e5e0", 62, 115);
     const camera = new THREE.OrthographicCamera(-15, 15, 9, -9, 0.1, 180);
     const aim = new THREE.Vector3(3, 1, 0);
     camera.position.set(-36, 20, 32);
     camera.lookAt(aim);
-    scene.add(new THREE.HemisphereLight("#fffdf6", "#b4aa98", 2.5));
-    const sun = new THREE.DirectionalLight("#fff6e9", 3.3);
+    scene.add(new THREE.HemisphereLight("#fffdf6", "#8c8475", 1.05));
+    const sun = new THREE.DirectionalLight("#fff6e9", 3.6);
     sun.position.set(-12, 21, 6);
     sun.castShadow = true;
     sun.shadow.mapSize.set(2048, 2048);
     Object.assign(sun.shadow.camera, {
-      left: -28,
-      right: 28,
-      top: 28,
-      bottom: -28,
+      left: -20,
+      right: 20,
+      top: 20,
+      bottom: -20,
       near: 0.1,
       far: 80,
     });
     sun.shadow.bias = -0.0004;
     sun.shadow.normalBias = 0.03;
     scene.add(sun);
-    const fill = new THREE.DirectionalLight("#ffffff", 1.1);
+    const fill = new THREE.DirectionalLight("#ffffff", 0.35);
     fill.position.set(10, 8, -10);
     scene.add(fill);
     const floorGeometry = new THREE.PlaneGeometry(150, 150);
@@ -86,9 +86,9 @@ export default function ArchiveScene({
     const columns = 9,
       rows = 59,
       count = columns * rows;
-    const bodyGeometry = new THREE.BoxGeometry(4.9, 3.6, 0.23);
+    const bodyGeometry = new THREE.BoxGeometry(4.9, 3.6, 0.38);
     const bodyMaterial = new THREE.MeshStandardMaterial({
-      color: "#e7e4db",
+      color: "#a6a18f",
       roughness: 0.54,
       metalness: 0.08,
     });
@@ -98,9 +98,9 @@ export default function ArchiveScene({
     bodies.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
     bodies.frustumCulled = false;
     scene.add(bodies);
-    const faceGeometry = new THREE.PlaneGeometry(4.72, 3.42);
+    const faceGeometry = new THREE.PlaneGeometry(4.66, 3.36);
     const faceMaterial = new THREE.MeshStandardMaterial({
-      color: "#f6f4eb",
+      color: "#eee9dc",
       roughness: 0.38,
       metalness: 0.05,
     });
@@ -154,7 +154,7 @@ export default function ArchiveScene({
       state.current.selectedId,
     );
     let x = initial.column * 5.3,
-      z = initial.row * 0.67;
+      z = initial.row * 0.88;
     let frame = 0,
       previousTime = 0,
       disposed = false,
@@ -171,12 +171,12 @@ export default function ArchiveScene({
       previousTime = now;
       const alpha = reduced.matches ? 1 : 1 - Math.exp(-dt * 8);
       const targetX = target.column * 5.3,
-        targetZ = target.row * 0.67;
+        targetZ = target.row * 0.88;
       x += (targetX - x) * alpha;
       z += (targetZ - z) * alpha;
       let moving = Math.abs(targetX - x) + Math.abs(targetZ - z) > 0.001;
       const baseColumn = Math.round(x / 5.3),
-        baseRow = Math.round(z / 0.67);
+        baseRow = Math.round(z / 0.88);
       let i = 0;
       const visible = new Set<string>();
       for (let c = baseColumn - 4; c <= baseColumn + 4; c++) {
@@ -196,11 +196,11 @@ export default function ArchiveScene({
           if (Math.abs(targetLift - lift) > 0.001) moving = true;
           lifts.set(key, lift);
           dummy.rotation.set(0, 0, 0);
-          dummy.position.set(c * 5.3 - x, 1.8 + lift, r * 0.67 - z);
+          dummy.position.set(c * 5.3 - x, 1.8 + lift, r * 0.88 - z);
           dummy.updateMatrix();
           bodies.setMatrixAt(i, dummy.matrix);
           bodies.setColorAt(i, colors[active ? 0 : id ? 1 : 2]);
-          dummy.position.z += 0.121;
+          dummy.position.z += 0.196;
           dummy.updateMatrix();
           faces.setMatrixAt(i, dummy.matrix);
           dummy.position.x -= 1.25;
@@ -231,7 +231,7 @@ export default function ArchiveScene({
       const { width, height } = el.getBoundingClientRect();
       if (!width || !height) return;
       const aspect = width / height;
-      const halfHeight = aspect < 0.9 ? 10 : 6.8;
+      const halfHeight = aspect < 0.9 ? 8 : 5.2;
       camera.left = -halfHeight * aspect;
       camera.right = halfHeight * aspect;
       camera.top = halfHeight;

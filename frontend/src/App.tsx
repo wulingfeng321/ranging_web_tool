@@ -25,6 +25,7 @@ import DecodedData from "./DecodedData";
 import AIAnalysis from "./AIAnalysis";
 import Admin from "./Admin";
 import Archive from "./Archive";
+import { usePageNavigation } from "./usePageNavigation";
 import { waveEvents, type EventMarker } from "./waveEvents";
 import "./style.css";
 import "./rhine.css";
@@ -139,8 +140,8 @@ export default function App() {
     [error, setError] = useState(""),
     [query, setQuery] = useState("");
   const [uploadOpen, setUploadOpen] = useState(false),
-    [editing, setEditing] = useState(false),
-    [tab, setTab] = useState("archive");
+    [editing, setEditing] = useState(false);
+  const { page: tab, navigate: setTab, surface } = usePageNavigation("archive");
   const [pairIndex, setPairIndex] = useState<number | null>(null),
     [range, setRange] = useState<[number, number] | null>(null);
   const [wave, setWave] = useState<Wave | null>(null),
@@ -329,6 +330,7 @@ export default function App() {
   const readyCount = experiments.filter((e) => e.status === "ready").length;
   return (
     <div
+      ref={surface}
       className={`app-shell ${tab === "archive" ? "is-archive" : "is-workbench"}`}
     >
       <aside className="sidebar">
