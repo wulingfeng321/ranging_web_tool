@@ -42,6 +42,10 @@ export default function Archive({
   onManage,
 }: Props) {
   const groups = useMemo(() => groupArchives(experiments), [experiments]);
+  const recordNumbers = useMemo(
+    () => new Map(experiments.map((record, index) => [record.id, index + 1])),
+    [experiments],
+  );
   const selected = experiments.find((e) => e.id === selectedId);
   const { column, row } = archivePosition(groups, selectedId);
   const current = groups[column];
@@ -95,12 +99,12 @@ export default function Archive({
       )
         state.total = 0;
       state.lastEvent = now;
-      if (now - state.lastSwitch < 450) {
+      if (now - state.lastSwitch < 140) {
         state.total = 0;
         return;
       }
       state.total += delta;
-      if (Math.abs(state.total) < 30) return;
+      if (Math.abs(state.total) < 18) return;
       const id = moveAllArchives(groups, selectedId, state.total);
       state.total = 0;
       state.lastSwitch = now;
@@ -158,6 +162,7 @@ export default function Archive({
       <Suspense fallback={<div className="archive-scene scene-loading" />}>
         <ArchiveScene
           groups={groups}
+          recordNumbers={recordNumbers}
           selectedId={selectedId}
           onSelect={onSelect}
           onStep={step}

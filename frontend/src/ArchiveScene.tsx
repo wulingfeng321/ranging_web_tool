@@ -5,6 +5,7 @@ import { archivePosition, type ArchiveGroup } from "./archiveNavigation";
 type Props = {
   groups: ArchiveGroup[];
   selectedId: string;
+  recordNumbers: Map<string, number>;
   onSelect: (id: string) => void;
   onStep: (axis: "row" | "column", delta: number) => void;
 };
@@ -14,17 +15,18 @@ type Props = {
 export default function ArchiveScene({
   groups,
   selectedId,
+  recordNumbers,
   onSelect,
   onStep,
 }: Props) {
   const host = useRef<HTMLDivElement>(null);
-  const state = useRef({ groups, selectedId, onSelect, onStep });
-  state.current = { groups, selectedId, onSelect, onStep };
+  const state = useRef({ groups, selectedId, recordNumbers, onSelect, onStep });
+  state.current = { groups, selectedId, recordNumbers, onSelect, onStep };
   const invalidate = useRef<(() => void) | null>(null);
   const [fallback, setFallback] = useState(false);
   useEffect(() => {
     invalidate.current?.();
-  }, [groups, selectedId]);
+  }, [groups, selectedId, recordNumbers]);
   useEffect(() => {
     const el = host.current!;
     let renderer: THREE.WebGLRenderer;
@@ -88,7 +90,7 @@ export default function ArchiveScene({
       count = columns * rows;
     const bodyGeometry = new THREE.BoxGeometry(4.9, 3.6, 0.38);
     const bodyMaterial = new THREE.MeshStandardMaterial({
-      color: "#a6a18f",
+      color: "#ffffff",
       roughness: 0.54,
       metalness: 0.08,
     });
@@ -108,29 +110,57 @@ export default function ArchiveScene({
     faces.receiveShadow = true;
     faces.frustumCulled = false;
     scene.add(faces);
-    const labelCanvas = document.createElement("canvas");
-    labelCanvas.width = 512;
-    labelCanvas.height = 128;
-    const context = labelCanvas.getContext("2d")!;
-    context.fillStyle = "#f1efe7";
-    context.fillRect(0, 0, 512, 128);
-    context.fillStyle = "#6c6d63";
-    context.font = "28px sans-serif";
-    context.fillText("RANGING LAB.", 18, 44);
-    context.font = "13px monospace";
-    context.fillText("ACOUSTIC RESEARCH / DATA CARRIER", 18, 73);
-    context.fillStyle = "#888779";
-    context.fillRect(18, 98, 475, 1);
-    const labelTexture = new THREE.CanvasTexture(labelCanvas);
-    labelTexture.colorSpace = THREE.SRGBColorSpace;
-    const labelGeometry = new THREE.PlaneGeometry(1.75, 0.44);
-    const labelMaterial = new THREE.MeshStandardMaterial({
-      map: labelTexture,
-      roughness: 0.9,
-    });
-    const labels = new THREE.InstancedMesh(labelGeometry, labelMaterial, count);
-    labels.frustumCulled = false;
-    scene.add(labels);
+    const labelGeometry = new THREE.PlaneGeometry(2.05, 0.42);
+    const recordLabels = new Map<
+      string,
+      {
+        number: number;
+        mesh: THREE.Mesh<THREE.PlaneGeometry, THREE.MeshBasicMaterial>;
+        texture: THREE.CanvasTexture;
+      }
+    >();
+    function syncLabels() {
+      const numbers = state.current.recordNumbers;
+      for (const [id, label] of recordLabels) {
+        if (numbers.get(id) !== label.number) {
+          scene.remove(label.mesh);
+          label.texture.dispose();
+          label.mesh.material.dispose();
+          recordLabels.delete(id);
+        }
+      }
+      for (const [id, number] of numbers) {
+        if (recordLabels.has(id)) continue;
+        const canvas = document.createElement("canvas");
+        canvas.width = 640;
+        canvas.height = 160;
+        const ctx = canvas.getContext("2d")!;
+        ctx.fillStyle = "#e7ebdc";
+        ctx.fillRect(0, 0, 640, 160);
+        ctx.fillStyle = "#45513a";
+        ctx.fillRect(0, 0, 12, 160);
+        ctx.font = "bold 106px Arial, sans-serif";
+        ctx.fillText(`#${String(number).padStart(2, "0")}`, 30, 119);
+        ctx.font = "bold 25px Arial, sans-serif";
+        ctx.fillText("RANGING LAB", 286, 68);
+        ctx.font = "19px monospace";
+        ctx.fillText("EXPERIMENT RECORD", 286, 106);
+        const texture = new THREE.CanvasTexture(canvas);
+        texture.colorSpace = THREE.SRGBColorSpace;
+        texture.anisotropy = Math.min(
+          8,
+          renderer.capabilities.getMaxAnisotropy(),
+        );
+        const material = new THREE.MeshBasicMaterial({
+          map: texture,
+          toneMapped: false,
+        });
+        const mesh = new THREE.Mesh(labelGeometry, material);
+        mesh.visible = false;
+        scene.add(mesh);
+        recordLabels.set(id, { number, mesh, texture });
+      }
+    }
     const screwGeometry = new THREE.CylinderGeometry(0.047, 0.047, 0.012, 8);
     const screwMaterial = new THREE.MeshStandardMaterial({
       color: "#aaa99f",
@@ -142,7 +172,10 @@ export default function ArchiveScene({
     scene.add(screws);
 
     const dummy = new THREE.Object3D();
-    const colors = ["#fffbef", "#f4f0e5", "#edeae1"].map(
+    const colors = ["#a1845a", "#849171", "#c9c5b9"].map(
+      (c) => new THREE.Color(c),
+    );
+    const faceColors = ["#fff4d8", "#e1e8d3", "#eeeae2"].map(
       (c) => new THREE.Color(c),
     );
     const pointer = new THREE.Vector2();
@@ -154,7 +187,7 @@ export default function ArchiveScene({
       state.current.selectedId,
     );
     let x = initial.column * 5.3,
-      z = initial.row * 0.88;
+      z = initial.row * 1.3;
     let frame = 0,
       previousTime = 0,
       disposed = false,
@@ -163,6 +196,8 @@ export default function ArchiveScene({
     function render(now: number) {
       frame = 0;
       if (disposed || contextLost || document.hidden) return;
+      syncLabels();
+      for (const label of recordLabels.values()) label.mesh.visible = false;
       const target = archivePosition(
         state.current.groups,
         state.current.selectedId,
@@ -171,12 +206,12 @@ export default function ArchiveScene({
       previousTime = now;
       const alpha = reduced.matches ? 1 : 1 - Math.exp(-dt * 8);
       const targetX = target.column * 5.3,
-        targetZ = target.row * 0.88;
+        targetZ = target.row * 1.3;
       x += (targetX - x) * alpha;
       z += (targetZ - z) * alpha;
       let moving = Math.abs(targetX - x) + Math.abs(targetZ - z) > 0.001;
       const baseColumn = Math.round(x / 5.3),
-        baseRow = Math.round(z / 0.88);
+        baseRow = Math.round(z / 1.3);
       let i = 0;
       const visible = new Set<string>();
       for (let c = baseColumn - 4; c <= baseColumn + 4; c++) {
@@ -190,24 +225,29 @@ export default function ArchiveScene({
             c === target.column
               ? Math.max(0, 1 - Math.abs(r - target.row) / 4) * 0.35
               : 0;
-          const targetLift = active ? 1.6 : shoulder;
+          const targetLift = active ? 2.0 : id ? 0.85 + shoulder : -0.45;
           let lift = lifts.get(key) ?? 0;
           lift += (targetLift - lift) * alpha;
           if (Math.abs(targetLift - lift) > 0.001) moving = true;
           lifts.set(key, lift);
           dummy.rotation.set(0, 0, 0);
-          dummy.position.set(c * 5.3 - x, 1.8 + lift, r * 0.88 - z);
+          dummy.position.set(c * 5.3 - x, 1.8 + lift, r * 1.3 - z);
           dummy.updateMatrix();
           bodies.setMatrixAt(i, dummy.matrix);
           bodies.setColorAt(i, colors[active ? 0 : id ? 1 : 2]);
           dummy.position.z += 0.196;
           dummy.updateMatrix();
           faces.setMatrixAt(i, dummy.matrix);
-          dummy.position.x -= 1.25;
-          dummy.position.y += 1.31;
+          faces.setColorAt(i, faceColors[active ? 0 : id ? 1 : 2]);
+          dummy.position.x -= 1.1;
+          dummy.position.y += 1.48;
           dummy.position.z += 0.007;
           dummy.updateMatrix();
-          labels.setMatrixAt(i, dummy.matrix);
+          const label = id ? recordLabels.get(id) : null;
+          if (label) {
+            label.mesh.position.copy(dummy.position);
+            label.mesh.visible = true;
+          }
           dummy.position.x += 3.42;
           dummy.position.y -= 2.8;
           dummy.rotation.x = Math.PI / 2;
@@ -216,9 +256,10 @@ export default function ArchiveScene({
         }
       }
       for (const key of lifts.keys()) if (!visible.has(key)) lifts.delete(key);
-      for (const mesh of [bodies, faces, labels, screws])
+      for (const mesh of [bodies, faces, screws])
         mesh.instanceMatrix.needsUpdate = true;
       if (bodies.instanceColor) bodies.instanceColor.needsUpdate = true;
+      if (faces.instanceColor) faces.instanceColor.needsUpdate = true;
       renderer.render(scene, camera);
       if (moving) frame = requestAnimationFrame(render);
     }
@@ -314,12 +355,15 @@ export default function ArchiveScene({
       for (const material of [
         bodyMaterial,
         faceMaterial,
-        labelMaterial,
         screwMaterial,
         floorMaterial,
       ])
         material.dispose();
-      labelTexture.dispose();
+      for (const label of recordLabels.values()) {
+        label.texture.dispose();
+        label.mesh.material.dispose();
+      }
+      recordLabels.clear();
       sun.shadow.dispose();
       renderer.dispose();
       renderer.domElement.remove();
