@@ -203,33 +203,35 @@ export default function Archive({
             : "ARCHIVE / EMPTY"}
         </h1>
         <div className="room-record-body">
-          <h2>{selected?.name ?? "等待第一份声音档案"}</h2>
-          <p>
-            {selected
-              ? `${selected.created_at.slice(0, 10)} · ${statuses[selected.status] ?? selected.status}`
-              : "导入 SD 卡数据，开始探索声音的时间与距离。"}
-          </p>
-          {selected && (
-            <dl>
-              <div>
-                <dt>配对事件</dt>
-                <dd>{number(selected.summary?.pairs)}</dd>
-              </div>
-              <div>
-                <dt>平均距离 / mm</dt>
-                <dd>{number(selected.summary?.mean_mm)}</dd>
-              </div>
-              <div>
-                <dt>标准差 / mm</dt>
-                <dd>{number(selected.summary?.std_mm)}</dd>
-              </div>
-            </dl>
-          )}
+          <div className="room-record-summary">
+            <h2>{selected?.name ?? "等待第一份声音档案"}</h2>
+            <p>
+              {selected
+                ? `${selected.created_at.slice(0, 10)} · ${statuses[selected.status] ?? selected.status}`
+                : "导入 SD 卡数据，开始探索声音的时间与距离。"}
+            </p>
+            {selected && (
+              <dl>
+                <div>
+                  <dt>配对事件</dt>
+                  <dd>{number(selected.summary?.pairs)}</dd>
+                </div>
+                <div>
+                  <dt>平均距离 / mm</dt>
+                  <dd>{number(selected.summary?.mean_mm)}</dd>
+                </div>
+                <div>
+                  <dt>标准差 / mm</dt>
+                  <dd>{number(selected.summary?.std_mm)}</dd>
+                </div>
+              </dl>
+            )}
+          </div>
           <button
             className="room-access"
             onClick={selected ? onOpen : onUpload}
           >
-            {selected ? "进入分析" : "导入实验"}
+            <strong>{selected ? "进入分析" : "导入实验"}</strong>
             <span>{selected ? "ACCESS FILE" : "IMPORT DATA"}</span>
             <ArrowRight size={25} />
           </button>

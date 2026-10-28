@@ -612,3 +612,87 @@
     padding: 10px 12px;
   }
 }
+
+/* Summary on the left; primary action occupies the marked right-hand area. */
+.room-record-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 170px;
+  gap: 22px;
+  padding: 22px;
+  align-items: stretch;
+}
+.room-record-summary {
+  min-width: 0;
+}
+.room-record dl {
+  gap: 22px;
+  flex-wrap: wrap;
+  margin-bottom: 0;
+}
+.archive-room .room-access {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-content: center;
+  align-items: center;
+  gap: 12px 10px;
+  width: 100%;
+  min-height: 126px;
+  margin: 0;
+  padding: 18px !important;
+}
+.room-access strong {
+  font-size: 19px;
+  font-weight: 500;
+  grid-column: 1;
+}
+.room-access span {
+  grid-column: 1;
+  font-size: 11px;
+}
+.room-access svg {
+  grid-column: 2;
+  grid-row: 1 / 3;
+  margin: 0;
+}
+@media (min-width: 701px) and (max-width: 1100px) {
+  .room-record {
+    width: 49%;
+    right: 3%;
+  }
+  .room-record-body {
+    grid-template-columns: minmax(0, 1fr) 140px;
+    gap: 14px;
+    padding: 16px;
+  }
+  .archive-room .room-access {
+    padding: 12px !important;
+  }
+}
+@media (max-width: 700px) {
+  .room-record-body {
+    grid-template-columns: minmax(0, 1fr) 112px;
+    gap: 12px;
+    padding: 14px;
+  }
+  .room-record dl {
+    gap: 10px 16px;
+    margin-top: 14px;
+  }
+  .room-record dd {
+    font-size: 16px;
+  }
+  .archive-room .room-access {
+    min-height: 126px;
+    padding: 10px !important;
+    gap: 10px 4px;
+  }
+  .room-access strong {
+    font-size: 15px;
+  }
+  .room-access span {
+    font-size: 9px;
+  }
+  .room-access svg {
+    width: 18px;
+  }
+}

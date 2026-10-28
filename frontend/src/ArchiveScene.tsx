@@ -89,9 +89,13 @@ export default function ArchiveScene({
       rows = 59,
       count = columns * rows;
     const bodyGeometry = new THREE.BoxGeometry(4.9, 3.6, 0.38);
-    const bodyMaterial = new THREE.MeshStandardMaterial({
+    const bodyMaterial = new THREE.MeshPhysicalMaterial({
       color: "#ffffff",
-      roughness: 0.54,
+      roughness: 0.3,
+      transmission: 0.38,
+      thickness: 0.38,
+      ior: 1.35,
+      clearcoat: 0.35,
       metalness: 0.08,
     });
     const bodies = new THREE.InstancedMesh(bodyGeometry, bodyMaterial, count);
@@ -101,9 +105,13 @@ export default function ArchiveScene({
     bodies.frustumCulled = false;
     scene.add(bodies);
     const faceGeometry = new THREE.PlaneGeometry(4.66, 3.36);
-    const faceMaterial = new THREE.MeshStandardMaterial({
+    const faceMaterial = new THREE.MeshPhysicalMaterial({
       color: "#eee9dc",
-      roughness: 0.38,
+      roughness: 0.27,
+      transmission: 0.55,
+      thickness: 0.12,
+      ior: 1.35,
+      clearcoat: 0.25,
       metalness: 0.05,
     });
     const faces = new THREE.InstancedMesh(faceGeometry, faceMaterial, count);
@@ -171,6 +179,46 @@ export default function ArchiveScene({
     screws.frustumCulled = false;
     scene.add(screws);
 
+    // Local light and a soft halo keep the selected glass carrier distinct.
+    const selectionLight = new THREE.PointLight("#ffcc70", 28, 9, 2);
+    scene.add(selectionLight);
+    const glowCanvas = document.createElement("canvas");
+    glowCanvas.width = glowCanvas.height = 256;
+    const glowContext = glowCanvas.getContext("2d")!;
+    const gradient = glowContext.createRadialGradient(
+      128,
+      128,
+      12,
+      128,
+      128,
+      128,
+    );
+    gradient.addColorStop(0, "rgba(255,205,110,.42)");
+    gradient.addColorStop(0.42, "rgba(255,193,76,.25)");
+    gradient.addColorStop(1, "rgba(255,183,60,0)");
+    glowContext.fillStyle = gradient;
+    glowContext.fillRect(0, 0, 256, 256);
+    const glowTexture = new THREE.CanvasTexture(glowCanvas);
+    glowTexture.colorSpace = THREE.SRGBColorSpace;
+    const glowMaterial = new THREE.SpriteMaterial({
+      map: glowTexture,
+      transparent: true,
+      depthWrite: false,
+      depthTest: false,
+      toneMapped: false,
+    });
+    const glow = new THREE.Sprite(glowMaterial);
+    glow.scale.set(8.4, 7.4, 1);
+    scene.add(glow);
+    const edgeGeometry = new THREE.EdgesGeometry(bodyGeometry);
+    const edgeMaterial = new THREE.LineBasicMaterial({
+      color: "#ffd889",
+      transparent: true,
+      opacity: 0.95,
+      toneMapped: false,
+    });
+    const selectedEdges = new THREE.LineSegments(edgeGeometry, edgeMaterial);
+    scene.add(selectedEdges);
     const dummy = new THREE.Object3D();
     const colors = ["#a1845a", "#849171", "#c9c5b9"].map(
       (c) => new THREE.Color(c),
@@ -187,7 +235,7 @@ export default function ArchiveScene({
       state.current.selectedId,
     );
     let x = initial.column * 5.3,
-      z = initial.row * 1.3;
+      z = initial.row * 0.88;
     let frame = 0,
       previousTime = 0,
       disposed = false,
@@ -197,6 +245,8 @@ export default function ArchiveScene({
       frame = 0;
       if (disposed || contextLost || document.hidden) return;
       syncLabels();
+      glow.visible = selectedEdges.visible = false;
+      selectionLight.intensity = 0;
       for (const label of recordLabels.values()) label.mesh.visible = false;
       const target = archivePosition(
         state.current.groups,
@@ -206,12 +256,12 @@ export default function ArchiveScene({
       previousTime = now;
       const alpha = reduced.matches ? 1 : 1 - Math.exp(-dt * 8);
       const targetX = target.column * 5.3,
-        targetZ = target.row * 1.3;
+        targetZ = target.row * 0.88;
       x += (targetX - x) * alpha;
       z += (targetZ - z) * alpha;
       let moving = Math.abs(targetX - x) + Math.abs(targetZ - z) > 0.001;
       const baseColumn = Math.round(x / 5.3),
-        baseRow = Math.round(z / 1.3);
+        baseRow = Math.round(z / 0.88);
       let i = 0;
       const visible = new Set<string>();
       for (let c = baseColumn - 4; c <= baseColumn + 4; c++) {
@@ -225,16 +275,25 @@ export default function ArchiveScene({
             c === target.column
               ? Math.max(0, 1 - Math.abs(r - target.row) / 4) * 0.35
               : 0;
-          const targetLift = active ? 2.0 : id ? 0.85 + shoulder : -0.45;
+          const targetLift = active ? 1.6 : shoulder;
           let lift = lifts.get(key) ?? 0;
           lift += (targetLift - lift) * alpha;
           if (Math.abs(targetLift - lift) > 0.001) moving = true;
           lifts.set(key, lift);
           dummy.rotation.set(0, 0, 0);
-          dummy.position.set(c * 5.3 - x, 1.8 + lift, r * 1.3 - z);
+          dummy.position.set(c * 5.3 - x, 1.8 + lift, r * 0.88 - z);
           dummy.updateMatrix();
           bodies.setMatrixAt(i, dummy.matrix);
           bodies.setColorAt(i, colors[active ? 0 : id ? 1 : 2]);
+          if (active) {
+            selectedEdges.position.copy(dummy.position);
+            selectedEdges.visible = glow.visible = true;
+            glow.position.copy(dummy.position);
+            selectionLight.position
+              .copy(dummy.position)
+              .add(new THREE.Vector3(-1, 1.1, 1.1));
+            selectionLight.intensity = 28;
+          }
           dummy.position.z += 0.196;
           dummy.updateMatrix();
           faces.setMatrixAt(i, dummy.matrix);
@@ -364,6 +423,10 @@ export default function ArchiveScene({
         label.mesh.material.dispose();
       }
       recordLabels.clear();
+      edgeGeometry.dispose();
+      edgeMaterial.dispose();
+      glowTexture.dispose();
+      glowMaterial.dispose();
       sun.shadow.dispose();
       renderer.dispose();
       renderer.domElement.remove();
