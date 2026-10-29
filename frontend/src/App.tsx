@@ -106,6 +106,8 @@ type Wave = {
   end: number;
 };
 const colors = { A: "#b76b38", B: "#3e7377" };
+const pageGroup = (page: string) =>
+  ["analysis", "health", "decoded", "ai"].includes(page) ? "analysis" : page;
 const fmt = (value: number | null | undefined, digits = 2) =>
   value == null
     ? "—"
@@ -141,7 +143,10 @@ export default function App() {
     [query, setQuery] = useState("");
   const [uploadOpen, setUploadOpen] = useState(false),
     [editing, setEditing] = useState(false);
-  const { page: tab, navigate: setTab, surface } = usePageNavigation("archive");
+  const { page: tab, navigate: setTab, surface } = usePageNavigation(
+    "archive",
+    pageGroup,
+  );
   const [pairIndex, setPairIndex] = useState<number | null>(null),
     [range, setRange] = useState<[number, number] | null>(null);
   const [wave, setWave] = useState<Wave | null>(null),

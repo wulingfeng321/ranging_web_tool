@@ -2,7 +2,10 @@ import { useEffect, useRef, useState } from "react";
 import { flushSync } from "react-dom";
 
 /** Snapshot transitions preserve component identity and avoid delaying navigation. */
-export function usePageNavigation(initial: string) {
+export function usePageNavigation(
+  initial: string,
+  pageGroup: (page: string) => string = (page) => page,
+) {
   const [page, setPage] = useState(initial);
   const current = useRef(initial);
   const transition = useRef<ViewTransition | null>(null);
@@ -17,9 +20,16 @@ export function usePageNavigation(initial: string) {
   );
   function navigate(next: string) {
     if (next === current.current) return;
+    const samePage = pageGroup(next) === pageGroup(current.current);
     current.current = next;
     const token = ++sequence.current;
     transition.current?.skipTransition();
+    surface.current?.getAnimations().forEach((animation) => animation.cancel());
+    // Local tabs share a page: update immediately and preserve scroll position.
+    if (samePage) {
+      setPage(next);
+      return;
+    }
     const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
     const update = () => {
       if (token !== sequence.current) return;
